@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ut.ewh.audiometrytest" >
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="ut.ewh.audiometrytest.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="ut.ewh.audiometrytest.PreTestInformation"
+            android:label="@string/title_activity_pre_test_information" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ut.ewh.audiometrytest.MainActivity" />
+        </activity>
+        <activity
+            android:name="ut.ewh.audiometrytest.TestProctoring"
+            android:label="@string/title_activity_test_proctoring" >
+        </activity>
+        <activity
+            android:name="ut.ewh.audiometrytest.TestComplete"
+            android:label="@string/title_activity_test_complete" >
+        </activity>
+        <activity
+            android:name="ut.ewh.audiometrytest.ExportData"
+            android:label="@string/title_activity_export_data" >
+        </activity>
+    </application>
+
+</manifest>
