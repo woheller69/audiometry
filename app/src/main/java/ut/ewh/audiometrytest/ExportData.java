@@ -27,8 +27,8 @@ public class ExportData extends ActionBarActivity {
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         try{
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_export_data);
+           // super.onCreate(savedInstanceState);
+            //setContentView(R.layout.activity_export_data);
             HttpClient httpclient = new DefaultHttpClient();
             String URL = "http://107.170.226.198/mail.php?";
             URL += "t="+"reeceman524@gmail.com";
