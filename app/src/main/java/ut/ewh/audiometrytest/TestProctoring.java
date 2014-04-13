@@ -107,19 +107,18 @@ public class TestProctoring extends ActionBarActivity {
                     iteration = i;
                     int frequency = testingFrequencies[i];
                     float increment  = (float)(Math.PI) * frequency / sampleRate;
-                    boolean running = true;
                     int maxVolume = volume;
                     int minVolume = 0;
                     // This is the loop for each individual sample using a binary search algorithm
-                    while (running) {
-                       // AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, sampleRate, AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_16BIT, generatedSnd.length, AudioTrack.MODE_STATIC);
+                    for(;;){
+                        // AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, sampleRate, AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_16BIT, generatedSnd.length, AudioTrack.MODE_STATIC);
                         int tempResponse = 0;
                         int actualVolume = (minVolume + maxVolume)/2;
-                        if ((maxVolume - minVolume) < 400){
+                        if ((maxVolume - minVolume) < 400){ //the test is done
                             thresholds[i] = actualVolume;
                             Log.i("Final Results", "results are " + thresholds[0] + " " + thresholds[1] + " " + thresholds[2] + " " + thresholds[3] + " " + thresholds[4] + " " + thresholds[5] + " " + thresholds[6]);
                             break;
-                        } else {
+                        } else { //still taking the test
                             for (int z = 0; z < 3; z++) {
                                 heard = false;
                                 Log.i("Playback Info", "actual volume is" + actualVolume);
