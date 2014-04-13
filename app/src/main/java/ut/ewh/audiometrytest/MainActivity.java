@@ -15,28 +15,25 @@ import android.util.Log;
 public class MainActivity extends ActionBarActivity {
 
 
-    //----------------------------------------------------------------
-    //Here Ends The Methods and Variables- below be dragons
-    //----------------------------------------------------------------
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        /*AudioManager am = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
-
-        for (int j = 0; j <=15; j++) {
-            am.setStreamVolume(AudioManager.STREAM_MUSIC, j, AudioManager.FLAG_PLAY_SOUND);
-            try{
-                Thread.sleep(400);
-            } catch(InterruptedException e){};
-        }*/
     }
 
+    /**
+     * goes to PreTestInformation activity
+     * @param view- current view
+     */
     public void gotoPretest(View view){
         Intent intent = new Intent(this, PreTestInformation.class);
         startActivity(intent);
     }
+
+    /**
+     * goes to ExportData activity
+     * @param view- current view
+     */
     public void gotoExport(View view){
         Intent intent = new Intent(this, ExportData.class);
         startActivity(intent);
