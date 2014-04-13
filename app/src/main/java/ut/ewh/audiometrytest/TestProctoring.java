@@ -23,10 +23,8 @@ public class TestProctoring extends ActionBarActivity {
     private final double sample[] = new double[numSamples];
     private final byte generatedSnd[] = new byte[2 * numSamples];
     //private final byte finalSnd[] = new byte[2 * numSamples];
-    private float angle = 0;
-    boolean heard = false;
+    private boolean heard = false;
     private boolean loop = true;
-    private Handler bkgrnd = new Handler();
     int a = 0;
     private int volume = 32767;
     // final AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, sampleRate, AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_16BIT, generatedSnd.length, AudioTrack.MODE_STATIC);
@@ -61,8 +59,13 @@ public class TestProctoring extends ActionBarActivity {
         startActivity(intent);
     };
 
+    /**
+     * Generates the tone based on the increment and volume, used in inner loop
+     * @param increment - the amount to increment by
+     * @param volume - the volume to generate
+     */
     public void genTone(float increment, int volume){
-        angle = 0;
+        float angle = 0;
         for (int i = 0; i < numSamples; i++){
             sample[i] = Math.sin(angle);
             angle += increment;
