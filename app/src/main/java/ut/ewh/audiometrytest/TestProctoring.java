@@ -186,8 +186,7 @@ public class TestProctoring extends ActionBarActivity {
     public boolean dispatchTouchEvent(MotionEvent e){
         //View view = findViewById(R.id.page);
         //view.setBackgroundResource(R.color.white);
-        a++;
-        Log.i("Touch Alert", "Screen was hit!" + a + heard);
+        Log.i("Touch Alert", "Screen was hit!" + a++ + heard);
         heard = true;
         //bkgrnd.postDelayed(bkgrndFlash, 1000);
         //try{Thread.sleep(1000);} catch (InterruptedException x){};
