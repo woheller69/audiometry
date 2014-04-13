@@ -10,7 +10,6 @@ Analyze this data and return a verdict to the user, as well as export data in a 
 
 We will develop the data analysis and test proctoring code in Java, and implement the user interface on the Android SDK platform.
 
-------------------------------------
 Goals (Updated 4.13.14)
 ------------------------------------
 
