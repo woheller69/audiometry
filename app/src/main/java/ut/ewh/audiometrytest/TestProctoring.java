@@ -21,15 +21,14 @@ public class TestProctoring extends ActionBarActivity {
     private final int sampleRate = 22050;
     private final int numSamples = duration * sampleRate;
     private final int volume = 32767;
+    private final int[] testingFrequencies = {1000, 500, 1000, 3000, 4000, 6000, 8000};
+
 
     private boolean heard = false;
     private boolean loop = true;
     int a = 0;
 
-    private final int[] testingFrequencies = {1000, 500, 1000, 3000, 4000, 6000, 8000};
-    public final int[] testingResults = {0, 0, 0, 0, 0, 0, 0};
     public int[] thresholds = {0, 0, 0, 0, 0, 0, 0};
-    public int iteration = 0;
 
     /**
      * Changes background to white when called.
@@ -107,13 +106,12 @@ public class TestProctoring extends ActionBarActivity {
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         AudioManager am = (AudioManager)getSystemService(AUDIO_SERVICE);
-        am.setStreamVolume(AudioManager.STREAM_MUSIC, 15,  0);
+        am.setStreamVolume(AudioManager.STREAM_MUSIC, 12,  0);
         //Executes playback and threshold searching procedure
         Thread testThread = new Thread (new Runnable() {
             public void run(){
                 //iterated once for every frequency to be tested
                 for (int i = 0; i < testingFrequencies.length; i++){
-                    iteration = i;
                     int frequency = testingFrequencies[i];
                     float increment  = (float)(Math.PI) * frequency / sampleRate;
                     int maxVolume = volume;
@@ -156,17 +154,7 @@ public class TestProctoring extends ActionBarActivity {
                 gotoComplete();
             }
         });
-        /*Thread checkThread = new Thread (new Runnable() {
-            public void run(){
-                while (loop){
-                    if (heard){
-                        int f = iteration;
-                        testingResults[f] = 1;
-                        //	TestProctoring.this.runOnUiThread(bkgrndFlash);
-                    }
-                }
-            }
-        });*/
+
         Thread screenThread = new Thread (new Runnable() {
             public void run(){
                 while (loop){
@@ -184,7 +172,6 @@ public class TestProctoring extends ActionBarActivity {
             };
         });
         testThread.start();
-        //checkThread.start();
         screenThread.start();
     }
 
