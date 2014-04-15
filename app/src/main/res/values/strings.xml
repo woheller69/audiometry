@@ -16,6 +16,9 @@
     <string name="title_activity_export_data">Export Data</string>
     <string name="button_export">Export</string>
     <string name="title_activity_test_complete">Test Complete!</string>
+    <string name="email_hint">Recipient Email</string>
+    <string name="export_test_title">Export Test Results</string>
+    <color name="orange">#FF8000</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
     <color name="grey">#888888</color>
