@@ -37,7 +37,7 @@ public class TestProctoring extends ActionBarActivity {
         @Override
         public void run(){
             View view = findViewById(R.id.page);
-            view.setBackgroundResource(R.color.white);
+            view.setBackgroundResource(R.color.green);
             //bkgrnd.postDelayed(this, 1000);
         }
     };
@@ -48,7 +48,7 @@ public class TestProctoring extends ActionBarActivity {
         @Override
         public void run(){
             View view = findViewById(R.id.page);
-            view.setBackgroundResource(R.color.black);
+            view.setBackgroundResource(R.color.background_grey);
             //bkgrnd.postDelayed(this, 1000);
         }
     };

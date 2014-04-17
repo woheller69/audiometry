@@ -18,9 +18,18 @@
     <string name="title_activity_test_complete">Test Complete!</string>
     <string name="email_hint">Recipient Email</string>
     <string name="export_test_title">Export Test Results</string>
+
     <color name="orange">#FF8000</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
     <color name="grey">#888888</color>
+    <color name="green">#adce49</color>
+    <color name="background_grey">#424242</color>
+
+    <string name="title_activity_pre__calibration">Pre_Calibration</string>
+    <string name="button_calibration">Calibration</string>
+    <string name="pre_calibration_title">Audiometer Calibration</string>
+    <string name="pre_calibration_info_body">In order to get accurate readings from the audiometer, your headphones must be calibrated. Please place your earphones as close as possible to your device microphone without touching it. For best results, perform this calibration in a quiet room. Tap the button below when you\'re ready to begin calibration.</string>
+    <string name="button_begin_calibration">Begin Calibration</string>
 
 </resources>

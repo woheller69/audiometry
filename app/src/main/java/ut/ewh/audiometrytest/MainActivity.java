@@ -38,6 +38,10 @@ public class MainActivity extends ActionBarActivity {
         Intent intent = new Intent(this, ExportData.class);
         startActivity(intent);
     }
+    public void gotoCalibration(View view){
+        Intent intent = new Intent(this, Pre_Calibration.class);
+        startActivity(intent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
