@@ -1,0 +1,26 @@
+New Download Instructions for the Audiometry App
+------------------------------------------------
+
+Well everyone, the switch to Android Studio has definitely paid off. 
+We now can use github a LOT more easily and get this project set up 
+on everyone's computers with minimal fuss. Here are the steps to
+get the project up-to-date and running on your computer:
+
+1) Download Android Studio
+
+Just google "Android Studio Download" and you should find it within the first two results. 
+The version specific to your operating system will automatically download.
+
+2) Download this repository
+
+Use the "clone to desktop" or git clone command to download this repository to your computer. 
+Remember where you put it- you'll be coming back to it really quickly. 
+
+3) Open Android Studio
+
+Once android studio is up and running, you will see a startup menu. Select the "Import Project"
+function and navigate to wherever you put the repository that you downloaded. Open it and 
+you'll find a file called "settings.gradle". Select that file and import the project. After everything
+loads, you should be up to speed with the latest  version of the project!
+
+Email me at reecestevens@utexas.edu if you have any questions or run into any problems!
