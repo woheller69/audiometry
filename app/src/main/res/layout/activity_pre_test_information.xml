@@ -19,7 +19,13 @@ android:gravity="center_vertical">
     android:textSize="30sp"
     android:textStyle="bold"
     android:textColor="#FF8000"/>
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 <TextView
     android:id="@+id/pretest_info_body"
     android:layout_marginTop="15sp"
@@ -41,9 +47,10 @@ android:gravity="center_vertical">
     android:paddingRight="30sp"
     android:paddingTop="20sp"
     android:paddingBottom="20sp"
-    android:background="#FF8000"
+    android:background="@drawable/button_background"
     android:layout_gravity="right"
     android:gravity="left"
     />
-
+    </LinearLayout>
+</ScrollView>
 </LinearLayout>

@@ -3,6 +3,8 @@
     package="ut.ewh.audiometrytest" >
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -57,6 +59,14 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ut.ewh.audiometrytest.MainActivity" />
+        </activity>
+        <activity
+            android:name="ut.ewh.audiometrytest.Calibration"
+            android:label="@string/title_activity_calibration" >
+        </activity>
+        <activity
+            android:name="ut.ewh.audiometrytest.ExportComplete"
+            android:label="@string/title_activity_export_complete" >
         </activity>
     </application>
 

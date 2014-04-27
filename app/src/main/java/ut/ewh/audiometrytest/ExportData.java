@@ -1,5 +1,6 @@
 package ut.ewh.audiometrytest;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -27,6 +28,10 @@ public class ExportData extends ActionBarActivity {
     EditText email_field;
     String email = "no email has yet been entered into this ridiculously long initialized field";
 
+    public void gotoExportComplete() {
+        Intent intent = new Intent(this, ExportComplete.class);
+        startActivity(intent);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,10 +68,12 @@ public class ExportData extends ActionBarActivity {
                         response.getEntity().getContent().close();
                         throw new IOException(statusLine.getReasonPhrase());
                     }
+                    gotoExportComplete();
                 } catch (Exception e){
                     Log.i("Not Good", "Not Pinging IP");
                     System.err.println(e);
                 }
+
             }
         });
         /*try{
