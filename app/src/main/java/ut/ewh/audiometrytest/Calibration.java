@@ -25,8 +25,11 @@ public class Calibration extends ActionBarActivity {
     final private int volume = 32767;
 
 
+
     // final private int bufferSize = AudioRecord.getMinBufferSize(44100, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT );
-    private boolean tone = false;
+    private int volumeMeasurements[] = new int[8];
+    private int volumeMeasurementsWithTone[] = new int[8];
+
 
     private byte[] recordAudio(){
         byte micInput[] = new byte[bufferSize];
@@ -113,7 +116,8 @@ public class Calibration extends ActionBarActivity {
         //toneThread.start();*/
         Thread calibrateThread = new Thread(new Runnable() {
            public void run() {
-                MediaRecorder mediaRecorder = new MediaRecorder();
+
+               /* MediaRecorder mediaRecorder = new MediaRecorder();
                 mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
                 mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
                 mediaRecorder.setOutputFile("/sdcard/audioFile");
@@ -127,17 +131,18 @@ public class Calibration extends ActionBarActivity {
                 } catch (IllegalStateException x){
                     Log.i("Illegal State Exception", "Not being initialized at the right time");
                 }
-                mediaRecorder.start();
-                try{
-                   Thread.sleep(1000);
+                mediaRecorder.start();*/
+
+                /*try{
+                   Thread.sleep(2000);
                 } catch (InterruptedException e){};
-                int background = mediaRecorder.getMaxAmplitude();
+                //int background = mediaRecorder.getMaxAmplitude();
                 //playSound(genTone(increment, volume));
                 try{
                     Thread.sleep(1000);
                 } catch (InterruptedException e){};
-                int toneVolume = mediaRecorder.getMaxAmplitude();
-                Log.i("Returned Volume Levels Are", "Background: " + background + " toneVolume: " + toneVolume);
+                //int toneVolume = mediaRecorder.getMaxAmplitude();
+                //Log.i("Returned Volume Levels Are", "Background: " + background + " toneVolume: " + toneVolume);
                try{
                    Thread.sleep(1000);
                } catch (InterruptedException e){};
@@ -156,13 +161,28 @@ public class Calibration extends ActionBarActivity {
                    Thread.sleep(1000);
                } catch (InterruptedException e){};
                int evenFurtherTesting = mediaRecorder.getMaxAmplitude();
-               Log.i("Returned Volume Levels Are", "Background: " + furtherTesting + " toneVolume: " + evenFurtherTesting);
+               Log.i("Returned Volume Levels Are", "Background: " + furtherTesting + " toneVolume: " + evenFurtherTesting);*/
 
+               /*for (int i = 0; i < 8; i++){
+                   try{
+                       Thread.sleep(1000);
+                   } catch (InterruptedException e){};
+                   volumeMeasurements[i] = mediaRecorder.getMaxAmplitude();
+               }
+               Log.i("Results are:", " " + volumeMeasurements[0] +" " + volumeMeasurements[1] +" " + volumeMeasurements[2] +" " + volumeMeasurements[3] + " " +volumeMeasurements[4] + " " +volumeMeasurements[5] + " " +volumeMeasurements[6] + " " +volumeMeasurements[7]);
+
+               for (int i = 0; i < 8; i++){
+                   try{
+                       Thread.sleep(1000);
+                   } catch (InterruptedException e){};
+                   volumeMeasurementsWithTone[i] = mediaRecorder.getMaxAmplitude();
+               }
+               Log.i("Results are:", " " + volumeMeasurementsWithTone[0] +" " + volumeMeasurementsWithTone[1] +" " + volumeMeasurementsWithTone[2] +" " + volumeMeasurementsWithTone[3] + " " +volumeMeasurementsWithTone[4] + " " +volumeMeasurementsWithTone[5] + " " +volumeMeasurementsWithTone[6] + " " +volumeMeasurementsWithTone[7]);
 
 
                mediaRecorder.stop();
-                mediaRecorder.reset();
-                mediaRecorder.release();
+               mediaRecorder.reset();
+               mediaRecorder.release();*/
            }
         });
         calibrateThread.start();
