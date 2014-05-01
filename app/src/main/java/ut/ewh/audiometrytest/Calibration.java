@@ -6,6 +6,7 @@ import android.media.AudioRecord;
 import android.media.AudioTrack;
 import android.media.MediaRecorder;
 import android.provider.MediaStore;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,29 +18,15 @@ import java.io.IOException;
 
 public class Calibration extends ActionBarActivity {
 
-    final private int numSamples = 3 * 44100;
-    final private int bufferSize = 16384;
-    final private int frequency = 1000; //in Hz
+    final private int numSamples = 4 * 44100;
+    //final private int bufferSize = 16384;
+    final private int frequency = 2000; //in Hz
     final private int sampleRate = 44100;
     final private float increment  = (float)(Math.PI) * frequency / sampleRate;
-    final private int volume = 32767;
-
-
-
-    // final private int bufferSize = AudioRecord.getMinBufferSize(44100, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT );
-    private int volumeMeasurements[] = new int[8];
-    private int volumeMeasurementsWithTone[] = new int[8];
-
-
-    private byte[] recordAudio(){
-        byte micInput[] = new byte[bufferSize];
-        AudioRecord audiorecord = new AudioRecord(MediaRecorder.AudioSource.MIC, sampleRate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, bufferSize);
-        //creates new AudioRecord (MIC, 44100 Hz, CHANNEL_IN_MONO, ENCODING_PCM_16BIT,
-        int recordResult = audiorecord.read(micInput, 0, bufferSize);
-        Log.i("Recording Result: ", "The recorder says:" + recordResult);
-        //Log.i("Recording Result: ", "The recorder says: nothing!");
-        return micInput;
-    }
+    final private int volume = 30000;
+    final private double mGain = 0.0044;
+    final private double mAlpha = 0.9;
+    final private int bufferSize = AudioRecord.getMinBufferSize(sampleRate, AudioFormat.CHANNEL_IN_STEREO, AudioFormat.ENCODING_PCM_16BIT);
 
     public byte[] genTone(float increment, int volume) {
         float angle = 0;
@@ -60,132 +47,103 @@ public class Calibration extends ActionBarActivity {
     }
 
     public void playSound(byte[] generatedSnd) {
-        //final AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, sampleRate, AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_16BIT, generatedSnd.length, AudioTrack.MODE_STATIC);
-        // audioTrack.setStereoVolume(0, AudioTrack.getMaxVolume());
-        //audioTrack.flush();
         AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, sampleRate, AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_16BIT, generatedSnd.length, AudioTrack.MODE_STATIC);
         audioTrack.write(generatedSnd, 0, generatedSnd.length);
         audioTrack.play();
     }
-    /*public void DFT(byte[] recordedSnd) {
-        int m = recordedSnd.length;
-        byte outputSnd[] = new byte[recordedSnd.length];
-        for (int i = 0; i < m; i++){
-            outputSnd[i] = 0;
-            double arg = -2*3.141592654*(double)i*(double)m;
-            for (int k = 0; k < m; k++){
-                double cosarg = Math.cos(k * arg);
-                //double sinarg = Math.sin(k * arg);
-                outputSnd[i] += recordedSnd[k] * cosarg;
+
+    public double[] dbListen() {
+        double rmsArray[] = new double[5];
+        for (int j = 0; j < rmsArray.length; j++) {
+            AudioRecord audioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC, sampleRate, AudioFormat.CHANNEL_IN_STEREO, AudioFormat.ENCODING_PCM_16BIT, bufferSize);
+            short[] buffer = new short[bufferSize];
+            //short[] buffer = new short[bufferSize * 2];
+
+            try {
+                audioRecord.startRecording();
+            } catch (IllegalStateException e) {
+                Log.e("Recording didn't work!", e.toString());
+            }
+            int bufferReadResult = audioRecord.read(buffer, 0, buffer.length);
+            //Log.i("Status of Buffer Read", "Result: " + bufferReadResult);
+
+            double rms = 0;
+            for (int i = 0; i < buffer.length; i++) {
+                rms += buffer[i] * buffer[i];
             }
 
+            //smoothing of rms
+            rmsArray[j] = (1 - mAlpha) * rms;
+            double mRmsSmoothed = (1 - mAlpha) * rms;
+            double rmsdB = 10 * Math.log10(mGain * mRmsSmoothed);
+            Log.i("BKGRND:", "Decibel calculation is: " + rmsdB);
+            audioRecord.stop();
+            audioRecord.release();
+
+//            try{
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e) {};
         }
-        for (int i = 0; i < m; i++){
-            recordedSnd[i] = outputSnd[i];
-        }
-    }*/
+        return rmsArray;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calibration);
-        /*tone = false;
-        Thread recordingThread = new Thread(new Runnable() {
-            public void run() {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException x) {};
-                byte silence[] = recordAudio();
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException x) {};
-                tone = true;
-                byte toneSample[] = recordAudio();
-                //playSound(toneSample);
-                Log.i("Recording ", "done! " + bufferSize);
-            }
-        });
-        Thread toneThread = new Thread(new Runnable() {
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        final Thread playTone = new Thread(new Runnable(){
             public void run(){
-                while (tone){
-                    playSound(genTone(increment, volume));
-                }
+                playSound(genTone(increment, volume));
             }
         });
-        recordingThread.start();
-        //toneThread.start();*/
+
         Thread calibrateThread = new Thread(new Runnable() {
            public void run() {
+               AudioManager am = (AudioManager)getSystemService(AUDIO_SERVICE);
+               am.setStreamVolume(AudioManager.STREAM_MUSIC, 0,  0);
 
-               /* MediaRecorder mediaRecorder = new MediaRecorder();
-                mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-                mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
-                mediaRecorder.setOutputFile("/sdcard/audioFile");
-                mediaRecorder.setAudioSamplingRate(sampleRate);
-                mediaRecorder.setAudioEncodingBitRate(64000);
-                mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-                try{
-                    mediaRecorder.prepare();
-                } catch (IOException e) {
-                    Log.i("IOException", "Failing for some other reason");
-                } catch (IllegalStateException x){
-                    Log.i("Illegal State Exception", "Not being initialized at the right time");
-                }
-                mediaRecorder.start();*/
+               double backgroundRms[] = dbListen();
 
-                /*try{
-                   Thread.sleep(2000);
-                } catch (InterruptedException e){};
-                //int background = mediaRecorder.getMaxAmplitude();
-                //playSound(genTone(increment, volume));
-                try{
-                    Thread.sleep(1000);
-                } catch (InterruptedException e){};
-                //int toneVolume = mediaRecorder.getMaxAmplitude();
-                //Log.i("Returned Volume Levels Are", "Background: " + background + " toneVolume: " + toneVolume);
-               try{
-                   Thread.sleep(1000);
-               } catch (InterruptedException e){};
-               int otherTestVolume = mediaRecorder.getMaxAmplitude();
-               try{
-                   Thread.sleep(1000);
-               } catch (InterruptedException e){};
-               int finalTestVolume = mediaRecorder.getMaxAmplitude();
-               Log.i("Returned Volume Levels Are", "Background: " + otherTestVolume + " toneVolume: " + finalTestVolume);
+               //playTone.start();
 
-               try{
-                   Thread.sleep(1000);
-               } catch (InterruptedException e){};
-               int furtherTesting = mediaRecorder.getMaxAmplitude();
-               try{
-                   Thread.sleep(1000);
-               } catch (InterruptedException e){};
-               int evenFurtherTesting = mediaRecorder.getMaxAmplitude();
-               Log.i("Returned Volume Levels Are", "Background: " + furtherTesting + " toneVolume: " + evenFurtherTesting);*/
+               double soundRms[] = dbListen();
 
-               /*for (int i = 0; i < 8; i++){
-                   try{
-                       Thread.sleep(1000);
-                   } catch (InterruptedException e){};
-                   volumeMeasurements[i] = mediaRecorder.getMaxAmplitude();
+               double resultingRms[] = new double[3];
+
+               for (int j = 0; j < 3; j++){
+                   resultingRms[j] = soundRms[j] - backgroundRms[j];
                }
-               Log.i("Results are:", " " + volumeMeasurements[0] +" " + volumeMeasurements[1] +" " + volumeMeasurements[2] +" " + volumeMeasurements[3] + " " +volumeMeasurements[4] + " " +volumeMeasurements[5] + " " +volumeMeasurements[6] + " " +volumeMeasurements[7]);
 
-               for (int i = 0; i < 8; i++){
-                   try{
-                       Thread.sleep(1000);
-                   } catch (InterruptedException e){};
-                   volumeMeasurementsWithTone[i] = mediaRecorder.getMaxAmplitude();
+               for (int j = 0; j < 3; j++) {
+                   double rmsdB = 10 * Math.log10(mGain * resultingRms[j]);
+                   Log.i("End Result:", "Decibel calculation is: " + rmsdB);
                }
-               Log.i("Results are:", " " + volumeMeasurementsWithTone[0] +" " + volumeMeasurementsWithTone[1] +" " + volumeMeasurementsWithTone[2] +" " + volumeMeasurementsWithTone[3] + " " +volumeMeasurementsWithTone[4] + " " +volumeMeasurementsWithTone[5] + " " +volumeMeasurementsWithTone[6] + " " +volumeMeasurementsWithTone[7]);
 
 
-               mediaRecorder.stop();
-               mediaRecorder.reset();
-               mediaRecorder.release();*/
            }
         });
         calibrateThread.start();
+        /*AudioManager am = (AudioManager)getSystemService(AUDIO_SERVICE);
+        am.setStreamVolume(AudioManager.STREAM_MUSIC, 0,  0);
+
+        double backgroundRms[] = dbListen();
+
+        calibrateThread.start();
+
+        double soundRms[] = dbListen();
+
+        double resultingRms[] = new double[3];
+
+        for (int j = 0; j < 3; j++){
+            resultingRms[j] = soundRms[j] - backgroundRms[j];
+        }
+
+        for (int j = 0; j < 3; j++) {
+            double rmsdB = 10 * Math.log10(mGain * resultingRms[j]);
+            Log.i("End Result:", "Decibel calculation is: " + rmsdB);
+        }*/
     }
 
 
