@@ -1,5 +1,6 @@
 package ut.ewh.audiometrytest;
 
+import android.content.Context;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -13,6 +14,11 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.MotionEvent;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.Random;
 
 
@@ -23,16 +29,16 @@ public class TestProctoring extends ActionBarActivity {
     private final int numSamples = duration * sampleRate;
     private final int volume = 32767;
     private final int[] testingFrequencies = {1000, 500, 1000, 3000, 4000, 6000, 8000};
-    private final int right = 42;
-    private final int left = 24;
+    final private double mGain = 0.0044;
+    final private double mAlpha = 0.9;
 
 
     private boolean heard = false;
     private boolean loop = true;
     int a = 0;
 
-    public int[] thresholds_right = {0, 0, 0, 0, 0, 0, 0};
-    public int[] thresholds_left = {0, 0, 0, 0, 0, 0, 0};
+    public double[] thresholds_right = {0, 0, 0, 0, 0, 0, 0};
+    public double[] thresholds_left = {0, 0, 0, 0, 0, 0, 0};
 
 
     /**
@@ -89,6 +95,11 @@ public class TestProctoring extends ActionBarActivity {
      * @param volume - the volume to generate
      */
     public byte[] genTone(float increment, int volume){
+//        Integer i = new Integer(4);
+//        i.byteValue();
+//        Short s = new Short(4);
+//        s.
+
         float angle = 0;
         double sample[] = new double[numSamples];
         byte generatedSnd[] = new byte[2 * numSamples];
@@ -116,7 +127,7 @@ public class TestProctoring extends ActionBarActivity {
         //audioTrack.flush();
         AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, sampleRate, AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_16BIT, generatedSnd.length, AudioTrack.MODE_STATIC);
         audioTrack.write(generatedSnd, 0, generatedSnd.length);
-        if (ear == 42) {
+        if (ear == 0) {
             audioTrack.setStereoVolume(0, AudioTrack.getMaxVolume());
         } else {
             audioTrack.setStereoVolume(AudioTrack.getMaxVolume(), 0);
@@ -125,6 +136,22 @@ public class TestProctoring extends ActionBarActivity {
        // audioTrack.release();
     }
 
+//    public int convertVolume(int i) {
+//        if (i == 0 || i == 2) {
+//            int actualVolume = (int) calibration
+//        } else if (i == 1){
+//            thresholds_right[i] = actualVolume * calibrationArray[0]; //records volume as threshold
+//        } else if (i == 3) {
+//            thresholds_right[i] = actualVolume * calibrationArray[2]; //records volume as threshold
+//        } else if (i == 4) {
+//            thresholds_right[i] = actualVolume * calibrationArray[3]; //records volume as threshold
+//        } else if (i == 5) {
+//            thresholds_right[i] = actualVolume * calibrationArray[4]; //records volume as threshold
+//        } else if (i == 6) {
+//            thresholds_right[i] = actualVolume * calibrationArray[5]; //records volume as threshold
+//        } else {}
+//    }
+
     //--------------------------------------------------------------------------
     //End of Variable and Method Definitions
     //--------------------------------------------------------------------------
@@ -132,21 +159,45 @@ public class TestProctoring extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_proctoring);
-        ActionBar actionbar = getSupportActionBar();
+        //ActionBar actionbar = getSupportActionBar();
 
         AudioManager am = (AudioManager)getSystemService(AUDIO_SERVICE);
         am.setStreamVolume(AudioManager.STREAM_MUSIC, 9,  0);
+
+        byte calibrationByteData[] = new byte[48];
+
+        try{
+            FileInputStream fis = openFileInput("CalibrationPreferences");
+            fis.read(calibrationByteData, 0, 48);
+            fis.close();
+            Log.i("File Read Info", "File Read Successful");
+        } catch (IOException e) {};
+
+        Log.i("Information", "Byte Array Length (should be 48): " + calibrationByteData.length);
+
+        final double calibrationArray[] = new double[6];
+
+
+        int counter = 0;
+
+        for (int i = 0; i < calibrationArray.length; i++){
+            byte tmpByteBuffer[] = new byte[8];
+            for (int j = 0; j < 8; j++) {
+                tmpByteBuffer[j] = calibrationByteData[counter];
+                counter++;
+            }
+            calibrationArray[i] = ByteBuffer.wrap(tmpByteBuffer).getDouble();
+        }
+        Log.i("Calibration Data", "Calibration factors are: " + calibrationArray[0] + " " + calibrationArray[1] + " " + calibrationArray[2] + " " + calibrationArray[3] + " " + calibrationArray[4] + " " + calibrationArray[5]);
+
+
+
+
         //Executes playback and threshold searching procedure
         Thread testThread = new Thread (new Runnable() {
             public void run() {
                 //iterated once for every frequency to be tested
-                int ear;
                 for (int s = 0; s < 2; s++) {
-                    if (s == 0) {
-                        ear = 42;
-                    } else {
-                        ear = 24;
-                    }
                     for (int i = 0; i < testingFrequencies.length; i++) {
                         int frequency = testingFrequencies[i];
                         float increment = (float) (Math.PI) * frequency / sampleRate;
@@ -158,10 +209,34 @@ public class TestProctoring extends ActionBarActivity {
                             int actualVolume = (minVolume + maxVolume) / 2;
                             if ((maxVolume - minVolume) < 200) { //the test is done if the range is less than 400
                                 if (s == 0) {
-                                    thresholds_right[i] = actualVolume; //records volume as threshold
+                                    if (i == 0 || i == 2) {
+                                        thresholds_right[i] = actualVolume * calibrationArray[1]; //records volume as threshold
+                                    } else if (i == 1){
+                                        thresholds_right[i] = actualVolume * calibrationArray[0]; //records volume as threshold
+                                    } else if (i == 3) {
+                                        thresholds_right[i] = actualVolume * calibrationArray[2]; //records volume as threshold
+                                    } else if (i == 4) {
+                                        thresholds_right[i] = actualVolume * calibrationArray[3]; //records volume as threshold
+                                    } else if (i == 5) {
+                                        thresholds_right[i] = actualVolume * calibrationArray[4]; //records volume as threshold
+                                    } else if (i == 6) {
+                                        thresholds_right[i] = actualVolume * calibrationArray[5]; //records volume as threshold
+                                    } else {}
                                     Log.i("Temporary Results", "results are " + thresholds_right[0] + " " + thresholds_right[1] + " " + thresholds_right[2] + " " + thresholds_right[3] + " " + thresholds_right[4] + " " + thresholds_right[5] + " " + thresholds_right[6]);
                                 } else {
-                                    thresholds_left[i] = actualVolume; //records volume as threshold
+                                    if (i == 0 || i == 2) {
+                                        thresholds_left[i] = actualVolume * calibrationArray[1]; //records volume as threshold
+                                    } else if (i == 1){
+                                        thresholds_left[i] = actualVolume * calibrationArray[0]; //records volume as threshold
+                                    } else if (i == 3) {
+                                        thresholds_left[i] = actualVolume * calibrationArray[2]; //records volume as threshold
+                                    } else if (i == 4) {
+                                        thresholds_left[i] = actualVolume * calibrationArray[3]; //records volume as threshold
+                                    } else if (i == 5) {
+                                        thresholds_left[i] = actualVolume * calibrationArray[4]; //records volume as threshold
+                                    } else if (i == 6) {
+                                        thresholds_left[i] = actualVolume * calibrationArray[5]; //records volume as threshold
+                                    } else {}
                                     Log.i("Temporary Results", "results are " + thresholds_left[0] + " " + thresholds_left[1] + " " + thresholds_left[2] + " " + thresholds_left[3] + " " + thresholds_left[4] + " " + thresholds_left[5] + " " + thresholds_left[6]);
 
                                 }
@@ -170,7 +245,7 @@ public class TestProctoring extends ActionBarActivity {
                                 for (int z = 0; z < 3; z++) { //iterate three times per volume level
                                     heard = false;
                                     Log.i("Playback Info", "actual volume is" + actualVolume);
-                                    playSound(genTone(increment, actualVolume), ear);
+                                    playSound(genTone(increment, actualVolume), s);
                                     try {
                                         Thread.sleep(randomTime());
                                     } catch (InterruptedException e) {
@@ -188,7 +263,6 @@ public class TestProctoring extends ActionBarActivity {
                                 }
                             } //continue with test
                         }
-                        ;
                         Log.i("Loop Alert", "New Frequency Beginning " + heard);
 
                     }
@@ -196,6 +270,18 @@ public class TestProctoring extends ActionBarActivity {
                     loop = false;
                     TestProctoring.this.runOnUiThread(bkgrndFlashBlack);
                 }
+                double thresholdVolumeRight[] = new double[thresholds_right.length];
+                double thresholdVolumeLeft[] = new double[thresholds_left.length];
+
+                for (int i = 0; i < thresholds_right.length; i++) {
+                    thresholdVolumeRight[i] = 10 * Math.log10(mGain * thresholds_right[i]);
+                }
+                for (int i = 0; i < thresholds_left.length; i++) {
+                    thresholdVolumeLeft[i] = 10 * Math.log10(mGain * thresholds_left[i]);
+                }
+                Log.i("Final Results Right", "results are " + thresholdVolumeRight[0] + " " + thresholdVolumeRight[1] + " " + thresholdVolumeRight[2] + " " + thresholdVolumeRight[3] + " " + thresholdVolumeRight[4] + " " + thresholdVolumeRight[5] + " " + thresholdVolumeRight[6]);
+                Log.i("Final Results", "results are " + thresholdVolumeLeft[0] + " " + thresholdVolumeLeft[1] + " " + thresholdVolumeLeft[2] + " " + thresholdVolumeLeft[3] + " " + thresholdVolumeLeft[4] + " " + thresholdVolumeLeft[5] + " " + thresholdVolumeLeft[6]);
+
                 gotoComplete();
 
             }

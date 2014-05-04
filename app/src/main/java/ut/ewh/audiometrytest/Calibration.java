@@ -1,5 +1,6 @@
 package ut.ewh.audiometrytest;
 
+import android.content.Context;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioRecord;
@@ -13,20 +14,25 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 
 
 public class Calibration extends ActionBarActivity {
 
-    final private int numSamples = 4 * 44100;
+    final private int sampleRate = 16000;
+    final private int numSamples = 4 * sampleRate;
     //final private int bufferSize = 16384;
-    final private int frequency = 2000; //in Hz
-    final private int sampleRate = 44100;
-    final private float increment  = (float)(Math.PI) * frequency / sampleRate;
+    final private int frequencies[] = {500, 1000, 3000, 4000, 6000, 8000};
+    //final private int frequency = 2000; //in Hz
     final private int volume = 30000;
     final private double mGain = 0.0044;
     final private double mAlpha = 0.9;
-    final private int bufferSize = AudioRecord.getMinBufferSize(sampleRate, AudioFormat.CHANNEL_IN_STEREO, AudioFormat.ENCODING_PCM_16BIT);
+    final private int bufferSize = AudioRecord.getMinBufferSize(sampleRate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
+
+    public double calibrationArray[] = new double[frequencies.length];
 
     public byte[] genTone(float increment, int volume) {
         float angle = 0;
@@ -46,16 +52,17 @@ public class Calibration extends ActionBarActivity {
         return generatedSnd;
     }
 
-    public void playSound(byte[] generatedSnd) {
+    public AudioTrack playSound(byte[] generatedSnd) {
         AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, sampleRate, AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_16BIT, generatedSnd.length, AudioTrack.MODE_STATIC);
         audioTrack.write(generatedSnd, 0, generatedSnd.length);
-        audioTrack.play();
+        //audioTrack.play();
+        return audioTrack;
     }
 
     public double[] dbListen() {
         double rmsArray[] = new double[5];
         for (int j = 0; j < rmsArray.length; j++) {
-            AudioRecord audioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC, sampleRate, AudioFormat.CHANNEL_IN_STEREO, AudioFormat.ENCODING_PCM_16BIT, bufferSize);
+            AudioRecord audioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC, sampleRate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, bufferSize);
             short[] buffer = new short[bufferSize];
             //short[] buffer = new short[bufferSize * 2];
 
@@ -81,11 +88,88 @@ public class Calibration extends ActionBarActivity {
             audioRecord.release();
 
 //            try{
-//                Thread.sleep(1000);
+//                Thread.sleep(2000);
 //            } catch (InterruptedException e) {};
         }
         return rmsArray;
     }
+
+//    final private Thread playTone = new Thread(new Runnable(){
+//        public void run(){
+//            AudioTrack audioTrack = playSound(genTone(increment, volume));
+//            audioTrack.play();
+//        }
+//    });
+
+    final private Thread calibrateThread = new Thread(new Runnable() {
+        public void run() {
+            for (int i = 0; i < frequencies.length; i++) {
+                Log.i("New Frequency", "------- New Frequency Beginning -------");
+                int frequency = frequencies[i];
+                final float increment = (float) (Math.PI) * frequency / sampleRate;
+
+
+                AudioTrack audioTrack = playSound(genTone(increment, volume));
+//            try {
+//                Thread.sleep(500);
+//            } catch (InterruptedException e) {};
+
+                double backgroundRms[] = dbListen();
+
+                audioTrack.play();
+                Log.i("Tone Started: ", "------- New measurements starting --------");
+
+                double soundRms[] = dbListen();
+
+                double resultingRms[] = new double[5];
+
+                for (int j = 0; j < 5; j++) {
+                    resultingRms[j] = soundRms[j] - backgroundRms[j];
+
+                }
+                double rmsSum = 0;
+                int numCounter = 0;
+                for (int j = 0; j < 5; j++) {
+                    if (resultingRms[j] > 0) {
+                        rmsSum += resultingRms[j];
+                        numCounter ++;
+                    } else {
+
+                    }
+                }
+                calibrationArray[i] = rmsSum / (volume * numCounter);
+                try{
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {};
+
+            }
+            Log.i("Calibration Results", "Calibration factors are: " + calibrationArray[0] + " " + calibrationArray[1] + " " + calibrationArray[2] + " " + calibrationArray[3] + " " + calibrationArray[4] + " " + calibrationArray[5]);
+            int counter = 0;
+            byte calibrationByteArray[] = new byte[calibrationArray.length * 8];
+            for (int x = 0; x < calibrationArray.length; x++){
+                byte tmpByteArray[] = new byte[8];
+                ByteBuffer.wrap(tmpByteArray).putDouble(calibrationArray[x]);
+                for (int j = 0; j < 8; j++){
+                    calibrationByteArray[counter] = tmpByteArray[j];
+                    counter++;
+                }
+                Log.i("Number Information", "double: " + calibrationArray[x]);
+
+            }
+            try{
+                FileOutputStream fos = openFileOutput("CalibrationPreferences", Context.MODE_PRIVATE);
+                try{
+                    fos.write(calibrationByteArray);
+                    fos.close();
+                    Log.i("Write Status", "Write Successful");
+                } catch (IOException q) {}
+            } catch (FileNotFoundException e) {
+                Log.e("ERROR", "Problem writing to file");
+            }
+
+
+        };
+    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,57 +177,11 @@ public class Calibration extends ActionBarActivity {
         setContentView(R.layout.activity_calibration);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
-        final Thread playTone = new Thread(new Runnable(){
-            public void run(){
-                playSound(genTone(increment, volume));
-            }
-        });
-
-        Thread calibrateThread = new Thread(new Runnable() {
-           public void run() {
-               AudioManager am = (AudioManager)getSystemService(AUDIO_SERVICE);
-               am.setStreamVolume(AudioManager.STREAM_MUSIC, 0,  0);
-
-               double backgroundRms[] = dbListen();
-
-               //playTone.start();
-
-               double soundRms[] = dbListen();
-
-               double resultingRms[] = new double[3];
-
-               for (int j = 0; j < 3; j++){
-                   resultingRms[j] = soundRms[j] - backgroundRms[j];
-               }
-
-               for (int j = 0; j < 3; j++) {
-                   double rmsdB = 10 * Math.log10(mGain * resultingRms[j]);
-                   Log.i("End Result:", "Decibel calculation is: " + rmsdB);
-               }
-
-
-           }
-        });
-        calibrateThread.start();
-        /*AudioManager am = (AudioManager)getSystemService(AUDIO_SERVICE);
-        am.setStreamVolume(AudioManager.STREAM_MUSIC, 0,  0);
-
-        double backgroundRms[] = dbListen();
+        AudioManager am = (AudioManager)getSystemService(AUDIO_SERVICE);
+        am.setStreamVolume(AudioManager.STREAM_MUSIC, 9 ,  0);
 
         calibrateThread.start();
 
-        double soundRms[] = dbListen();
-
-        double resultingRms[] = new double[3];
-
-        for (int j = 0; j < 3; j++){
-            resultingRms[j] = soundRms[j] - backgroundRms[j];
-        }
-
-        for (int j = 0; j < 3; j++) {
-            double rmsdB = 10 * Math.log10(mGain * resultingRms[j]);
-            Log.i("End Result:", "Decibel calculation is: " + rmsdB);
-        }*/
     }
 
 
