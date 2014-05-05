@@ -6,10 +6,11 @@
     <string name="main_menu_greeting">The University of Texas at Austin EWH Audiometry Test</string>
     <string name="main_menu_greeting_body">What would you like to do?</string>
     <string name="button_start">Begin Test</string>
+    <string name="button_acknowledgements">Acknowledgements</string>
     <string name="title_activity_pre_test_information">Before We Begin</string>
     <string name="pretest_title">Instructions</string>
-    <string name="pretest_info_body">This audiometry test is a simple procedure designed to evaluate your hearing capabilities. Once the test begins, you will hear beeps of various pitches and volumes. Every time you hear a beep, simply tap the screen. That\'s it! Tap the button below when you\'re ready to begin.</string>
-    <string name="pretest_button">Start Test</string>
+    <string name="pretest_info_body">Before the audiometry test is performed, the headphones must be calibrated. Ensure that the headphones being used are firmly plugged into the headphone jack and that they do NOT have a microphone on them. Press the button below when you\'re ready to see calibration instructions. Once the headphones are calibrated, you can begin the audiometry test.</string>
+    <string name="pretest_button">Calibration Instructions</string>
     <string name="title_activity_test_proctoring">Tap When You Hear A Beep</string>
     <string name="hello_world">Test Started!</string>
     <string name="title_activity_test_proctoring_revised">Test Has Begun!</string>
@@ -18,6 +19,7 @@
     <string name="title_activity_test_complete">Test Complete!</string>
     <string name="email_hint">Recipient Email</string>
     <string name="export_test_title">Export Test Results</string>
+    <string name="test_proctoring_information">This audiometry test is a simple procedure designed to evaluate your hearing capabilities. Once the test begins, you will hear beeps of various pitches and volumes. Every time you hear a beep, simply tap the screen. That\'s it! Tap the button below when you\'re ready to begin.</string>
 
     <color name="orange">#FF8000</color>
     <color name="dark_orange">#bb4000</color>
@@ -35,12 +37,23 @@
     <string name="title_activity_calibration">Calibration</string>
     <string name="calibration_in_progress">Calibrating...</string>
     <string name="test_complete_title">Test Complete!</string>
-    <string name="test_complete_body">Do you want to upload your results?</string>
+    <string name="test_complete_body">Do you want to keep your results?</string>
     <string name="test_complete_button_yes">Yes</string>
     <string name="test_complete_button_no">No</string>
     <string name="export_body">Please enter the email address you would like to send the test results to.</string>
     <string name="title_activity_export_complete">ExportComplete</string>
     <string name="export_data_complete_title">Data Export Complete!</string>
     <string name="export_data_complete_button">Return to Home</string>
+    <string name="title_activity_calibration_complete">CalibrationComplete</string>
+    <string name="calibration_complete_title">Calibration Complete!</string>
+    <string name="calibration_complete_body">Now that calibration is complete, you can take the audiometry test. This audiometry test is a simple procedure designed to evaluate your hearing capabilities. Once the test begins, you will hear beeps of various pitches and volumes. Every time you hear a beep, simply tap the screen. That\'s it! Tap the button below when you\'re ready to begin.</string>
+    <string name="calibration_complete_button">Start Test</string>
+    <string name="export_data_complete_caveat">If you can\'t find the test results in your inbox, be sure to check your junk or spam folder.</string>
+    <string name="title_activity_acknowledgements">Acknowledgements</string>
+    <string name="acknowledgements_title">Acknowledgements</string>
+    <string name="developer">Developer: Reece Stevens</string>
+    <string name="special_thanks">Special thanks to: Pato Lankenau, Davin Siu, and James Yao</string>
+    <string name="reason">Developed for Texas Engineering World Health as a submission for the 2014 EWH Design Competition.</string>
+    <string name="final_notes">Questions or concerns about the app? Email ReeceStevens24@gmail.com.</string>
 
 </resources>

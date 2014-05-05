@@ -16,6 +16,8 @@ import android.view.View;
 import android.view.MotionEvent;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -267,9 +269,10 @@ public class TestProctoring extends ActionBarActivity {
 
                     }
                     //Log.i("Final Results", "results are " + thresholds[0] + " " + thresholds[1] + " " + thresholds[2] + " " + thresholds[3] + " " + thresholds[4] + " " + thresholds[5] + " " + thresholds[6]);
-                    loop = false;
                     TestProctoring.this.runOnUiThread(bkgrndFlashBlack);
                 }
+                loop = false;
+
                 double thresholdVolumeRight[] = new double[thresholds_right.length];
                 double thresholdVolumeLeft[] = new double[thresholds_left.length];
 
@@ -281,6 +284,51 @@ public class TestProctoring extends ActionBarActivity {
                 }
                 Log.i("Final Results Right", "results are " + thresholdVolumeRight[0] + " " + thresholdVolumeRight[1] + " " + thresholdVolumeRight[2] + " " + thresholdVolumeRight[3] + " " + thresholdVolumeRight[4] + " " + thresholdVolumeRight[5] + " " + thresholdVolumeRight[6]);
                 Log.i("Final Results", "results are " + thresholdVolumeLeft[0] + " " + thresholdVolumeLeft[1] + " " + thresholdVolumeLeft[2] + " " + thresholdVolumeLeft[3] + " " + thresholdVolumeLeft[4] + " " + thresholdVolumeLeft[5] + " " + thresholdVolumeLeft[6]);
+
+                int counter = 0;
+                byte thresholdVolumeRightbyte[] = new byte[thresholdVolumeRight.length * 8];
+                for (int x = 0; x < thresholdVolumeRight.length; x++){
+                    byte tmpByteArray[] = new byte[8];
+                    ByteBuffer.wrap(tmpByteArray).putDouble(thresholdVolumeRight[x]);
+                    for (int j = 0; j < 8; j++){
+                        thresholdVolumeRightbyte[counter] = tmpByteArray[j];
+                        counter++;
+                    }
+
+                }
+                try{
+                    FileOutputStream fos = openFileOutput("TestResultsRight", Context.MODE_PRIVATE);
+                    try{
+                        fos.write(thresholdVolumeRightbyte);
+                        fos.close();
+                        Log.i("Write Status", "Write Successful");
+                    } catch (IOException q) {}
+                } catch (FileNotFoundException e) {
+                    Log.e("ERROR", "Problem writing to file");
+                }
+
+                counter = 0;
+                byte thresholdVolumeLeftbyte[] = new byte[thresholdVolumeLeft.length * 8];
+                for (int x = 0; x < thresholdVolumeLeft.length; x++){
+                    byte tmpByteArray[] = new byte[8];
+                    ByteBuffer.wrap(tmpByteArray).putDouble(thresholdVolumeLeft[x]);
+                    for (int j = 0; j < 8; j++){
+                        thresholdVolumeLeftbyte[counter] = tmpByteArray[j];
+                        counter++;
+                    }
+
+                }
+                try{
+                    FileOutputStream fos = openFileOutput("TestResultsLeft", Context.MODE_PRIVATE);
+                    try{
+                        fos.write(thresholdVolumeLeftbyte);
+                        fos.close();
+                        Log.i("Write Status", "Write Successful");
+                    } catch (IOException q) {}
+                } catch (FileNotFoundException e) {
+                    Log.e("ERROR", "Problem writing to file");
+                }
+
 
                 gotoComplete();
 

@@ -1,6 +1,7 @@
 package ut.ewh.audiometrytest;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioRecord;
@@ -13,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -33,6 +35,11 @@ public class Calibration extends ActionBarActivity {
     final private int bufferSize = AudioRecord.getMinBufferSize(sampleRate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
 
     public double calibrationArray[] = new double[frequencies.length];
+
+    public void gotoCalibrationComplete(){
+        Intent intent = new Intent(this, CalibrationComplete.class);
+        startActivity(intent);
+    }
 
     public byte[] genTone(float increment, int volume) {
         float angle = 0;
@@ -167,6 +174,8 @@ public class Calibration extends ActionBarActivity {
                 Log.e("ERROR", "Problem writing to file");
             }
 
+            gotoCalibrationComplete();
+
 
         };
     });
@@ -181,6 +190,8 @@ public class Calibration extends ActionBarActivity {
         am.setStreamVolume(AudioManager.STREAM_MUSIC, 9 ,  0);
 
         calibrateThread.start();
+
+
 
     }
 

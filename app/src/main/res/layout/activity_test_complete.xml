@@ -36,6 +36,7 @@
         android:paddingTop="20sp"
         android:paddingBottom="20sp"
         android:layout_marginTop="15sp"
+        android:onClick="gotoExport"
         android:background="@drawable/button_background"
         android:gravity="left"
         android:layout_gravity="right"/>
@@ -48,6 +49,7 @@
         android:paddingTop="20sp"
         android:paddingBottom="20sp"
         android:layout_marginTop="15sp"
+        android:onClick="tmpGotoMain"
         android:background="@drawable/button_background"
         android:gravity="left"
         android:layout_gravity="right"/>

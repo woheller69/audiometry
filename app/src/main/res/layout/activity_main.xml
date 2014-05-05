@@ -63,15 +63,15 @@ android:gravity="left">
     android:gravity="right"/>
 
  <Button
-       android:layout_width="150sp"
+       android:layout_width="165sp"
        android:layout_height="wrap_content"
-        android:text="@string/button_calibration"
+        android:text="@string/button_acknowledgements"
         android:paddingLeft="30sp"
         android:paddingRight="10sp"
         android:paddingTop="20sp"
         android:paddingBottom="20sp"
         android:layout_marginTop="15sp"
-        android:onClick="gotoCalibration"
+        android:onClick="gotoAcknowledgements"
         android:background="@drawable/button_background"
         android:gravity="right"/>
 

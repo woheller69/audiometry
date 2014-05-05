@@ -9,7 +9,7 @@ android:paddingTop="@dimen/activity_vertical_margin"
 tools:context=".PreTestInformation"
 android:background="@color/background_grey"
 android:orientation="vertical"
-android:gravity="center_vertical">
+>
 
 <TextView
     android:id="@+id/pretest_title"
@@ -19,38 +19,39 @@ android:gravity="center_vertical">
     android:textSize="30sp"
     android:textStyle="bold"
     android:textColor="#FF8000"/>
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-<TextView
-    android:id="@+id/pretest_info_body"
-    android:layout_marginTop="15sp"
-    android:layout_marginBottom="15sp"
-    android:layout_width="264dp"
-    android:layout_height="270dp"
-    android:textSize="20sp"
-    android:text="@string/pretest_info_body"
-    android:textColor="#FFFFFF"
-    />
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/pretest_info_body"
+                android:layout_marginTop="15sp"
+                android:layout_marginBottom="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:gravity="left"
+                android:text="@string/pretest_info_body"
+                android:textColor="#FFFFFF"
+                />
 
-<Button
-    android:id="@+id/pretest_button"
-    android:layout_width="200sp"
-    android:layout_height="wrap_content"
-    android:text="@string/pretest_button"
-    android:onClick="beginTest"
-    android:paddingLeft="10sp"
-    android:paddingRight="30sp"
-    android:paddingTop="20sp"
-    android:paddingBottom="20sp"
-    android:background="@drawable/button_background"
-    android:layout_gravity="right"
-    android:gravity="left"
-    />
-    </LinearLayout>
-</ScrollView>
+            <Button
+                android:id="@+id/pretest_button"
+                android:layout_width="250sp"
+                android:layout_height="wrap_content"
+                android:text="@string/pretest_button"
+                android:onClick="gotoCalibration"
+                android:paddingLeft="10sp"
+                android:paddingRight="30sp"
+                android:paddingTop="20sp"
+                android:paddingBottom="20sp"
+                android:background="@drawable/button_background"
+                android:layout_gravity="right"
+                android:gravity="left"
+                />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

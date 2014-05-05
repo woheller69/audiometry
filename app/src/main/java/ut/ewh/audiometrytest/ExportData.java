@@ -17,7 +17,9 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 
 import android.widget.EditText;
 import android.widget.Button;
@@ -38,6 +40,61 @@ public class ExportData extends ActionBarActivity {
         setContentView(R.layout.activity_export_data);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
+
+        byte testResultsRightByte[] = new byte[7*8];
+
+        try{
+            FileInputStream fis = openFileInput("TestResultsRight");
+            fis.read(testResultsRightByte, 0, testResultsRightByte.length);
+            fis.close();
+            Log.i("File Read Info", "File Read Successful");
+        } catch (IOException e) {};
+
+        Log.i("Information", "Byte Array Length (should be 56): " + testResultsRightByte.length);
+
+        final double testResultsRight[] = new double[7];
+
+
+        int counter = 0;
+
+        for (int i = 0; i < testResultsRight.length; i++){
+            byte tmpByteBuffer[] = new byte[8];
+            for (int j = 0; j < 8; j++) {
+                tmpByteBuffer[j] = testResultsRightByte[counter];
+                counter++;
+            }
+            testResultsRight[i] = ByteBuffer.wrap(tmpByteBuffer).getDouble();
+        }
+        Log.i("Calibration Data", "Calibration factors are: " + testResultsRight[0] + " " + testResultsRight[1] + " " + testResultsRight[2] + " " + testResultsRight[3] + " " + testResultsRight[4] + " " + testResultsRight[5] + " " + testResultsRight[6]);
+
+        byte testResultsLeftByte[] = new byte[7 * 8];
+
+        try{
+            FileInputStream fis = openFileInput("TestResultsLeft");
+            fis.read(testResultsLeftByte, 0, testResultsLeftByte.length);
+            fis.close();
+            Log.i("File Read Info", "File Read Successful");
+        } catch (IOException e) {};
+
+        Log.i("Information", "Byte Array Length (should be 56): " + testResultsLeftByte.length);
+
+        final double testResultsLeft[] = new double[7];
+
+
+        counter = 0;
+
+        for (int i = 0; i < testResultsLeft.length; i++){
+            byte tmpByteBuffer[] = new byte[8];
+            for (int j = 0; j < 8; j++) {
+                tmpByteBuffer[j] = testResultsLeftByte[counter];
+                counter++;
+            }
+            testResultsLeft[i] = ByteBuffer.wrap(tmpByteBuffer).getDouble();
+        }
+        Log.i("Calibration Data", "Calibration factors are: " + testResultsLeft[0] + " " + testResultsLeft[1] + " " + testResultsLeft[2] + " " + testResultsLeft[3] + " " + testResultsLeft[4] + " " + testResultsLeft[5] + " " + testResultsLeft[6]);
+
+
+
         doneButton = (Button)findViewById(R.id.doneButton);
         email_field = (EditText)findViewById(R.id.email_address);
         /**
@@ -53,7 +110,8 @@ public class ExportData extends ActionBarActivity {
                     String URL = "http://107.170.226.198/mail.php?";
                     URL += "t="+ email;
                     URL += "&s="+"test";
-                    URL += "&b="+"body";
+                    URL += "&b="+"Thresholds:+Right+Ear+[1000+Hz]+" + testResultsRight[0] +"+[500+Hz]+" + testResultsRight[1] + "+[1000+Hz+Repeated]+" + testResultsRight[2] + "+[3000+Hz]+" + testResultsRight[3] + "+[4000+Hz]+" + testResultsRight[4] +"+[6000+Hz]+" + testResultsRight[5] + "+[8000+Hz]+" + testResultsRight[6] + ".+Left+Ear+[1000+Hz]+"+ testResultsLeft[0] +"+[500+Hz]+" + testResultsLeft[1] + "+[1000+Hz+Repeated]+" + testResultsLeft[2] + "+[3000+Hz]+" + testResultsLeft[3] + "+[4000+Hz]+" + testResultsLeft[4] +"+[6000+Hz]+" + testResultsLeft[5] + "+[8000+Hz]+" + testResultsLeft[6];
+                    //URL += "&b="+"two+words";
                     HttpResponse response = httpclient.execute(new HttpGet(URL));
                     StatusLine statusLine = response.getStatusLine();
                     if (statusLine.getStatusCode() == HttpStatus.SC_OK){

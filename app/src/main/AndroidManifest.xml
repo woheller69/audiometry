@@ -69,6 +69,14 @@
             android:name="ut.ewh.audiometrytest.ExportComplete"
             android:label="@string/title_activity_export_complete" >
         </activity>
+        <activity
+            android:name="ut.ewh.audiometrytest.CalibrationComplete"
+            android:label="@string/title_activity_calibration_complete" >
+        </activity>
+        <activity
+            android:name="ut.ewh.audiometrytest.Acknowledgements"
+            android:label="@string/title_activity_acknowledgements" >
+        </activity>
     </application>
 
 </manifest>
