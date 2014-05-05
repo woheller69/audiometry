@@ -36,7 +36,7 @@
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ut.ewh.audiometrytest.PreTestInformation" />
+                android:value="ut.ewh.audiometrytest.CalibrationComplete" />
         </activity>
         <activity
             android:name="ut.ewh.audiometrytest.TestComplete"
@@ -48,34 +48,47 @@
         </activity>
         <activity
             android:name="ut.ewh.audiometrytest.ExportData"
-            android:label="@string/title_activity_export_data"
-            android:screenOrientation="portrait" >
+            android:label="@string/title_activity_export_data" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ut.ewh.audiometrytest.MainActivity" />
         </activity>
         <activity
             android:name="ut.ewh.audiometrytest.Pre_Calibration"
-            android:label="@string/title_activity_pre__calibration" >
+            android:label="@string/title_activity_pre__calibration"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ut.ewh.audiometrytest.MainActivity" />
+                android:value="ut.ewh.audiometrytest.PreTestInformation" />
         </activity>
         <activity
             android:name="ut.ewh.audiometrytest.Calibration"
-            android:label="@string/title_activity_calibration" >
+            android:label="@string/title_activity_calibration"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="ut.ewh.audiometrytest.ExportComplete"
-            android:label="@string/title_activity_export_complete" >
+            android:label="@string/title_activity_export_complete"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ut.ewh.audiometrytest.ExportData" />
         </activity>
         <activity
             android:name="ut.ewh.audiometrytest.CalibrationComplete"
-            android:label="@string/title_activity_calibration_complete" >
+            android:label="@string/title_activity_calibration_complete"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ut.ewh.audiometrytest.Calibration" />
         </activity>
         <activity
             android:name="ut.ewh.audiometrytest.Acknowledgements"
-            android:label="@string/title_activity_acknowledgements" >
+            android:label="@string/title_activity_acknowledgements"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ut.ewh.audiometrytest.MainActivity" />
         </activity>
     </application>
 

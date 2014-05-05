@@ -24,7 +24,7 @@ import java.nio.ByteBuffer;
 
 public class Calibration extends ActionBarActivity {
 
-    final private int sampleRate = 16000;
+    final private int sampleRate = 44100;
     final private int numSamples = 4 * sampleRate;
     //final private int bufferSize = 16384;
     final private int frequencies[] = {500, 1000, 3000, 4000, 6000, 8000};
@@ -34,7 +34,9 @@ public class Calibration extends ActionBarActivity {
     final private double mAlpha = 0.9;
     final private int bufferSize = AudioRecord.getMinBufferSize(sampleRate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
 
+
     public double calibrationArray[] = new double[frequencies.length];
+    public static boolean running = true;
 
     public void gotoCalibrationComplete(){
         Intent intent = new Intent(this, CalibrationComplete.class);
@@ -108,7 +110,14 @@ public class Calibration extends ActionBarActivity {
 //        }
 //    });
 
-    final private Thread calibrateThread = new Thread(new Runnable() {
+    //public final Thread calibrateThread = new Thread(new Runnable() {
+    static void stopThread(){
+        running = false;
+    }
+
+    public class calibrateThread extends Thread {
+
+
         public void run() {
             for (int i = 0; i < frequencies.length; i++) {
                 Log.i("New Frequency", "------- New Frequency Beginning -------");
@@ -145,6 +154,12 @@ public class Calibration extends ActionBarActivity {
                     }
                 }
                 calibrationArray[i] = rmsSum / (volume * numCounter);
+                if (!running){
+                    return;
+                }
+                Log.i("Status Check", "Status is " + running);
+
+
                 try{
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {};
@@ -178,18 +193,24 @@ public class Calibration extends ActionBarActivity {
 
 
         };
-    });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calibration);
-        ActionBar actionbar = getSupportActionBar();
-        actionbar.setDisplayHomeAsUpEnabled(true);
+//        ActionBar actionbar = getSupportActionBar();
+//        actionbar.setDisplayHomeAsUpEnabled(true);
         AudioManager am = (AudioManager)getSystemService(AUDIO_SERVICE);
         am.setStreamVolume(AudioManager.STREAM_MUSIC, 9 ,  0);
+        Thread runningThread = new Thread(new Runnable() {
 
-        calibrateThread.start();
+            public void run() {
+                final calibrateThread calibrateThread = new Calibration.calibrateThread();
+                calibrateThread.run();
+            }
+        });
+        runningThread.start();
 
 
 
@@ -216,6 +237,13 @@ public class Calibration extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        Log.i("Stop", "Application is stopping");
+        stopThread();
     }
 
 }
