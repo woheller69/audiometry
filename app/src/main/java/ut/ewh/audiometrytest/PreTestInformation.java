@@ -20,10 +20,6 @@ public class PreTestInformation extends ActionBarActivity {
         setContentView(R.layout.activity_pre_test_information);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
-
-
-
-
     }
 
 

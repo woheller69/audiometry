@@ -39,7 +39,7 @@ public class TestComplete extends ActionBarActivity {
             FileInputStream fis = openFileInput("TestResultsRight");
             fis.read(testResultsRightByte, 0, testResultsRightByte.length);
             fis.close();
-            Log.i("File Read Info", "File Read Successful");
+            //Log.i("File Read Info", "File Read Successful");
         } catch (IOException e) {};
 
         final double testResultsRight[] = new double[7];
@@ -55,7 +55,7 @@ public class TestComplete extends ActionBarActivity {
             }
             testResultsRight[i] = ByteBuffer.wrap(tmpByteBuffer).getDouble();
         }
-        Log.i("Calibration Data", "Calibration factors are: " + testResultsRight[0] + " " + testResultsRight[1] + " " + testResultsRight[2] + " " + testResultsRight[3] + " " + testResultsRight[4] + " " + testResultsRight[5] + " " + testResultsRight[6]);
+        //Log.i("Calibration Data", "Calibration factors are: " + testResultsRight[0] + " " + testResultsRight[1] + " " + testResultsRight[2] + " " + testResultsRight[3] + " " + testResultsRight[4] + " " + testResultsRight[5] + " " + testResultsRight[6]);
 
         byte testResultsLeftByte[] = new byte[7 * 8];
 
@@ -63,7 +63,7 @@ public class TestComplete extends ActionBarActivity {
             FileInputStream fis = openFileInput("TestResultsLeft");
             fis.read(testResultsLeftByte, 0, testResultsLeftByte.length);
             fis.close();
-            Log.i("File Read Info", "File Read Successful");
+            //Log.i("File Read Info", "File Read Successful");
         } catch (IOException e) {};
 
 

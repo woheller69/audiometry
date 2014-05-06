@@ -47,10 +47,9 @@ public class ExportData extends ActionBarActivity {
             FileInputStream fis = openFileInput("TestResultsRight");
             fis.read(testResultsRightByte, 0, testResultsRightByte.length);
             fis.close();
-            Log.i("File Read Info", "File Read Successful");
+            //Log.i("File Read Info", "File Read Successful");
         } catch (IOException e) {};
 
-        Log.i("Information", "Byte Array Length (should be 56): " + testResultsRightByte.length);
 
         final double testResultsRight[] = new double[7];
 
@@ -65,7 +64,7 @@ public class ExportData extends ActionBarActivity {
             }
             testResultsRight[i] = ByteBuffer.wrap(tmpByteBuffer).getDouble();
         }
-        Log.i("Calibration Data", "Calibration factors are: " + testResultsRight[0] + " " + testResultsRight[1] + " " + testResultsRight[2] + " " + testResultsRight[3] + " " + testResultsRight[4] + " " + testResultsRight[5] + " " + testResultsRight[6]);
+        //Log.i("Calibration Data", "Calibration factors are: " + testResultsRight[0] + " " + testResultsRight[1] + " " + testResultsRight[2] + " " + testResultsRight[3] + " " + testResultsRight[4] + " " + testResultsRight[5] + " " + testResultsRight[6]);
 
         byte testResultsLeftByte[] = new byte[7 * 8];
 
@@ -73,10 +72,9 @@ public class ExportData extends ActionBarActivity {
             FileInputStream fis = openFileInput("TestResultsLeft");
             fis.read(testResultsLeftByte, 0, testResultsLeftByte.length);
             fis.close();
-            Log.i("File Read Info", "File Read Successful");
+            //Log.i("File Read Info", "File Read Successful");
         } catch (IOException e) {};
 
-        Log.i("Information", "Byte Array Length (should be 56): " + testResultsLeftByte.length);
 
         final double testResultsLeft[] = new double[7];
 
@@ -91,7 +89,7 @@ public class ExportData extends ActionBarActivity {
             }
             testResultsLeft[i] = ByteBuffer.wrap(tmpByteBuffer).getDouble();
         }
-        Log.i("Calibration Data", "Calibration factors are: " + testResultsLeft[0] + " " + testResultsLeft[1] + " " + testResultsLeft[2] + " " + testResultsLeft[3] + " " + testResultsLeft[4] + " " + testResultsLeft[5] + " " + testResultsLeft[6]);
+        //Log.i("Calibration Data", "Calibration factors are: " + testResultsLeft[0] + " " + testResultsLeft[1] + " " + testResultsLeft[2] + " " + testResultsLeft[3] + " " + testResultsLeft[4] + " " + testResultsLeft[5] + " " + testResultsLeft[6]);
 
 
 
@@ -104,14 +102,11 @@ public class ExportData extends ActionBarActivity {
             public void onClick(View view){
                 email = email_field.getText().toString();
                 try{
-                    // super.onCreate(savedInstanceState);
-                    //setContentView(R.layout.activity_export_data);
                     HttpClient httpclient = new DefaultHttpClient();
                     String URL = "http://107.170.226.198/mail.php?";
                     URL += "t="+ email;
                     URL += "&s="+"test";
                     URL += "&b="+"Thresholds:+Right+Ear+[1000+Hz]+" + testResultsRight[0] +"+[500+Hz]+" + testResultsRight[1] + "+[1000+Hz+Repeated]+" + testResultsRight[2] + "+[3000+Hz]+" + testResultsRight[3] + "+[4000+Hz]+" + testResultsRight[4] +"+[6000+Hz]+" + testResultsRight[5] + "+[8000+Hz]+" + testResultsRight[6] + ".+Left+Ear+[1000+Hz]+"+ testResultsLeft[0] +"+[500+Hz]+" + testResultsLeft[1] + "+[1000+Hz+Repeated]+" + testResultsLeft[2] + "+[3000+Hz]+" + testResultsLeft[3] + "+[4000+Hz]+" + testResultsLeft[4] +"+[6000+Hz]+" + testResultsLeft[5] + "+[8000+Hz]+" + testResultsLeft[6];
-                    //URL += "&b="+"two+words";
                     HttpResponse response = httpclient.execute(new HttpGet(URL));
                     StatusLine statusLine = response.getStatusLine();
                     if (statusLine.getStatusCode() == HttpStatus.SC_OK){
@@ -119,47 +114,21 @@ public class ExportData extends ActionBarActivity {
                         response.getEntity().writeTo(out);
                         out.close();
                         String responseString = out.toString();
-                        Log.i("Connection", "Successful");
-                        Log.i("connection", responseString);
+                        //Log.i("Connection", "Successful");
+                        //Log.i("connection", responseString);
                     }  else {
-                        Log.i("connection", "unsuccessful");
+                        //Log.i("connection", "unsuccessful");
                         response.getEntity().getContent().close();
                         throw new IOException(statusLine.getReasonPhrase());
                     }
                     gotoExportComplete();
                 } catch (Exception e){
-                    Log.i("Not Good", "Not Pinging IP");
+                    //Log.i("Not Good", "Not Pinging IP");
                     System.err.println(e);
                 }
 
             }
         });
-        /*try{
-           // super.onCreate(savedInstanceState);
-            //setContentView(R.layout.activity_export_data);
-            HttpClient httpclient = new DefaultHttpClient();
-            String URL = "http://107.170.226.198/mail.php?";
-            URL += "t="+email;
-            URL += "&s="+"test";
-            URL += "&b="+"body";
-            HttpResponse response = httpclient.execute(new HttpGet(URL));
-            StatusLine statusLine = response.getStatusLine();
-            if (statusLine.getStatusCode() == HttpStatus.SC_OK){
-                ByteArrayOutputStream out = new ByteArrayOutputStream();
-                response.getEntity().writeTo(out);
-                out.close();
-                String responseString = out.toString();
-                Log.i("Connection", "Successful");
-                Log.i("connection", responseString);
-            }  else {
-                Log.i("connection", "unsuccessful");
-                response.getEntity().getContent().close();
-                throw new IOException(statusLine.getReasonPhrase());
-            }
-        } catch (Exception e){
-            Log.i("Not Good", "Not Pinging IP");
-            System.err.println(e);
-        }*/
     }
 
 

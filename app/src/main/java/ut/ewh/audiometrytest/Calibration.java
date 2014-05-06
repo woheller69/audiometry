@@ -78,7 +78,7 @@ public class Calibration extends ActionBarActivity {
             try {
                 audioRecord.startRecording();
             } catch (IllegalStateException e) {
-                Log.e("Recording didn't work!", e.toString());
+               // Log.e("Recording didn't work!", e.toString());
             }
             int bufferReadResult = audioRecord.read(buffer, 0, buffer.length);
             //Log.i("Status of Buffer Read", "Result: " + bufferReadResult);
@@ -92,7 +92,7 @@ public class Calibration extends ActionBarActivity {
             rmsArray[j] = (1 - mAlpha) * rms;
             double mRmsSmoothed = (1 - mAlpha) * rms;
             double rmsdB = 10 * Math.log10(mGain * mRmsSmoothed);
-            Log.i("BKGRND:", "Decibel calculation is: " + rmsdB);
+            //Log.i("BKGRND:", "Decibel calculation is: " + rmsdB);
             audioRecord.stop();
             audioRecord.release();
 
@@ -120,7 +120,6 @@ public class Calibration extends ActionBarActivity {
 
         public void run() {
             for (int i = 0; i < frequencies.length; i++) {
-                Log.i("New Frequency", "------- New Frequency Beginning -------");
                 int frequency = frequencies[i];
                 final float increment = (float) (Math.PI) * frequency / sampleRate;
 
@@ -133,7 +132,6 @@ public class Calibration extends ActionBarActivity {
                 double backgroundRms[] = dbListen();
 
                 audioTrack.play();
-                Log.i("Tone Started: ", "------- New measurements starting --------");
 
                 double soundRms[] = dbListen();
 
@@ -157,7 +155,6 @@ public class Calibration extends ActionBarActivity {
                 if (!running){
                     return;
                 }
-                Log.i("Status Check", "Status is " + running);
 
 
                 try{
@@ -165,7 +162,7 @@ public class Calibration extends ActionBarActivity {
                 } catch (InterruptedException e) {};
 
             }
-            Log.i("Calibration Results", "Calibration factors are: " + calibrationArray[0] + " " + calibrationArray[1] + " " + calibrationArray[2] + " " + calibrationArray[3] + " " + calibrationArray[4] + " " + calibrationArray[5]);
+            //Log.i("Calibration Results", "Calibration factors are: " + calibrationArray[0] + " " + calibrationArray[1] + " " + calibrationArray[2] + " " + calibrationArray[3] + " " + calibrationArray[4] + " " + calibrationArray[5]);
             int counter = 0;
             byte calibrationByteArray[] = new byte[calibrationArray.length * 8];
             for (int x = 0; x < calibrationArray.length; x++){
@@ -175,7 +172,6 @@ public class Calibration extends ActionBarActivity {
                     calibrationByteArray[counter] = tmpByteArray[j];
                     counter++;
                 }
-                Log.i("Number Information", "double: " + calibrationArray[x]);
 
             }
             try{
@@ -183,10 +179,8 @@ public class Calibration extends ActionBarActivity {
                 try{
                     fos.write(calibrationByteArray);
                     fos.close();
-                    Log.i("Write Status", "Write Successful");
                 } catch (IOException q) {}
             } catch (FileNotFoundException e) {
-                Log.e("ERROR", "Problem writing to file");
             }
 
             gotoCalibrationComplete();
@@ -199,8 +193,6 @@ public class Calibration extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calibration);
-//        ActionBar actionbar = getSupportActionBar();
-//        actionbar.setDisplayHomeAsUpEnabled(true);
         AudioManager am = (AudioManager)getSystemService(AUDIO_SERVICE);
         am.setStreamVolume(AudioManager.STREAM_MUSIC, 9 ,  0);
         Thread runningThread = new Thread(new Runnable() {
@@ -242,7 +234,6 @@ public class Calibration extends ActionBarActivity {
     @Override
     public void onStop(){
         super.onStop();
-        Log.i("Stop", "Application is stopping");
         stopThread();
     }
 

@@ -1,7 +1,6 @@
 package ut.ewh.audiometrytest;
 
 import android.content.Context;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,7 +9,6 @@ import android.content.Intent;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.MotionEvent;
@@ -20,8 +18,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.util.Random;
+
 
 
 
@@ -53,7 +50,7 @@ public class TestProctoring extends ActionBarActivity {
      * @return
      */
     public int randomTime(){
-        int time = 3000;
+        int time;
         double num = Math.random();
         if (num < 0.3){
             time = 2000;
@@ -129,9 +126,6 @@ public class TestProctoring extends ActionBarActivity {
      * @param generatedSnd- input 16-bit PCM Array
      */
     public void playSound(byte[] generatedSnd, int ear) {
-        //final AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, sampleRate, AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_16BIT, generatedSnd.length, AudioTrack.MODE_STATIC);
-        // audioTrack.setStereoVolume(0, AudioTrack.getMaxVolume());
-        //audioTrack.flush();
         AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, sampleRate, AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_16BIT, generatedSnd.length, AudioTrack.MODE_STATIC);
         audioTrack.write(generatedSnd, 0, generatedSnd.length);
         if (ear == 0) {
@@ -140,10 +134,8 @@ public class TestProctoring extends ActionBarActivity {
             audioTrack.setStereoVolume(AudioTrack.getMaxVolume(), 0);
         }
         audioTrack.play();
-       // audioTrack.release();
     }
 
-    //Thread testThread = new Thread (new Runnable() {
     public class testThread extends Thread {
         public void run() {
             byte calibrationByteData[] = new byte[48];
@@ -152,13 +144,10 @@ public class TestProctoring extends ActionBarActivity {
                 FileInputStream fis = openFileInput("CalibrationPreferences");
                 fis.read(calibrationByteData, 0, 48);
                 fis.close();
-                Log.i("File Read Info", "File Read Successful");
+                //Log.i("File Read Info", "File Read Successful");
             } catch (IOException e) {};
 
-            Log.i("Information", "Byte Array Length (should be 48): " + calibrationByteData.length);
-
             final double calibrationArray[] = new double[6];
-
 
             int counter = 0;
 
@@ -170,7 +159,7 @@ public class TestProctoring extends ActionBarActivity {
                 }
                 calibrationArray[i] = ByteBuffer.wrap(tmpByteBuffer).getDouble();
             }
-            Log.i("Calibration Data", "Calibration factors are: " + calibrationArray[0] + " " + calibrationArray[1] + " " + calibrationArray[2] + " " + calibrationArray[3] + " " + calibrationArray[4] + " " + calibrationArray[5]);
+            //Log.i("Calibration Data", "Calibration factors are: " + calibrationArray[0] + " " + calibrationArray[1] + " " + calibrationArray[2] + " " + calibrationArray[3] + " " + calibrationArray[4] + " " + calibrationArray[5]);
 
             //iterated once for every frequency to be tested
             for (int s = 0; s < 2; s++) {
@@ -198,7 +187,7 @@ public class TestProctoring extends ActionBarActivity {
                                 } else if (i == 6) {
                                     thresholds_right[i] = actualVolume * calibrationArray[5]; //records volume as threshold
                                 } else {}
-                                Log.i("Temporary Results", "results are " + thresholds_right[0] + " " + thresholds_right[1] + " " + thresholds_right[2] + " " + thresholds_right[3] + " " + thresholds_right[4] + " " + thresholds_right[5] + " " + thresholds_right[6]);
+                                //Log.i("Temporary Results", "results are " + thresholds_right[0] + " " + thresholds_right[1] + " " + thresholds_right[2] + " " + thresholds_right[3] + " " + thresholds_right[4] + " " + thresholds_right[5] + " " + thresholds_right[6]);
                             } else {
                                 if (i == 0 || i == 2) {
                                     thresholds_left[i] = actualVolume * calibrationArray[1]; //records volume as threshold
@@ -213,14 +202,14 @@ public class TestProctoring extends ActionBarActivity {
                                 } else if (i == 6) {
                                     thresholds_left[i] = actualVolume * calibrationArray[5]; //records volume as threshold
                                 } else {}
-                                Log.i("Temporary Results", "results are " + thresholds_left[0] + " " + thresholds_left[1] + " " + thresholds_left[2] + " " + thresholds_left[3] + " " + thresholds_left[4] + " " + thresholds_left[5] + " " + thresholds_left[6]);
+                                //Log.i("Temporary Results", "results are " + thresholds_left[0] + " " + thresholds_left[1] + " " + thresholds_left[2] + " " + thresholds_left[3] + " " + thresholds_left[4] + " " + thresholds_left[5] + " " + thresholds_left[6]);
 
                             }
                             break; //go to next frequency
                         } else {
                             for (int z = 0; z < 3; z++) { //iterate three times per volume level
                                 heard = false;
-                                Log.i("Playback Info", "actual volume is" + actualVolume);
+                                //Log.i("Playback Info", "actual volume is" + actualVolume);
                                 if (!running){
                                     return;
                                 }
@@ -242,7 +231,7 @@ public class TestProctoring extends ActionBarActivity {
                             }
                         } //continue with test
                     }
-                    Log.i("Loop Alert", "New Frequency Beginning " + heard);
+                    //Log.i("Loop Alert", "New Frequency Beginning " + heard);
 
                 }
                 //Log.i("Final Results", "results are " + thresholds[0] + " " + thresholds[1] + " " + thresholds[2] + " " + thresholds[3] + " " + thresholds[4] + " " + thresholds[5] + " " + thresholds[6]);
@@ -259,8 +248,8 @@ public class TestProctoring extends ActionBarActivity {
             for (int i = 0; i < thresholds_left.length; i++) {
                 thresholdVolumeLeft[i] = 10 * Math.log10(mGain * thresholds_left[i]);
             }
-            Log.i("Final Results Right", "results are " + thresholdVolumeRight[0] + " " + thresholdVolumeRight[1] + " " + thresholdVolumeRight[2] + " " + thresholdVolumeRight[3] + " " + thresholdVolumeRight[4] + " " + thresholdVolumeRight[5] + " " + thresholdVolumeRight[6]);
-            Log.i("Final Results", "results are " + thresholdVolumeLeft[0] + " " + thresholdVolumeLeft[1] + " " + thresholdVolumeLeft[2] + " " + thresholdVolumeLeft[3] + " " + thresholdVolumeLeft[4] + " " + thresholdVolumeLeft[5] + " " + thresholdVolumeLeft[6]);
+            //Log.i("Final Results Right", "results are " + thresholdVolumeRight[0] + " " + thresholdVolumeRight[1] + " " + thresholdVolumeRight[2] + " " + thresholdVolumeRight[3] + " " + thresholdVolumeRight[4] + " " + thresholdVolumeRight[5] + " " + thresholdVolumeRight[6]);
+            //Log.i("Final Results", "results are " + thresholdVolumeLeft[0] + " " + thresholdVolumeLeft[1] + " " + thresholdVolumeLeft[2] + " " + thresholdVolumeLeft[3] + " " + thresholdVolumeLeft[4] + " " + thresholdVolumeLeft[5] + " " + thresholdVolumeLeft[6]);
 
             counter = 0;
             byte thresholdVolumeRightbyte[] = new byte[thresholdVolumeRight.length * 8];
@@ -278,10 +267,10 @@ public class TestProctoring extends ActionBarActivity {
                 try{
                     fos.write(thresholdVolumeRightbyte);
                     fos.close();
-                    Log.i("Write Status", "Write Successful");
+                    //Log.i("Write Status", "Write Successful");
                 } catch (IOException q) {}
             } catch (FileNotFoundException e) {
-                Log.e("ERROR", "Problem writing to file");
+                //Log.e("ERROR", "Problem writing to file");
             }
 
             counter = 0;
@@ -300,10 +289,10 @@ public class TestProctoring extends ActionBarActivity {
                 try{
                     fos.write(thresholdVolumeLeftbyte);
                     fos.close();
-                    Log.i("Write Status", "Write Successful");
+                    //Log.i("Write Status", "Write Successful");
                 } catch (IOException q) {}
             } catch (FileNotFoundException e) {
-                Log.e("ERROR", "Problem writing to file");
+               // Log.e("ERROR", "Problem writing to file");
             }
 
 
@@ -320,7 +309,6 @@ public class TestProctoring extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_proctoring);
-        //ActionBar actionbar = getSupportActionBar();
 
         AudioManager am = (AudioManager)getSystemService(AUDIO_SERVICE);
         am.setStreamVolume(AudioManager.STREAM_MUSIC, 9,  0);
@@ -351,13 +339,9 @@ public class TestProctoring extends ActionBarActivity {
                     }
                     if (heard){
                         TestProctoring.this.runOnUiThread(bkgrndFlash);
-						/*try {
-							Thread.sleep(1000);
-						} catch (InterruptedException x){};*/
                         while (heard){
 
                         };
-                        //TestProctoring.this.runOnUiThread(bkgrndFlashBlack);
                     };
                 };
             };
@@ -378,12 +362,8 @@ public class TestProctoring extends ActionBarActivity {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent e){
-        //View view = findViewById(R.id.page);
-        //view.setBackgroundResource(R.color.white);
         Log.i("Touch Alert", "Screen was hit!" + a++ + heard);
         heard = true;
-        //bkgrnd.postDelayed(bkgrndFlash, 1000);
-        //try{Thread.sleep(1000);} catch (InterruptedException x){};
         return super.dispatchTouchEvent(e);
     }
 
