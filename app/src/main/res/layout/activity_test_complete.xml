@@ -19,6 +19,19 @@
         android:textSize="30sp"
         android:textStyle="bold"
         />
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="100sp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TableLayout
+                android:id="@+id/tableResults"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:divider="@android:color/transparent"></TableLayout>
+        </LinearLayout>
+    </ScrollView>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

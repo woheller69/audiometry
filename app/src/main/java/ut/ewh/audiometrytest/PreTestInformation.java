@@ -3,10 +3,13 @@ package ut.ewh.audiometrytest;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.content.Intent;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 public class PreTestInformation extends ActionBarActivity {
@@ -17,6 +20,10 @@ public class PreTestInformation extends ActionBarActivity {
         setContentView(R.layout.activity_pre_test_information);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
+
+
+
+
     }
 
 

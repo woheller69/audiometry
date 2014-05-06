@@ -37,6 +37,7 @@
                 android:textSize="20sp"
                 android:text="@string/pre_calibration_info_body"
                 android:textColor="#FFFFFF" />
+
                <Button
                 android:layout_width="200sp"
                 android:layout_height="wrap_content"
