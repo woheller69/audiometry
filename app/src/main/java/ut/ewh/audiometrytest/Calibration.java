@@ -119,6 +119,7 @@ public class Calibration extends ActionBarActivity {
 
 
         public void run() {
+            running = true;
             for (int i = 0; i < frequencies.length; i++) {
                 int frequency = frequencies[i];
                 final float increment = (float) (Math.PI) * frequency / sampleRate;

@@ -34,6 +34,11 @@ public class ExportData extends ActionBarActivity {
         Intent intent = new Intent(this, ExportComplete.class);
         startActivity(intent);
     }
+
+    public void gotoExportError(){
+        Intent intent = new Intent(this, ExportError.class);
+        startActivity(intent);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,6 +130,7 @@ public class ExportData extends ActionBarActivity {
                 } catch (Exception e){
                     //Log.i("Not Good", "Not Pinging IP");
                     System.err.println(e);
+                    gotoExportError();
                 }
 
             }

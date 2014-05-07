@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Texas EWH Audiometry Test</string>
+    <string name="app_name">Audiometry Made Easy</string>
     <string name="action_settings">Settings</string>
     <string name="main_menu_greeting">The University of Texas at Austin EWH Audiometry Test</string>
     <string name="main_menu_greeting_body">What would you like to do?</string>
@@ -55,5 +55,8 @@
     <string name="special_thanks">Special thanks to: Pato Lankenau, Davin Siu, and James Yao</string>
     <string name="reason">Developed for Texas Engineering World Health as a submission for the 2014 EWH Design Competition.</string>
     <string name="final_notes">Questions or concerns about the app? Email reecestevens@utexas.edu.</string>
-
+    <string name="title_activity_export_error">ExportError</string>
+    <string name="export_error_title">Oops!</string>
+    <string name="export_error_body">Export seems to have run into a problem. Please check your internet connection and try again. You can export your test results at any time using the export button on the main page of the app!</string>
+    <string name="export_error_button">Back to Main Menu</string>
 </resources>
