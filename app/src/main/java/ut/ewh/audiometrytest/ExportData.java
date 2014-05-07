@@ -103,36 +103,41 @@ public class ExportData extends ActionBarActivity {
         /**
          * Takes entered email address and sends test results to that email
          */
-        doneButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view){
+        doneButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
                 email = email_field.getText().toString();
-                try{
-                    HttpClient httpclient = new DefaultHttpClient();
-                    String URL = "http://107.170.226.198/mail.php?";
-                    URL += "t="+ email;
-                    URL += "&s="+"test";
-                    URL += "&b="+"Thresholds:+Right+Ear+[1000+Hz]+" + testResultsRight[0] +"+[500+Hz]+" + testResultsRight[1] + "+[1000+Hz+Repeated]+" + testResultsRight[2] + "+[3000+Hz]+" + testResultsRight[3] + "+[4000+Hz]+" + testResultsRight[4] +"+[6000+Hz]+" + testResultsRight[5] + "+[8000+Hz]+" + testResultsRight[6] + ".+Left+Ear+[1000+Hz]+"+ testResultsLeft[0] +"+[500+Hz]+" + testResultsLeft[1] + "+[1000+Hz+Repeated]+" + testResultsLeft[2] + "+[3000+Hz]+" + testResultsLeft[3] + "+[4000+Hz]+" + testResultsLeft[4] +"+[6000+Hz]+" + testResultsLeft[5] + "+[8000+Hz]+" + testResultsLeft[6];
-                    HttpResponse response = httpclient.execute(new HttpGet(URL));
-                    StatusLine statusLine = response.getStatusLine();
-                    if (statusLine.getStatusCode() == HttpStatus.SC_OK){
-                        ByteArrayOutputStream out = new ByteArrayOutputStream();
-                        response.getEntity().writeTo(out);
-                        out.close();
-                        String responseString = out.toString();
-                        //Log.i("Connection", "Successful");
-                        //Log.i("connection", responseString);
-                    }  else {
-                        //Log.i("connection", "unsuccessful");
-                        response.getEntity().getContent().close();
-                        throw new IOException(statusLine.getReasonPhrase());
-                    }
-                    gotoExportComplete();
-                } catch (Exception e){
-                    //Log.i("Not Good", "Not Pinging IP");
-                    System.err.println(e);
-                    gotoExportError();
-                }
+                Thread networkThread = new Thread(new Runnable() {
+                    public void run() {
+                        try {
+                            HttpClient httpclient = new DefaultHttpClient();
+                            String URL = "http://107.170.226.198/mail.php?";
+                            URL += "t=" + email;
+                            URL += "&s=" + "test";
+                            URL += "&b=" + "Thresholds:+Right+Ear+[1000+Hz]+" + testResultsRight[0] + "+[500+Hz]+" + testResultsRight[1] + "+[1000+Hz+Repeated]+" + testResultsRight[2] + "+[3000+Hz]+" + testResultsRight[3] + "+[4000+Hz]+" + testResultsRight[4] + "+[6000+Hz]+" + testResultsRight[5] + "+[8000+Hz]+" + testResultsRight[6] + ".+Left+Ear+[1000+Hz]+" + testResultsLeft[0] + "+[500+Hz]+" + testResultsLeft[1] + "+[1000+Hz+Repeated]+" + testResultsLeft[2] + "+[3000+Hz]+" + testResultsLeft[3] + "+[4000+Hz]+" + testResultsLeft[4] + "+[6000+Hz]+" + testResultsLeft[5] + "+[8000+Hz]+" + testResultsLeft[6];
+                            HttpResponse response = httpclient.execute(new HttpGet(URL));
+                            StatusLine statusLine = response.getStatusLine();
+                            if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
+                                ByteArrayOutputStream out = new ByteArrayOutputStream();
+                                response.getEntity().writeTo(out);
+                                out.close();
+                                String responseString = out.toString();
+                                //Log.i("Connection", "Successful");
+                                //Log.i("connection", responseString);
+                            } else {
+                                //Log.i("connection", "unsuccessful");
+                                response.getEntity().getContent().close();
+                                throw new IOException(statusLine.getReasonPhrase());
+                            }
+                            gotoExportComplete();
+                        } catch (Exception e) {
+                            //Log.i("Not Good", "Not Pinging IP");
+                            System.err.println(e);
+                            gotoExportError();
+                        }
 
+                    }
+                });
+                networkThread.start();
             }
         });
     }
