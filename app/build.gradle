@@ -24,7 +24,7 @@ android {
         release {
             runProguard true
             debuggable false
-            signingConfig signingConfigs.releaseSign
+            //signingConfig signingConfigs.releaseSign
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
