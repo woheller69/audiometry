@@ -24,7 +24,7 @@ import java.nio.ByteBuffer;
 
 public class TestProctoring extends ActionBarActivity {
     private final int duration = 1;
-    private final int sampleRate = 22050;
+    private final int sampleRate = 44100;
     private final int numSamples = duration * sampleRate;
     private final int volume = 32767;
     private final int[] testingFrequencies = {1000, 500, 1000, 3000, 4000, 6000, 8000};
@@ -172,8 +172,7 @@ public class TestProctoring extends ActionBarActivity {
                     for (; ; ) {
                         int tempResponse = 0;
                         int actualVolume = (minVolume + maxVolume) / 2;
-                        if ((maxVolume - minVolume) < 200) { //the test is done if the range is less than 400
-                            if (s == 0) {
+                        if ((maxVolume - minVolume) < 50) { //the test is done if the range is less than 50                            if (s == 0) {
                                 if (i == 0 || i == 2) {
                                     thresholds_right[i] = actualVolume * calibrationArray[1]; //records volume as threshold
                                 } else if (i == 1){
