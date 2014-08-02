@@ -6,8 +6,10 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
-import android.view.View;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -21,14 +23,14 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
-import android.widget.EditText;
-import android.widget.Button;
-
 
 public class ExportData extends ActionBarActivity {
     Button doneButton;
     EditText email_field;
     String email = "no email has yet been entered into this ridiculously long initialized field";
+
+
+
 
     public void gotoExportComplete() {
         Intent intent = new Intent(this, ExportComplete.class);
@@ -46,10 +48,15 @@ public class ExportData extends ActionBarActivity {
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
 
+        Intent intent = getIntent();
+        final String fileName = intent.getStringExtra(TestData.DESIRED_FILE);
+
+        Log.i("Warning", "Are we getting this far? The file name is " + fileName);
+
         byte testResultsRightByte[] = new byte[7*8];
 
         try{
-            FileInputStream fis = openFileInput("TestResultsRight");
+            FileInputStream fis = openFileInput(fileName);
             fis.read(testResultsRightByte, 0, testResultsRightByte.length);
             fis.close();
             //Log.i("File Read Info", "File Read Successful");
@@ -71,31 +78,31 @@ public class ExportData extends ActionBarActivity {
         }
         //Log.i("Calibration Data", "Calibration factors are: " + testResultsRight[0] + " " + testResultsRight[1] + " " + testResultsRight[2] + " " + testResultsRight[3] + " " + testResultsRight[4] + " " + testResultsRight[5] + " " + testResultsRight[6]);
 
-        byte testResultsLeftByte[] = new byte[7 * 8];
-
-        try{
-            FileInputStream fis = openFileInput("TestResultsLeft");
-            fis.read(testResultsLeftByte, 0, testResultsLeftByte.length);
-            fis.close();
-            //Log.i("File Read Info", "File Read Successful");
-        } catch (IOException e) {};
-
-
-        final double testResultsLeft[] = new double[7];
-
-
-        counter = 0;
-
-        for (int i = 0; i < testResultsLeft.length; i++){
-            byte tmpByteBuffer[] = new byte[8];
-            for (int j = 0; j < 8; j++) {
-                tmpByteBuffer[j] = testResultsLeftByte[counter];
-                counter++;
-            }
-            testResultsLeft[i] = ByteBuffer.wrap(tmpByteBuffer).getDouble();
-        }
-        //Log.i("Calibration Data", "Calibration factors are: " + testResultsLeft[0] + " " + testResultsLeft[1] + " " + testResultsLeft[2] + " " + testResultsLeft[3] + " " + testResultsLeft[4] + " " + testResultsLeft[5] + " " + testResultsLeft[6]);
-
+//        byte testResultsLeftByte[] = new byte[7 * 8];
+//
+//        try{
+//            FileInputStream fis = openFileInput("TestResultsLeft");
+//            fis.read(testResultsLeftByte, 0, testResultsLeftByte.length);
+//            fis.close();
+//            //Log.i("File Read Info", "File Read Successful");
+//        } catch (IOException e) {};
+//
+//
+//        final double testResultsLeft[] = new double[7];
+//
+//
+//        counter = 0;
+//
+//        for (int i = 0; i < testResultsLeft.length; i++){
+//            byte tmpByteBuffer[] = new byte[8];
+//            for (int j = 0; j < 8; j++) {
+//                tmpByteBuffer[j] = testResultsLeftByte[counter];
+//                counter++;
+//            }
+//            testResultsLeft[i] = ByteBuffer.wrap(tmpByteBuffer).getDouble();
+//        }
+//        //Log.i("Calibration Data", "Calibration factors are: " + testResultsLeft[0] + " " + testResultsLeft[1] + " " + testResultsLeft[2] + " " + testResultsLeft[3] + " " + testResultsLeft[4] + " " + testResultsLeft[5] + " " + testResultsLeft[6]);
+//
 
 
         doneButton = (Button)findViewById(R.id.doneButton);
@@ -113,7 +120,7 @@ public class ExportData extends ActionBarActivity {
                             String URL = "http://107.170.226.198/mail.php?";
                             URL += "t=" + email;
                             URL += "&s=" + "test";
-                            URL += "&b=" + "Thresholds:+Right+Ear+[1000+Hz]+" + testResultsRight[0] + "+[500+Hz]+" + testResultsRight[1] + "+[1000+Hz+Repeated]+" + testResultsRight[2] + "+[3000+Hz]+" + testResultsRight[3] + "+[4000+Hz]+" + testResultsRight[4] + "+[6000+Hz]+" + testResultsRight[5] + "+[8000+Hz]+" + testResultsRight[6] + ".+Left+Ear+[1000+Hz]+" + testResultsLeft[0] + "+[500+Hz]+" + testResultsLeft[1] + "+[1000+Hz+Repeated]+" + testResultsLeft[2] + "+[3000+Hz]+" + testResultsLeft[3] + "+[4000+Hz]+" + testResultsLeft[4] + "+[6000+Hz]+" + testResultsLeft[5] + "+[8000+Hz]+" + testResultsLeft[6];
+                            URL += "&b=" + "Thresholds+for+test+" + fileName + "+:+[1000+Hz]+" + testResultsRight[0] + "+[500+Hz]+" + testResultsRight[1] + "+[1000+Hz+Repeated]+" + testResultsRight[2] + "+[3000+Hz]+" + testResultsRight[3] + "+[4000+Hz]+" + testResultsRight[4] + "+[6000+Hz]+" + testResultsRight[5] + "+[8000+Hz]+" + testResultsRight[6] + ".";
                             HttpResponse response = httpclient.execute(new HttpGet(URL));
                             StatusLine statusLine = response.getStatusLine();
                             if (statusLine.getStatusCode() == HttpStatus.SC_OK) {

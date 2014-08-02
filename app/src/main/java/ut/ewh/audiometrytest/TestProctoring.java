@@ -1,25 +1,25 @@
 package ut.ewh.audiometrytest;
 
 import android.content.Context;
-import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.content.Intent;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
+import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.View;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class TestProctoring extends ActionBarActivity {
@@ -187,7 +187,7 @@ public class TestProctoring extends ActionBarActivity {
                                     thresholds_right[i] = actualVolume * calibrationArray[5]; //records volume as threshold
                                 } else {}
                                 //Log.i("Temporary Results", "results are " + thresholds_right[0] + " " + thresholds_right[1] + " " + thresholds_right[2] + " " + thresholds_right[3] + " " + thresholds_right[4] + " " + thresholds_right[5] + " " + thresholds_right[6]);
-                            } else {
+                           // } else {
                                 if (i == 0 || i == 2) {
                                     thresholds_left[i] = actualVolume * calibrationArray[1]; //records volume as threshold
                                 } else if (i == 1){
@@ -203,7 +203,7 @@ public class TestProctoring extends ActionBarActivity {
                                 } else {}
                                 //Log.i("Temporary Results", "results are " + thresholds_left[0] + " " + thresholds_left[1] + " " + thresholds_left[2] + " " + thresholds_left[3] + " " + thresholds_left[4] + " " + thresholds_left[5] + " " + thresholds_left[6]);
 
-                            }
+                           // }
                             break; //go to next frequency
                         } else {
                             for (int z = 0; z < 3; z++) { //iterate three times per volume level
@@ -250,6 +250,13 @@ public class TestProctoring extends ActionBarActivity {
             //Log.i("Final Results Right", "results are " + thresholdVolumeRight[0] + " " + thresholdVolumeRight[1] + " " + thresholdVolumeRight[2] + " " + thresholdVolumeRight[3] + " " + thresholdVolumeRight[4] + " " + thresholdVolumeRight[5] + " " + thresholdVolumeRight[6]);
             //Log.i("Final Results", "results are " + thresholdVolumeLeft[0] + " " + thresholdVolumeLeft[1] + " " + thresholdVolumeLeft[2] + " " + thresholdVolumeLeft[3] + " " + thresholdVolumeLeft[4] + " " + thresholdVolumeLeft[5] + " " + thresholdVolumeLeft[6]);
 
+
+//            Calendar c = Calendar.getInstance();
+//            int date = c.get(Calendar.DATE);
+
+            SimpleDateFormat sdf = new SimpleDateFormat("MM_dd_yyyy-HHmmss");
+            String currentDateTime = sdf.format(new Date());
+
             counter = 0;
             byte thresholdVolumeRightbyte[] = new byte[thresholdVolumeRight.length * 8];
             for (int x = 0; x < thresholdVolumeRight.length; x++){
@@ -262,7 +269,7 @@ public class TestProctoring extends ActionBarActivity {
 
             }
             try{
-                FileOutputStream fos = openFileOutput("TestResultsRight", Context.MODE_PRIVATE);
+                FileOutputStream fos = openFileOutput("TestResultsRight." + currentDateTime, Context.MODE_PRIVATE);
                 try{
                     fos.write(thresholdVolumeRightbyte);
                     fos.close();
@@ -284,7 +291,7 @@ public class TestProctoring extends ActionBarActivity {
 
             }
             try{
-                FileOutputStream fos = openFileOutput("TestResultsLeft", Context.MODE_PRIVATE);
+                FileOutputStream fos = openFileOutput("TestResultsLeft." + currentDateTime, Context.MODE_PRIVATE);
                 try{
                     fos.write(thresholdVolumeLeftbyte);
                     fos.close();
