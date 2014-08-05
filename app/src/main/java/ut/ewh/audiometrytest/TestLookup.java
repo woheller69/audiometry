@@ -58,6 +58,7 @@ public class TestLookup extends ActionBarActivity {
             message.setTextColor(Color.parseColor("#FFFFFF"));
             message.setBackgroundColor(Color.parseColor("#424242"));
             message.setText("Sorry! It seems there are no tests currently stored in memory. Please take a test, then return to this page to view the results.");
+            layout.addView(message, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         } else {
             ScrollView scrollview = new ScrollView(this);
             scrollview.setLayoutParams(new ScrollView.LayoutParams(ScrollView.LayoutParams.FILL_PARENT, ScrollView.LayoutParams.WRAP_CONTENT));
