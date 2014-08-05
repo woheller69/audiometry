@@ -15,7 +15,7 @@
     <string name="hello_world">Test Started!</string>
     <string name="title_activity_test_proctoring_revised">Test Has Begun!</string>
     <string name="title_activity_export_data">Export Data</string>
-    <string name="button_export">Export</string>
+    <string name="button_export">Test Results</string>
     <string name="title_activity_test_complete">Test Complete!</string>
     <string name="email_hint">Recipient Email</string>
     <string name="export_test_title">Export Test Results</string>
@@ -59,4 +59,8 @@
     <string name="export_error_title">Oops!</string>
     <string name="export_error_body">Export seems to have run into a problem. Please check your internet connection and try again. You can export your test results at any time using the export button on the main page of the app!</string>
     <string name="export_error_button">Back to Main Menu</string>
+    <string name="title_activity_test_lookup">TestLookup</string>
+    <string name="title_activity_test_data">TestData</string>
+    <string name="email_option">Email Test Results</string>
+
 </resources>

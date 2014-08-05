@@ -1,15 +1,11 @@
 package ut.ewh.audiometrytest;
 
-import android.content.Context;
-import android.media.AudioManager;
-import android.provider.MediaStore;
-import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.content.Intent;
-import android.util.Log;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -35,7 +31,7 @@ public class MainActivity extends ActionBarActivity {
      * @param view- current view
      */
     public void gotoExport(View view){
-        Intent intent = new Intent(this, ExportData.class);
+        Intent intent = new Intent(this, TestLookup.class);
         startActivity(intent);
     }
     public void gotoAcknowledgements(View view){
