@@ -2,6 +2,7 @@ package ut.ewh.audiometrytest;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
@@ -69,7 +70,7 @@ public class TestProctoring extends ActionBarActivity {
         @Override
         public void run(){
             View view = findViewById(R.id.page);
-            view.setBackgroundColor(getResources().getColor(R.color.green));
+            view.setBackgroundColor(Color.parseColor("#adce49"));
             //bkgrnd.postDelayed(this, 1000);
         }
     };
@@ -80,7 +81,7 @@ public class TestProctoring extends ActionBarActivity {
         @Override
         public void run(){
             View view = findViewById(R.id.page);
-            view.setBackgroundResource(getResources().getColor(R.color.background_grey));
+            view.setBackgroundColor(Color.parseColor("#424242"));
             //bkgrnd.postDelayed(this, 1000);
         }
     };
@@ -221,8 +222,12 @@ public class TestProctoring extends ActionBarActivity {
                                 if (heard) {
                                     tempResponse++;
                                 }
-                                // Checks if the first two test were positive, and skips the third if true. Helps speed the test along.
+//                                // Checks if the first two test were positive, and skips the third if true. Helps speed the test along.
                                 if (tempResponse >= 2){
+                                    break;
+                                }
+                                // Check if the first two tests were misses, and skips the third if this is the case.
+                                if (z == 1 && tempResponse == 0){
                                     break;
                                 }
                             }
