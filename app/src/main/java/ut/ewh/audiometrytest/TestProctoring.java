@@ -55,9 +55,9 @@ public class TestProctoring extends ActionBarActivity {
         if (num < 0.3){
             time = 2000;
         } else if (num < 0.67 && num >= 0.3){
-            time = 3000;
+            time = 2500;
         }else{
-            time = 4000;
+            time = 3000;
         };
         return time;
     }
@@ -69,7 +69,7 @@ public class TestProctoring extends ActionBarActivity {
         @Override
         public void run(){
             View view = findViewById(R.id.page);
-            view.setBackgroundResource(R.color.green);
+            view.setBackgroundColor(getResources().getColor(R.color.green));
             //bkgrnd.postDelayed(this, 1000);
         }
     };
@@ -80,7 +80,7 @@ public class TestProctoring extends ActionBarActivity {
         @Override
         public void run(){
             View view = findViewById(R.id.page);
-            view.setBackgroundResource(R.color.background_grey);
+            view.setBackgroundResource(getResources().getColor(R.color.background_grey));
             //bkgrnd.postDelayed(this, 1000);
         }
     };
@@ -172,7 +172,7 @@ public class TestProctoring extends ActionBarActivity {
                     for (; ; ) {
                         int tempResponse = 0;
                         int actualVolume = (minVolume + maxVolume) / 2;
-                        if ((maxVolume - minVolume) < 50) { //the test is done if the range is less than 50                            if (s == 0) {
+                        if ((maxVolume - minVolume) < 400) { //the test is done if the range is less than 400                            if (s == 0) {
                                 if (i == 0 || i == 2) {
                                     thresholds_right[i] = actualVolume * calibrationArray[1]; //records volume as threshold
                                 } else if (i == 1){
@@ -220,6 +220,10 @@ public class TestProctoring extends ActionBarActivity {
                                 ;
                                 if (heard) {
                                     tempResponse++;
+                                }
+                                // Checks if the first two test were positive, and skips the third if true. Helps speed the test along.
+                                if (tempResponse >= 2){
+                                    break;
                                 }
                             }
                             //If the response was positive two out of three times, register as heard

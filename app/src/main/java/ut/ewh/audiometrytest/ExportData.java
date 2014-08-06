@@ -76,33 +76,6 @@ public class ExportData extends ActionBarActivity {
             }
             testResultsRight[i] = ByteBuffer.wrap(tmpByteBuffer).getDouble();
         }
-        //Log.i("Calibration Data", "Calibration factors are: " + testResultsRight[0] + " " + testResultsRight[1] + " " + testResultsRight[2] + " " + testResultsRight[3] + " " + testResultsRight[4] + " " + testResultsRight[5] + " " + testResultsRight[6]);
-
-//        byte testResultsLeftByte[] = new byte[7 * 8];
-//
-//        try{
-//            FileInputStream fis = openFileInput("TestResultsLeft");
-//            fis.read(testResultsLeftByte, 0, testResultsLeftByte.length);
-//            fis.close();
-//            //Log.i("File Read Info", "File Read Successful");
-//        } catch (IOException e) {};
-//
-//
-//        final double testResultsLeft[] = new double[7];
-//
-//
-//        counter = 0;
-//
-//        for (int i = 0; i < testResultsLeft.length; i++){
-//            byte tmpByteBuffer[] = new byte[8];
-//            for (int j = 0; j < 8; j++) {
-//                tmpByteBuffer[j] = testResultsLeftByte[counter];
-//                counter++;
-//            }
-//            testResultsLeft[i] = ByteBuffer.wrap(tmpByteBuffer).getDouble();
-//        }
-//        //Log.i("Calibration Data", "Calibration factors are: " + testResultsLeft[0] + " " + testResultsLeft[1] + " " + testResultsLeft[2] + " " + testResultsLeft[3] + " " + testResultsLeft[4] + " " + testResultsLeft[5] + " " + testResultsLeft[6]);
-//
 
 
         doneButton = (Button)findViewById(R.id.doneButton);

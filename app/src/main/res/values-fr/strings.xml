@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+<string name="app_name">Audiometry Made Easy</string>
+<string name="action_settings">Settings</string>
+<string name="main_menu_greeting">The University of Texas at Austin EWH Audiometry Test</string>
+<string name="main_menu_greeting_body">Que choisirez-vous?</string>
+<string name="button_start">Nouveau Test</string>
+<string name="button_acknowledgements">Remerciement</string>
+<string name="title_activity_pre_test_information">Avant De Commencer</string>
+<string name="pretest_title">Instructions</string>
+<string name="pretest_info_body">Avant le test commence, les écouteurs doivant être calibrés. Tapez sur le bouton quand tu être prêt continuer. </string>
+<string name="pretest_button">Instructions d\'Étalonnage</string>
+<string name="title_activity_test_proctoring">Tapez Quand Vous Entendez Un Son</string>
+<string name="hello_world">Test En Cours!</string>
+<string name="title_activity_test_proctoring_revised">Test En Cours!</string>
+<string name="title_activity_export_data">Exportez les Données</string>
+<string name="button_export">Résultats de Test</string>
+<string name="title_activity_test_complete">Test Est Terminé!</string>
+<string name="email_hint">Destinataire</string>
+<string name="export_test_title">Exportez les Résultats de Test</string>
+<string name="test_proctoring_information">C\'est un test simple pour évaluer votre audition. Quand il commence, vous entendrez des sons de différentes hauteurs et de volumes. Quand vous entendez un son, tapez l\'écran. Tapez sur le bouton quand tu être prêt á commencer le test.</string>
+
+    <string name="title_activity_pre__calibration">Avant l\'Étalonnage</string>
+    <string name="button_calibration">L\'Étalonnage</string>
+    <string name="pre_calibration_title">L\'Étalonnage de Audiométrie</string>
+    <string name="pre_calibration_info_body">Pour des résultats précis, vos écouteurs doivent être calibrés. S\'il vous plaît, branchez vos écouteurs. Placez-les en face de votre microphone de l\'appareil, mais ne pas touchez le microphone. Pour meilleur résultats, faire dans un piéce calme. Tapez sur le bouton quand tu être prêt á commencer l\'étalonnage.</string>
+    <string name="button_begin_calibration">Commencer l\'Étalonnage</string>
+    <string name="title_activity_calibration">L\'Étalonnage</string>
+    <string name="calibration_in_progress">L\'Étalonnage...</string>
+    <string name="test_complete_title">Test Est Terminé!</string>
+    <string name="test_complete_body">Voulez-vous garder vos résultats?</string>
+    <string name="test_complete_button_yes">Oui</string>
+    <string name="test_complete_button_no">Non</string>
+    <string name="export_body">S\'il vous plaît, indiquer le adresse email oú vous voulez envoyer les résultats.</string>
+    <string name="title_activity_export_complete">Exportation Est Terminé</string>
+    <string name="export_data_complete_title">Exportation de Résultats Est Terminé!</string>
+    <string name="export_data_complete_button">Retour á la Maison</string>
+    <string name="title_activity_calibration_complete">L\'Étalonnage Est Terminé</string>
+    <string name="calibration_complete_title">L\'Étalonnage Est Terminé!</string>
+    <string name="calibration_complete_body">Maintenant que l\'étalonnage est terminé, vous pouvez commencer le test de audiométrie. C\'est un test simple pour évaluer votre audition. Quand il commence, vous entendrez des sons de différentes hauteurs et de volumes. Quand vous entendez un son, tapez l\'écran. Tapez sur le bouton quand tu être prêt á commencer le test.</string>
+    <string name="calibration_complete_button">Commencer le Test</string>
+    <string name="export_data_complete_caveat">Si vous ne pouvez pas trouver les résultats, vérifiez votre dossier spam et les déchets.</string>
+    <string name="title_activity_acknowledgements">Remerciement</string>
+    <string name="acknowledgements_title">Remerciement</string>
+    <string name="developer">Créateur: Reece Stevens</string>
+    <string name="special_thanks">Merci á: Pato Lankenau, Davin Siu, and James Yao</string>
+    <string name="reason">Développé pour Texas Engineering World Health 2014 EWH Design Competition.</string>
+    <string name="final_notes">Questions ou des préoccupations? Email reecestevens@utexas.edu.</string>
+    <string name="title_activity_export_error">ExportError</string>
+    <string name="export_error_title">Oops!</string>
+    <string name="export_error_body">Exportation semble avoir rencontré un probléme. Vérifiez votre connexion internet et essayez á nouveau. Vous pouvez exporter vos résultats á tout moment par la Résultats de Test page!</string>
+    <string name="export_error_button">Retour á la Maison</string>
+    <string name="title_activity_test_lookup">Résultats de Test</string>
+    <string name="title_activity_test_data">Données de Test</string>
+    <string name="email_option">Email les Résultats de Test</string>
+
+
+</resources>
