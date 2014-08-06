@@ -1,7 +1,7 @@
 UT Engineering World Health Audiometry App
 ------------------------------------------------
 
-![alt tag](https://github.com/ReeceStevens/ut_ewh_audiometer_2014/raw/master/SC20140504-214649.png)
+![alt tag](https://github.com/ReeceStevens/ut_ewh_audiometer_2014/raw/master/SC20050105-124830.png)
 
 Project Start Date: 1.29.14
 
