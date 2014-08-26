@@ -135,12 +135,7 @@ public class TestComplete extends ActionBarActivity {
         return true;
     }
 
-    public void gotoExport(View view){
-        Intent intent = new Intent(this, ExportData.class);
-        startActivity(intent);
-    }
-
-    public void tmpGotoMain(View view){
+    public void gotoMain(View view){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }

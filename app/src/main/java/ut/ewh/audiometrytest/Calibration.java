@@ -33,6 +33,8 @@ public class Calibration extends ActionBarActivity {
     final private double mGain = 0.0044;
     final private double mAlpha = 0.9;
     final private int bufferSize = AudioRecord.getMinBufferSize(sampleRate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
+    double[] inputSignalImaginary = new double[2048];
+    final private double[] dbHLCorrectionCoefficients = {13.5, 7.5, 11.5, 12, 16, 15.5}; //based off of ANSI Standards
 
 
     public double calibrationArray[] = new double[frequencies.length];
@@ -68,11 +70,99 @@ public class Calibration extends ActionBarActivity {
         return audioTrack;
     }
 
-    public double[] dbListen() {
+    public int bitReverse(int j, int nu){
+        int j2;
+        int j1 = j;
+        int k = 0;
+        for(int i=1; i<=nu; i++){
+            j2 = j1/2;
+            k = 2*k + j1 - 2*j2;
+            j1 = j2;
+        }
+        return k;
+    }
+
+    public int newBitReverse(int j){
+        int b = 0;
+        while (j!=0){
+            b<<=1;
+            b|=( j &1);
+            j>>=1;
+        }
+        return b;
+    }
+
+    public double[] fftAnalysis(double[] inputReal, double[] inputImag){
+        int n = 2048;
+        int nu = 11;
+        double[] bufferReal = new double[inputReal.length+1];
+        double[] shortenedReal =  new double[n];
+
+        //shorten buffer data to a power of two
+        for (int s = 0; s < n; s++){
+            shortenedReal[s] = inputReal[s];
+        }
+
+        // Computing the coefficients for everything ahead of time
+        double[][] Real = new double[nu+1][n];
+        int counter = 2;
+        for (int l = 1; l <= nu; l++){
+            for(int i = 0; i<n; i++){
+                Real[l][i] = Math.cos(((double)2)*Math.PI*((double)i)/((double)counter));
+            }
+            counter *= 2;
+        }
+        double[][] Imag = new double[nu+1][n];
+        counter = 2;
+        for (int l = 1; l <= nu; l++){
+            for(int i = 0; i<n; i++){
+                Imag[l][i] = -1*Math.sin(((double)2)*Math.PI*((double)i)/((double)counter));
+            }
+            counter *= 2;
+        }
+
+        // Populate bufferReal with inputReal in bit-reversed order
+        for (int x = 1; x <= shortenedReal.length; x ++){
+            int p = newBitReverse(x);
+            bufferReal[x] = shortenedReal[p];
+            //Log.i("Check", "bufferReal: " + bufferReal[x] + " shortenedReal: " + shortenedReal[p]);
+
+        }
+
+        // begin transform
+        int step = 1;
+        for (int level = 1; level <= nu; level ++){
+            int increm = step * 2;
+            for (int j = 0; j < step; j++){
+//                double realCoefficient = Real[level][j];
+//                double imagCoefficient = Imag[level][j];
+                for(int i = j; i < n; i += increm){
+                    double realCoefficient = Real[level][j];
+                    double imagCoefficient = Imag[level][j];
+                    realCoefficient *= bufferReal[i+step];
+                    imagCoefficient *= bufferReal[i+step];
+                    bufferReal[i+step] = bufferReal[i];
+                    inputImag[i+step] = inputImag[i];
+                    bufferReal[i+step] -= realCoefficient;
+                    inputImag[i+step] -= imagCoefficient;
+                    bufferReal[i] += realCoefficient;
+                    inputImag[i] += imagCoefficient;
+                    //Log.i("Spot Check", "bufferReal[i+step]: " + bufferReal[i+step] + " bufferReal[i]: " + bufferReal[i] + " realCoefficient: " + realCoefficient + " imagCoefficient: " + imagCoefficient);
+                }
+            }
+            step *= 2;
+        }
+        return bufferReal;
+    }
+
+
+
+    public double[] dbListen(int frequency) {
         double rmsArray[] = new double[5];
         for (int j = 0; j < rmsArray.length; j++) {
             AudioRecord audioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC, sampleRate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, bufferSize);
             short[] buffer = new short[bufferSize];
+            //Log.i("Note", "Buffer size is " + bufferSize);
             //short[] buffer = new short[bufferSize * 2];
 
             try {
@@ -81,25 +171,44 @@ public class Calibration extends ActionBarActivity {
                // Log.e("Recording didn't work!", e.toString());
             }
             int bufferReadResult = audioRecord.read(buffer, 0, buffer.length);
-            //Log.i("Status of Buffer Read", "Result: " + bufferReadResult);
+//            Log.i("Status of Buffer Read", "Result: " + bufferReadResult);
 
-            double rms = 0;
-            for (int i = 0; i < buffer.length; i++) {
-                rms += buffer[i] * buffer[i];
+            //Convert buffer from type short[] to double[]
+            double[] inputSignal = new double[buffer.length];
+            for(int x=0;x<buffer.length; x++){
+                inputSignal[x] = (double)buffer[x];
             }
 
-            //smoothing of rms
-            rmsArray[j] = (1 - mAlpha) * rms;
-            double mRmsSmoothed = (1 - mAlpha) * rms;
-            double rmsdB = 10 * Math.log10(mGain * mRmsSmoothed);
+            double[] outputSignal = fftAnalysis(inputSignal, inputSignalImaginary);
+            //Log.i("outputSignal", "Anything here? " + outputSignal[0] + " " + outputSignal[100] +  " " + outputSignal[200] + " " + outputSignal[300] + " " + outputSignal[400]+ " " + outputSignal[500] + outputSignal[1000] + " " + outputSignal[2000]);
+
+            int k = frequency*2048/sampleRate; // Selects the value from the transform array corresponding to the desired frequency
+            rmsArray[j] = outputSignal[k];
+
+//            for(int i = 0; i<inputSignal.length; i = i + 500){
+//                Log.i("Original Recording", "Data Point " + i + ": " + inputSignal[i]);
+//            }
+
+//            for(int i = 0; i<2048; i= i + 500){
+//                Log.i("FFT Results", "Data Point " + i + ": " + outputSignal[i] + " from: " + inputSignalImaginary[i]);
+//            }
+
+            // RMS Routine
+//            double rms = 0;
+//            for (int i = 0; i < buffer.length; i++) {
+//                rms += buffer[i] * buffer[i];
+//            }
+//
+//            //smoothing of rms
+//            rmsArray[j] = (1 - mAlpha) * rms;
+//            double mRmsSmoothed = (1 - mAlpha) * rms;
+//            double rmsdB = 10 * Math.log10(mGain * mRmsSmoothed);
             //Log.i("BKGRND:", "Decibel calculation is: " + rmsdB);
             audioRecord.stop();
             audioRecord.release();
 
-//            try{
-//                Thread.sleep(2000);
-//            } catch (InterruptedException e) {};
         }
+        //Log.i("Array Check", "rmsArray: " + rmsArray[0] + " " + rmsArray[1] + " " + rmsArray[2] + " " + rmsArray[3] + " " + rmsArray[4]);
         return rmsArray;
     }
 
@@ -129,17 +238,21 @@ public class Calibration extends ActionBarActivity {
 //            try {
 //                Thread.sleep(500);
 //            } catch (InterruptedException e) {};
-
-                double backgroundRms[] = dbListen();
+                Log.i("Silence", "Listening to silence");
+                double backgroundRms[] = dbListen(frequency);
 
                 audioTrack.play();
 
-                double soundRms[] = dbListen();
+                Log.i("Audio", "Listening to audio");
+                double soundRms[] = dbListen(frequency);
 
                 double resultingRms[] = new double[5];
 
                 for (int j = 0; j < 5; j++) {
-                    resultingRms[j] = soundRms[j] - backgroundRms[j];
+                    resultingRms[j] = Math.pow(10, soundRms[j]) - Math.pow(10, backgroundRms[j]); // raise to power of 10 in order to properly subtract logarithmic scale
+                    resultingRms[j] = Math.log10(resultingRms[j]); // return to log_10 scale
+                    resultingRms[j] -= dbHLCorrectionCoefficients[i]; // convert from dB SPL to dB HL
+                    Log.i("Resulting Frequency amplitude", "Equals: " + resultingRms[j]);
 
                 }
                 double rmsSum = 0;
@@ -152,7 +265,7 @@ public class Calibration extends ActionBarActivity {
 
                     }
                 }
-                calibrationArray[i] = rmsSum / (volume * numCounter);
+                calibrationArray[i] = rmsSum / (volume * numCounter); // create ratio of dB/binary. Will be used in testProctoring for final conversion.
                 if (!running){
                     return;
                 }
@@ -187,7 +300,7 @@ public class Calibration extends ActionBarActivity {
             gotoCalibrationComplete();
 
 
-        };
+        }
     }
 
     @Override

@@ -32,37 +32,17 @@
                 android:divider="@android:color/transparent"></TableLayout>
         </LinearLayout>
     </ScrollView>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20sp"
-        android:layout_marginBottom="20sp"
-        android:text="@string/test_complete_body"
-        android:textColor="@color/white"
-        android:textSize="20sp"/>
-    <Button
-        android:layout_width="200sp"
-        android:layout_height="wrap_content"
-        android:text="@string/test_complete_button_yes"
-        android:paddingLeft="10sp"
-        android:paddingRight="30sp"
-        android:paddingTop="20sp"
-        android:paddingBottom="20sp"
-        android:layout_marginTop="15sp"
-        android:onClick="gotoExport"
-        android:background="@drawable/button_background"
-        android:gravity="left"
-        android:layout_gravity="right"/>
+
     <Button
         android:layout_width="150sp"
         android:layout_height="wrap_content"
-        android:text="@string/test_complete_button_no"
+        android:text="@string/export_data_complete_button"
         android:paddingLeft="10sp"
         android:paddingRight="30sp"
         android:paddingTop="20sp"
         android:paddingBottom="20sp"
         android:layout_marginTop="15sp"
-        android:onClick="tmpGotoMain"
+        android:onClick="gotoMain"
         android:background="@drawable/button_background"
         android:gravity="left"
         android:layout_gravity="right"/>
