@@ -70,17 +70,17 @@ public class Calibration extends ActionBarActivity {
         return audioTrack;
     }
 
-    public int bitReverse(int j, int nu){
-        int j2;
-        int j1 = j;
-        int k = 0;
-        for(int i=1; i<=nu; i++){
-            j2 = j1/2;
-            k = 2*k + j1 - 2*j2;
-            j1 = j2;
-        }
-        return k;
-    }
+//    public int bitReverse(int j, int nu){
+//        int j2;
+//        int j1 = j;
+//        int k = 0;
+//        for(int i=1; i<=nu; i++){
+//            j2 = j1/2;
+//            k = 2*k + j1 - 2*j2;
+//            j1 = j2;
+//        }
+//        return k;
+//    }
 
     public int newBitReverse(int j){
         int b = 0;
@@ -95,7 +95,7 @@ public class Calibration extends ActionBarActivity {
     public double[] fftAnalysis(double[] inputReal, double[] inputImag){
         int n = 2048;
         int nu = 11;
-        double[] bufferReal = new double[inputReal.length+1];
+        double[] bufferReal = new double[n];
         double[] shortenedReal =  new double[n];
 
         //shorten buffer data to a power of two
@@ -122,7 +122,7 @@ public class Calibration extends ActionBarActivity {
         }
 
         // Populate bufferReal with inputReal in bit-reversed order
-        for (int x = 1; x <= shortenedReal.length; x ++){
+        for (int x = 0; x < shortenedReal.length; x ++){
             int p = newBitReverse(x);
             bufferReal[x] = shortenedReal[p];
             //Log.i("Check", "bufferReal: " + bufferReal[x] + " shortenedReal: " + shortenedReal[p]);
@@ -152,10 +152,13 @@ public class Calibration extends ActionBarActivity {
             }
             step *= 2;
         }
-        return bufferReal;
+        double[] transformResult = new double[bufferReal.length];
+        // Calculate magnitude of FFT coefficients
+        for (int q = 0; q < bufferReal.length; q++){
+            transformResult[q] = Math.sqrt(Math.pow(bufferReal[q], 2) + Math.pow(inputImag[q], 2));
+        }
+        return transformResult;
     }
-
-
 
     public double[] dbListen(int frequency) {
         double rmsArray[] = new double[5];
@@ -184,7 +187,6 @@ public class Calibration extends ActionBarActivity {
 
             int k = frequency*2048/sampleRate; // Selects the value from the transform array corresponding to the desired frequency
             rmsArray[j] = outputSignal[k];
-
 //            for(int i = 0; i<inputSignal.length; i = i + 500){
 //                Log.i("Original Recording", "Data Point " + i + ": " + inputSignal[i]);
 //            }
@@ -193,17 +195,20 @@ public class Calibration extends ActionBarActivity {
 //                Log.i("FFT Results", "Data Point " + i + ": " + outputSignal[i] + " from: " + inputSignalImaginary[i]);
 //            }
 
-            // RMS Routine
-//            double rms = 0;
-//            for (int i = 0; i < buffer.length; i++) {
-//                rms += buffer[i] * buffer[i];
-//            }
-//
+           // RMS Routine
+            double rms = 0;
+            for (int i = 0; i < buffer.length; i++) {
+                rms += buffer[i] * buffer[i];
+            }
 //            //smoothing of rms
-//            rmsArray[j] = (1 - mAlpha) * rms;
-//            double mRmsSmoothed = (1 - mAlpha) * rms;
-//            double rmsdB = 10 * Math.log10(mGain * mRmsSmoothed);
-            //Log.i("BKGRND:", "Decibel calculation is: " + rmsdB);
+//            rms = (1 - mAlpha) * rms;
+            double mRmsSmoothed = (1 - mAlpha) * rms;
+          // RMS Decibel Calculation
+            double rmsdB = 20 * Math.log10(mRmsSmoothed * mGain);
+
+          // FFT Decibel Calculation
+           //rmsArray[j] = 20 * Math.log10(outputSignal[k]/32767);
+           Log.i("RMS Decibel", "RMS Decibel calculation is: " + rmsdB);
             audioRecord.stop();
             audioRecord.release();
 
@@ -247,14 +252,23 @@ public class Calibration extends ActionBarActivity {
                 double soundRms[] = dbListen(frequency);
 
                 double resultingRms[] = new double[5];
+                double resultingdB[] = new double[5];
 
-                for (int j = 0; j < 5; j++) {
-                    resultingRms[j] = Math.pow(10, soundRms[j]) - Math.pow(10, backgroundRms[j]); // raise to power of 10 in order to properly subtract logarithmic scale
-                    resultingRms[j] = Math.log10(resultingRms[j]); // return to log_10 scale
-                    resultingRms[j] -= dbHLCorrectionCoefficients[i]; // convert from dB SPL to dB HL
-                    Log.i("Resulting Frequency amplitude", "Equals: " + resultingRms[j]);
-
+                for(int x = 0; x < resultingRms.length; x++){
+                    resultingRms[x] = soundRms[x]/backgroundRms[x];
+                    resultingdB[x] = 20 * Math.log10(resultingRms[x]) + 70;
+                    resultingdB[x] -= dbHLCorrectionCoefficients[i];
+                    Log.i("FFT Decibel", "Reading "+ resultingdB[x]);
                 }
+
+
+//                for (int j = 0; j < 5; j++) {
+//                    resultingRms[j] = Math.pow(10, soundRms[j]) - Math.pow(10, backgroundRms[j]); // raise to power of 10 in order to properly subtract logarithmic scale
+//                    resultingRms[j] = Math.log10(resultingRms[j]); // return to log_10 scale
+//                    //resultingRms[j] -= dbHLCorrectionCoefficients[i]; // convert from dB SPL to dB HL
+//                   //Log.i("Resulting Frequency amplitude", "Equals: " + resultingRms[j]);
+//
+//                }
                 double rmsSum = 0;
                 int numCounter = 0;
                 for (int j = 0; j < 5; j++) {
@@ -265,7 +279,12 @@ public class Calibration extends ActionBarActivity {
 
                     }
                 }
-                calibrationArray[i] = rmsSum / (volume * numCounter); // create ratio of dB/binary. Will be used in testProctoring for final conversion.
+                double dBAverage = 0;
+                for(int q = 0; q < resultingdB.length; q++){
+                    dBAverage += resultingdB[q];
+                }
+                dBAverage /= resultingdB.length;
+                calibrationArray[i] = dBAverage / volume; // create ratio of dB/binary. Will be used in testProctoring for final conversion.
                 if (!running){
                     return;
                 }

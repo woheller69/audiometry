@@ -247,15 +247,15 @@ public class TestProctoring extends ActionBarActivity {
             }
             loop = false;
 
-            double thresholdVolumeRight[] = new double[thresholds_right.length];
-            double thresholdVolumeLeft[] = new double[thresholds_left.length];
-
-            for (int i = 0; i < thresholds_right.length; i++) {
-                thresholdVolumeRight[i] = 10 * Math.log10(mGain * thresholds_right[i]);
-            }
-            for (int i = 0; i < thresholds_left.length; i++) {
-                thresholdVolumeLeft[i] = 10 * Math.log10(mGain * thresholds_left[i]);
-            }
+//            double thresholdVolumeRight[] = new double[thresholds_right.length];
+//            double thresholdVolumeLeft[] = new double[thresholds_left.length];
+//
+//            for (int i = 0; i < thresholds_right.length; i++) {
+//                thresholdVolumeRight[i] = 10 * Math.log10(mGain * thresholds_right[i]);
+//            }
+//            for (int i = 0; i < thresholds_left.length; i++) {
+//                thresholdVolumeLeft[i] = 10 * Math.log10(mGain * thresholds_left[i]);
+//            }
             //Log.i("Final Results Right", "results are " + thresholdVolumeRight[0] + " " + thresholdVolumeRight[1] + " " + thresholdVolumeRight[2] + " " + thresholdVolumeRight[3] + " " + thresholdVolumeRight[4] + " " + thresholdVolumeRight[5] + " " + thresholdVolumeRight[6]);
             //Log.i("Final Results", "results are " + thresholdVolumeLeft[0] + " " + thresholdVolumeLeft[1] + " " + thresholdVolumeLeft[2] + " " + thresholdVolumeLeft[3] + " " + thresholdVolumeLeft[4] + " " + thresholdVolumeLeft[5] + " " + thresholdVolumeLeft[6]);
 
@@ -267,10 +267,20 @@ public class TestProctoring extends ActionBarActivity {
             String currentDateTime = sdf.format(new Date());
 
             counter = 0;
-            byte thresholdVolumeRightbyte[] = new byte[thresholdVolumeRight.length * 8];
-            for (int x = 0; x < thresholdVolumeRight.length; x++){
+//            byte thresholdVolumeRightbyte[] = new byte[thresholdVolumeRight.length * 8];
+//            for (int x = 0; x < thresholdVolumeRight.length; x++){
+//                byte tmpByteArray[] = new byte[8];
+//                ByteBuffer.wrap(tmpByteArray).putDouble(thresholdVolumeRight[x]);
+//                for (int j = 0; j < 8; j++){
+//                    thresholdVolumeRightbyte[counter] = tmpByteArray[j];
+//                    counter++;
+//                }
+//
+//            }
+            byte thresholdVolumeRightbyte[] = new byte[thresholds_right.length * 8];
+            for (int x = 0; x < thresholds_right.length; x++){
                 byte tmpByteArray[] = new byte[8];
-                ByteBuffer.wrap(tmpByteArray).putDouble(thresholdVolumeRight[x]);
+                ByteBuffer.wrap(tmpByteArray).putDouble(thresholds_right[x]);
                 for (int j = 0; j < 8; j++){
                     thresholdVolumeRightbyte[counter] = tmpByteArray[j];
                     counter++;
@@ -289,10 +299,20 @@ public class TestProctoring extends ActionBarActivity {
             }
 
             counter = 0;
-            byte thresholdVolumeLeftbyte[] = new byte[thresholdVolumeLeft.length * 8];
-            for (int x = 0; x < thresholdVolumeLeft.length; x++){
+//            byte thresholdVolumeLeftbyte[] = new byte[thresholdVolumeLeft.length * 8];
+//            for (int x = 0; x < thresholdVolumeLeft.length; x++){
+//                byte tmpByteArray[] = new byte[8];
+//                ByteBuffer.wrap(tmpByteArray).putDouble(thresholdVolumeLeft[x]);
+//                for (int j = 0; j < 8; j++){
+//                    thresholdVolumeLeftbyte[counter] = tmpByteArray[j];
+//                    counter++;
+//                }
+//
+//            }
+            byte thresholdVolumeLeftbyte[] = new byte[thresholds_left.length * 8];
+            for (int x = 0; x < thresholds_left.length; x++){
                 byte tmpByteArray[] = new byte[8];
-                ByteBuffer.wrap(tmpByteArray).putDouble(thresholdVolumeLeft[x]);
+                ByteBuffer.wrap(tmpByteArray).putDouble(thresholds_left[x]);
                 for (int j = 0; j < 8; j++){
                     thresholdVolumeLeftbyte[counter] = tmpByteArray[j];
                     counter++;

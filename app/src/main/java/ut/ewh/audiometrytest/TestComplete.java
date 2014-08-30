@@ -20,11 +20,15 @@ import android.widget.TextView;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class TestComplete extends ActionBarActivity {
 
     private final int[] testingFrequencies = {1000, 500, 1000, 3000, 4000, 6000, 8000};
+    SimpleDateFormat sdf = new SimpleDateFormat("MM_dd_yyyy-HHmmss");
+    String currentDateTime = sdf.format(new Date());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +40,7 @@ public class TestComplete extends ActionBarActivity {
         byte testResultsRightByte[] = new byte[7*8];
 
         try{
-            FileInputStream fis = openFileInput("TestResultsRight");
+            FileInputStream fis = openFileInput("TestResultsRight." + currentDateTime);
             fis.read(testResultsRightByte, 0, testResultsRightByte.length);
             fis.close();
             //Log.i("File Read Info", "File Read Successful");
@@ -60,7 +64,7 @@ public class TestComplete extends ActionBarActivity {
         byte testResultsLeftByte[] = new byte[7 * 8];
 
         try{
-            FileInputStream fis = openFileInput("TestResultsLeft");
+            FileInputStream fis = openFileInput("TestResultsLeft." + currentDateTime);
             fis.read(testResultsLeftByte, 0, testResultsLeftByte.length);
             fis.close();
             //Log.i("File Read Info", "File Read Successful");
