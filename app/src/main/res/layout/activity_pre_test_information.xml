@@ -22,7 +22,7 @@
     android:textColor="#FF8000"/>
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -38,6 +38,10 @@
                 android:text="@string/pretest_info_body"
                 android:textColor="#FFFFFF"
                 />
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/plug_in_headphones" />
 
             <Button
                 android:id="@+id/pretest_button"
