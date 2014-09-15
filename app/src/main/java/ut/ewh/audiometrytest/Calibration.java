@@ -240,6 +240,9 @@ public class Calibration extends ActionBarActivity {
 
 
                 AudioTrack audioTrack = playSound(genTone(increment, volume));
+                if (!running){
+                    return;
+                }
 //            try {
 //                Thread.sleep(500);
 //            } catch (InterruptedException e) {};

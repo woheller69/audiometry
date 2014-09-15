@@ -22,11 +22,12 @@
             android:textColor="#FF8000"/>
          <ScrollView
           android:layout_width="match_parent"
-          android:layout_height="match_parent">
+          android:layout_height="wrap_content">
           <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
               <TextView
                 android:id="@+id/pre_calibration_info_body"
                 android:layout_marginTop="15sp"
@@ -37,6 +38,12 @@
                 android:textSize="20sp"
                 android:text="@string/pre_calibration_info_body"
                 android:textColor="#FFFFFF" />
+
+              <ImageView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:src="@drawable/calibration_diagram" />
+
 
                <Button
                 android:layout_width="200sp"

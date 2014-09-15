@@ -173,7 +173,7 @@ public class TestProctoring extends ActionBarActivity {
                     for (; ; ) {
                         int tempResponse = 0;
                         int actualVolume = (minVolume + maxVolume) / 2;
-                        if ((maxVolume - minVolume) < 400) { //the test is done if the range is less than 400                            if (s == 0) {
+                        if ((maxVolume - minVolume) < 200) { //the test is done if the range is less than 400                            if (s == 0) {
                                 if (i == 0 || i == 2) {
                                     thresholds_right[i] = actualVolume * calibrationArray[1]; //records volume as threshold
                                 } else if (i == 1){
@@ -340,6 +340,8 @@ public class TestProctoring extends ActionBarActivity {
     //--------------------------------------------------------------------------
     //End of Variable and Method Definitions
     //--------------------------------------------------------------------------
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -94,13 +94,13 @@ public class TestComplete extends ActionBarActivity {
             TableLayout.LayoutParams lp = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
             row.setLayoutParams(lp);
             row.setPadding(15, 3, 15, 3);
-            row.setBackgroundColor(Color.parseColor("#FFFFFF"));
+            row.setBackgroundColor(Color.parseColor("#424242"));
 
             TextView Values = new TextView(this);
             Values.setPadding(15, 0, 15, 0);
             Values.setGravity(Gravity.LEFT);
-            Values.setTextSize(15.0f);
-            Values.setTextColor(Color.parseColor("#000000"));
+            Values.setTextSize(25.0f);
+            Values.setTextColor(Color.parseColor("#FFFFFF"));
             Values.setText(testingFrequencies[i] + " Hz Right: " + String.valueOf(testResultsRight[i]));
             row.addView(Values);
             tableResults.addView(row);
@@ -110,12 +110,12 @@ public class TestComplete extends ActionBarActivity {
             TableLayout.LayoutParams lp = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
             row.setLayoutParams(lp);
             row.setPadding(15, 3, 15, 3);
-            row.setBackgroundColor(Color.parseColor("#FFFFFF"));
+            row.setBackgroundColor(Color.parseColor("#424242"));
             TextView Values = new TextView(this);
             Values.setPadding(15, 0, 15, 0);
             Values.setGravity(Gravity.LEFT);
-            Values.setTextSize(15.0f);
-            Values.setTextColor(Color.parseColor("#000000"));
+            Values.setTextSize(25.0f);
+            Values.setTextColor(Color.parseColor("#FFFFFF"));
             Values.setText(testingFrequencies[i] + " Hz Left: " + String.valueOf(testResultsLeft[i]));
             row.addView(Values);
             tableResults.addView(row);
