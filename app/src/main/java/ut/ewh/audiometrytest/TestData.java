@@ -44,6 +44,17 @@ public class TestData extends ActionBarActivity {
         Intent intent = getIntent();
         final String fileName = intent.getStringExtra(TestLookup.DESIRED_FILE);
 
+        String[] names = fileName.split("-");
+        String time = "";
+        for (int j=0;j<4;j = j + 2){
+            if (j != 2){
+                time += String.valueOf(names[3].charAt(j)) + String.valueOf(names[3].charAt(j+1)) + ":";
+            } else {
+                time += String.valueOf(names[3].charAt(j)) + String.valueOf(names[3].charAt(j+1));
+            }
+        }
+        String name = "Test at " +time + ", " + names[2].replaceAll("_", ".") + ", " + names[1] + " Ear";
+
         Button b = (Button) findViewById(R.id.email_button);
         b.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +64,7 @@ public class TestData extends ActionBarActivity {
         });
 
         TextView title = (TextView) findViewById(R.id.test_title);
-        title.setText("Test Results for " + fileName);
+        title.setText(name);
 
         byte testResultsRightByte[] = new byte[7*8];
 
@@ -91,7 +102,7 @@ public class TestData extends ActionBarActivity {
             Values.setGravity(Gravity.LEFT);
             Values.setTextSize(25.0f);
             Values.setTextColor(Color.parseColor("#FFFFFF"));
-            Values.setText(testingFrequencies[i] + " Hz: " + String.valueOf(testResultsRight[i]));
+            Values.setText(testingFrequencies[i] + " Hz: " + String.format("%.2f", testResultsRight[i]));
             row.addView(Values);
             tableResults.addView(row);
         }

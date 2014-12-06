@@ -50,7 +50,8 @@
     android:layout_marginTop="15sp"
     android:layout_marginBottom="15sp"
     android:layout_gravity="left"
-    android:gravity="right"/>
+    android:gravity="right"
+    android:elevation="5dp"/>
 <Button
     android:layout_width="220sp"
     android:layout_height="wrap_content"
@@ -62,7 +63,8 @@
     android:onClick="gotoExport"
     android:background="@drawable/button_background"
     android:layout_gravity="left"
-    android:gravity="right"/>
+    android:gravity="right"
+    android:elevation="5dp"/>
 
  <Button
         android:layout_width="wrap_content"
@@ -75,7 +77,8 @@
         android:layout_marginTop="15sp"
         android:onClick="gotoAcknowledgements"
         android:background="@drawable/button_background"
-        android:gravity="right"/>
+        android:gravity="right"
+     android:elevation="5dp"/>
 
         </LinearLayout>
     </ScrollView>

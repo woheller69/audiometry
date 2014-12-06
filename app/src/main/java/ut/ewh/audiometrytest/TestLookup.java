@@ -83,12 +83,21 @@ public class TestLookup extends ActionBarActivity {
                     b.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT+50));
                     b.setBackgroundResource(R.drawable.button_background);
                     b.setPadding(10, 20, 10, 20);
-                    String[] names = allSavedTests[i].split("[-]");
-                    String name = "Test on " + names[1].replaceAll("\\.*_\\.*", ".") + ", " + names[1] + " Ear";
+                    String[] names = allSavedTests[i].split("-");
+                    String time = "";
+                    for (int j=0;j<4;j = j + 2){
+                        if (j != 2){
+                            time += String.valueOf(names[3].charAt(j)) + String.valueOf(names[3].charAt(j+1)) + ":";
+                        } else {
+                            time += String.valueOf(names[3].charAt(j)) + String.valueOf(names[3].charAt(j+1));
+                        }
+                    }
+                    String name = "Test at " +time + ", " + names[2].replaceAll("_", ".") + ", " + names[1] + " Ear";
                     b.setText(name);
                     b.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            
                             gotoTestData(view, allSavedTests[number]);
                         }
                     });
