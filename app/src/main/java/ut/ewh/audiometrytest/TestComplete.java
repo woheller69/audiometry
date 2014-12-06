@@ -102,24 +102,22 @@ public class TestComplete extends ActionBarActivity {
             Values.setGravity(Gravity.LEFT);
             Values.setTextSize(25.0f);
             Values.setTextColor(Color.parseColor("#FFFFFF"));
-            Values.setText(testingFrequencies[i] + " Hz Right: " + String.format("%.2f", testResultsRight[i]));
+            Values.setText(testingFrequencies[i] + " Hz: " + String.format("%.2f", testResultsLeft[i]) + "db HL Left");
             row.addView(Values);
             tableResults.addView(row);
-        }
-        for (int i = 0; i < 7; i ++) {
-            TableRow row = new TableRow(this);
-            TableLayout.LayoutParams lp = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
-            row.setLayoutParams(lp);
-            row.setPadding(15, 3, 15, 3);
-            row.setBackgroundColor(Color.parseColor("#424242"));
-            TextView Values = new TextView(this);
-            Values.setPadding(15, 0, 15, 0);
-            Values.setGravity(Gravity.LEFT);
-            Values.setTextSize(25.0f);
-            Values.setTextColor(Color.parseColor("#FFFFFF"));
-            Values.setText(testingFrequencies[i] + " Hz Left: " + String.format("%.2f", testResultsLeft[i]));
-            row.addView(Values);
-            tableResults.addView(row);
+
+            TableRow row2 = new TableRow(this);
+            row2.setLayoutParams(lp);
+            row2.setPadding(15, 3, 15, 3);
+            row2.setBackgroundColor(Color.parseColor("#424242"));
+            TextView Values2 = new TextView(this);
+            Values2.setPadding(15, 0, 15, 0);
+            Values2.setGravity(Gravity.LEFT);
+            Values2.setTextSize(25.0f);
+            Values2.setTextColor(Color.parseColor("#FFFFFF"));
+            Values2.setText(testingFrequencies[i] + " Hz: " + String.format("%.2f", testResultsRight[i]) + "db HL Right");
+            row2.addView(Values);
+            tableResults.addView(row2);
         }
     }
 
