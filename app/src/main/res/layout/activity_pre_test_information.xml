@@ -22,7 +22,8 @@
     android:textColor="#FF8000"/>
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="20sp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -42,7 +43,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/plug_in_headphones"
-                android:adjustViewBounds="true" />
+                android:adjustViewBounds="true"
+                android:paddingBottom="20sp"/>
 
             <Button
                 android:id="@+id/pretest_button"

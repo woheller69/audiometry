@@ -41,7 +41,7 @@
     android:layout_width="270sp"
     android:layout_height="wrap_content"
     android:text="@string/button_start"
-    android:onClick="gotoPretest"
+    android:onClick="gotoPreCalibration"
     android:background="@drawable/button_background"
     android:paddingLeft="30sp"
     android:paddingRight="10sp"

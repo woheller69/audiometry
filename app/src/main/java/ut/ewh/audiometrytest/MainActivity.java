@@ -29,8 +29,8 @@ public class MainActivity extends ActionBarActivity{
      * goes to PreTestInformation activity
      * @param view- current view
      */
-    public void gotoPretest(View view){
-        Intent intent = new Intent(this, PreTestInformation.class);
+    public void gotoPreCalibration(View view){
+        Intent intent = new Intent(this, Pre_Calibration.class);
         startActivity(intent);
     }
 

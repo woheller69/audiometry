@@ -35,7 +35,7 @@
     <string name="title_activity_pre__calibration">Pre-Calibration</string>
     <string name="button_calibration">Calibration</string>
     <string name="pre_calibration_title">Audiometer Calibration</string>
-    <string name="pre_calibration_info_body">In order to get accurate readings from the audiometer, your headphones must be calibrated. Please plug in your headphones into the headphone jack on your device. Place your headphone speakers about 1.8 cm, or the width of your thumb, from your device microphone as shown in the diagram below. For best results, perform this calibration in a quiet room. Tap the button below when you\'re ready to begin!</string>
+    <string name="pre_calibration_info_body">To calibrate your earphones, place them about a thumb\'s width from your device microphone. For best results, perform this calibration in a quiet room.</string>
     <string name="button_begin_calibration">Begin Calibration</string>
     <string name="title_activity_calibration">Calibration</string>
     <string name="calibration_in_progress">Calibrating...</string>
@@ -43,7 +43,7 @@
     <string name="test_complete_body">Do you want to keep your results?</string>
     <string name="test_complete_button_yes">Yes</string>
     <string name="test_complete_button_no">No</string>
-    <string name="export_body">Please enter the email address you would like to send the test results to.</string>
+    <string name="export_body">Please enter the email address where you would like the results sent.</string>
     <string name="title_activity_export_complete">ExportComplete</string>
     <string name="export_data_complete_title">Data Export Complete!</string>
     <string name="export_data_complete_button">Return to Home</string>

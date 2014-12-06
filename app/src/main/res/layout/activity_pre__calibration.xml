@@ -22,7 +22,9 @@
             android:textColor="#FF8000"/>
          <ScrollView
           android:layout_width="match_parent"
-          android:layout_height="wrap_content">
+          android:layout_height="0dp"
+          android:layout_weight="0.70"
+          android:paddingBottom="20sp">
           <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -43,10 +45,11 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:src="@drawable/calibration_diagram"
-                  android:adjustViewBounds="true" />
+                  android:adjustViewBounds="true"
+                  android:paddingBottom="20sp"/>
 
 
-               <Button
+               <!---<Button
                 android:layout_width="200sp"
                 android:layout_height="wrap_content"
                 android:text="@string/button_begin_calibration"
@@ -58,8 +61,21 @@
                 android:paddingTop="20sp"
                 android:paddingBottom="20sp"
                 android:onClick="gotoCalibration"
-                />
+                />-->
            </LinearLayout>
          </ScrollView>
+    <Button
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:text="@string/button_begin_calibration"
+        android:background="@drawable/button_background"
+        android:layout_gravity="right"
+        android:gravity="left"
+        android:paddingLeft="10sp"
+        android:paddingRight="10sp"
+        android:paddingTop="20sp"
+        android:paddingBottom="20sp"
+        android:onClick="gotoCalibration"
+        />
 
 </LinearLayout>
