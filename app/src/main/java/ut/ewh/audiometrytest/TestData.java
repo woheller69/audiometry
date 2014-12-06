@@ -1,5 +1,6 @@
 package ut.ewh.audiometrytest;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -18,18 +19,16 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 
 
-public class TestData extends ActionBarActivity {
+public class TestData extends Activity {
 
     private final int[] testingFrequencies = {1000, 500, 1000, 3000, 4000, 6000, 8000};
     public final static String DESIRED_FILE = "ut.ewh.audiometrytest.DESIRED_FILE";
-
 
     public void gotoExport(View view, String string) {
         Intent exportIntent = new Intent(this, ExportData.class);
         exportIntent.putExtra(DESIRED_FILE, string);
         startActivity(exportIntent);
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +55,9 @@ public class TestData extends ActionBarActivity {
             FileInputStream fis = openFileInput(fileName);
             fis.read(testResultsRightByte, 0, testResultsRightByte.length);
             fis.close();
-            //Log.i("File Read Info", "File Read Successful");
         } catch (IOException e) {};
 
-
         final double testResultsRight[] = new double[7];
-
 
         int counter = 0;
 
@@ -84,7 +80,6 @@ public class TestData extends ActionBarActivity {
             row.setLayoutParams(lp);
             row.setPadding(20, 3, 15, 3);
             row.setBackgroundColor(Color.parseColor("#424242"));
-
             TextView Values = new TextView(this);
             Values.setPadding(20, 0, 15, 0);
             Values.setGravity(Gravity.LEFT);

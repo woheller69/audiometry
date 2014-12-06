@@ -1,5 +1,6 @@
 package ut.ewh.audiometrytest;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -24,7 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class TestComplete extends ActionBarActivity {
+public class TestComplete extends Activity {
 
     private final int[] testingFrequencies = {1000, 500, 1000, 3000, 4000, 6000, 8000};
     SimpleDateFormat sdf = new SimpleDateFormat("MM_dd_yyyy-HHmmss");
@@ -34,20 +35,18 @@ public class TestComplete extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_complete);
-        ActionBar actionbar = getSupportActionBar();
-        actionbar.setDisplayHomeAsUpEnabled(true);
+//        ActionBar actionbar = getSupportActionBar();
+//        actionbar.setDisplayHomeAsUpEnabled(true);
 
         byte testResultsRightByte[] = new byte[7*8];
 
         try{
-            FileInputStream fis = openFileInput("TestResultsRight." + currentDateTime);
+            FileInputStream fis = openFileInput("TestResults-Right-" + currentDateTime);
             fis.read(testResultsRightByte, 0, testResultsRightByte.length);
             fis.close();
-            //Log.i("File Read Info", "File Read Successful");
         } catch (IOException e) {};
 
         final double testResultsRight[] = new double[7];
-
 
         int counter = 0;
 
@@ -59,20 +58,17 @@ public class TestComplete extends ActionBarActivity {
             }
             testResultsRight[i] = ByteBuffer.wrap(tmpByteBuffer).getDouble();
         }
-        //Log.i("Calibration Data", "Calibration factors are: " + testResultsRight[0] + " " + testResultsRight[1] + " " + testResultsRight[2] + " " + testResultsRight[3] + " " + testResultsRight[4] + " " + testResultsRight[5] + " " + testResultsRight[6]);
 
         byte testResultsLeftByte[] = new byte[7 * 8];
 
         try{
-            FileInputStream fis = openFileInput("TestResultsLeft." + currentDateTime);
+            FileInputStream fis = openFileInput("TestResults-Left-" + currentDateTime);
             fis.read(testResultsLeftByte, 0, testResultsLeftByte.length);
             fis.close();
-            //Log.i("File Read Info", "File Read Successful");
         } catch (IOException e) {};
 
 
         final double testResultsLeft[] = new double[7];
-
 
         counter = 0;
 
@@ -95,13 +91,12 @@ public class TestComplete extends ActionBarActivity {
             row.setLayoutParams(lp);
             row.setPadding(15, 3, 15, 3);
             row.setBackgroundColor(Color.parseColor("#424242"));
-
             TextView Values = new TextView(this);
             Values.setPadding(15, 0, 15, 0);
             Values.setGravity(Gravity.LEFT);
             Values.setTextSize(25.0f);
             Values.setTextColor(Color.parseColor("#FFFFFF"));
-            Values.setText(testingFrequencies[i] + " Hz Right: " + String.valueOf(testResultsRight[i]));
+            Values.setText(testingFrequencies[i] + " Hz Right: " + String.format("%.2f", testResultsRight[i]));
             row.addView(Values);
             tableResults.addView(row);
         }
@@ -116,18 +111,10 @@ public class TestComplete extends ActionBarActivity {
             Values.setGravity(Gravity.LEFT);
             Values.setTextSize(25.0f);
             Values.setTextColor(Color.parseColor("#FFFFFF"));
-            Values.setText(testingFrequencies[i] + " Hz Left: " + String.valueOf(testResultsLeft[i]));
+            Values.setText(testingFrequencies[i] + " Hz Left: " + String.format("%.2f", testResultsLeft[i]));
             row.addView(Values);
             tableResults.addView(row);
         }
-
-
-
-//        ProgressBar progressBar = new ProgressBar(this);
-//        progressBar.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, Gravity.CENTER));
-//        progressBar.setIndeterminate(true);
-//
-//        getListView().setEmptyView(progressBar);
     }
 
 

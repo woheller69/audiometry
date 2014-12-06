@@ -1,5 +1,6 @@
 package ut.ewh.audiometrytest;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -24,13 +25,10 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 
 
-public class ExportData extends ActionBarActivity {
+public class ExportData extends Activity {
     Button doneButton;
     EditText email_field;
     String email = "no email has yet been entered into this ridiculously long initialized field";
-
-
-
 
     public void gotoExportComplete() {
         Intent intent = new Intent(this, ExportComplete.class);
@@ -41,17 +39,16 @@ public class ExportData extends ActionBarActivity {
         Intent intent = new Intent(this, ExportError.class);
         startActivity(intent);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_export_data);
-        ActionBar actionbar = getSupportActionBar();
-        actionbar.setDisplayHomeAsUpEnabled(true);
+//        ActionBar actionbar = getSupportActionBar();
+//        actionbar.setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
         final String fileName = intent.getStringExtra(TestData.DESIRED_FILE);
-
-        Log.i("Warning", "Are we getting this far? The file name is " + fileName);
 
         byte testResultsRightByte[] = new byte[7*8];
 
@@ -59,12 +56,10 @@ public class ExportData extends ActionBarActivity {
             FileInputStream fis = openFileInput(fileName);
             fis.read(testResultsRightByte, 0, testResultsRightByte.length);
             fis.close();
-            //Log.i("File Read Info", "File Read Successful");
         } catch (IOException e) {};
 
 
         final double testResultsRight[] = new double[7];
-
 
         int counter = 0;
 
@@ -90,7 +85,7 @@ public class ExportData extends ActionBarActivity {
                     public void run() {
                         try {
                             HttpClient httpclient = new DefaultHttpClient();
-                            String URL = "http://107.170.226.198/mail.php?";
+                            String URL = "http://reecestevens.me/mail.php?";
                             URL += "t=" + email;
                             URL += "&s=" + "test";
                             URL += "&b=" + "Thresholds+for+test+" + fileName + "+:+[1000+Hz]+" + testResultsRight[0] + "+[500+Hz]+" + testResultsRight[1] + "+[1000+Hz+Repeated]+" + testResultsRight[2] + "+[3000+Hz]+" + testResultsRight[3] + "+[4000+Hz]+" + testResultsRight[4] + "+[6000+Hz]+" + testResultsRight[5] + "+[8000+Hz]+" + testResultsRight[6] + ".";
@@ -101,16 +96,12 @@ public class ExportData extends ActionBarActivity {
                                 response.getEntity().writeTo(out);
                                 out.close();
                                 String responseString = out.toString();
-                                //Log.i("Connection", "Successful");
-                                //Log.i("connection", responseString);
                             } else {
-                                //Log.i("connection", "unsuccessful");
                                 response.getEntity().getContent().close();
                                 throw new IOException(statusLine.getReasonPhrase());
                             }
                             gotoExportComplete();
                         } catch (Exception e) {
-                            //Log.i("Not Good", "Not Pinging IP");
                             System.err.println(e);
                             gotoExportError();
                         }

@@ -1,5 +1,6 @@
 package ut.ewh.audiometrytest;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -9,14 +10,14 @@ import android.view.MenuItem;
 import android.view.View;
 
 
-public class CalibrationComplete extends ActionBarActivity {
+public class CalibrationComplete extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calibration_complete);
-        ActionBar actionbar = getSupportActionBar();
-        actionbar.setDisplayHomeAsUpEnabled(true);
+//        ActionBar actionbar = getSupportActionBar();
+//        actionbar.setDisplayHomeAsUpEnabled(true);
 
 
     }

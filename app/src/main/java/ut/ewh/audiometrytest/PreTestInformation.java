@@ -1,5 +1,6 @@
 package ut.ewh.audiometrytest;
 
+import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
@@ -12,14 +13,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
-public class PreTestInformation extends ActionBarActivity {
+public class PreTestInformation extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pre_test_information);
-        ActionBar actionbar = getSupportActionBar();
-        actionbar.setDisplayHomeAsUpEnabled(true);
+//        ActionBar actionbar = getSupportActionBar();
+//        actionbar.setDisplayHomeAsUpEnabled(true);
     }
 
 
@@ -35,11 +36,6 @@ public class PreTestInformation extends ActionBarActivity {
         Intent intent = new Intent(this, Pre_Calibration.class);
         startActivity(intent);
     }
-
-//    public void beginTest(View view){
-//        Intent intent = new Intent(this, TestProctoring.class);
-//        startActivity(intent);
-//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -1,5 +1,6 @@
 package ut.ewh.audiometrytest;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioFormat;
@@ -22,13 +23,11 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 
 
-public class Calibration extends ActionBarActivity {
+public class Calibration extends Activity {
 
     final private int sampleRate = 44100;
     final private int numSamples = 4 * sampleRate;
-    //final private int bufferSize = 16384;
     final private int frequencies[] = {500, 1000, 3000, 4000, 6000, 8000};
-    //final private int frequency = 2000; //in Hz
     final private int volume = 30000;
     final private double mGain = 0.0044;
     final private double mAlpha = 0.9;
@@ -69,18 +68,6 @@ public class Calibration extends ActionBarActivity {
         //audioTrack.play();
         return audioTrack;
     }
-
-//    public int bitReverse(int j, int nu){
-//        int j2;
-//        int j1 = j;
-//        int k = 0;
-//        for(int i=1; i<=nu; i++){
-//            j2 = j1/2;
-//            k = 2*k + j1 - 2*j2;
-//            j1 = j2;
-//        }
-//        return k;
-//    }
 
     public int newBitReverse(int j){
         int b = 0;
@@ -134,8 +121,6 @@ public class Calibration extends ActionBarActivity {
         for (int level = 1; level <= nu; level ++){
             int increm = step * 2;
             for (int j = 0; j < step; j++){
-//                double realCoefficient = Real[level][j];
-//                double imagCoefficient = Imag[level][j];
                 for(int i = j; i < n; i += increm){
                     double realCoefficient = Real[level][j];
                     double imagCoefficient = Imag[level][j];
@@ -147,7 +132,6 @@ public class Calibration extends ActionBarActivity {
                     inputImag[i+step] -= imagCoefficient;
                     bufferReal[i] += realCoefficient;
                     inputImag[i] += imagCoefficient;
-                    //Log.i("Spot Check", "bufferReal[i+step]: " + bufferReal[i+step] + " bufferReal[i]: " + bufferReal[i] + " realCoefficient: " + realCoefficient + " imagCoefficient: " + imagCoefficient);
                 }
             }
             step *= 2;
@@ -165,16 +149,12 @@ public class Calibration extends ActionBarActivity {
         for (int j = 0; j < rmsArray.length; j++) {
             AudioRecord audioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC, sampleRate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, bufferSize);
             short[] buffer = new short[bufferSize];
-            //Log.i("Note", "Buffer size is " + bufferSize);
-            //short[] buffer = new short[bufferSize * 2];
 
             try {
                 audioRecord.startRecording();
             } catch (IllegalStateException e) {
-               // Log.e("Recording didn't work!", e.toString());
             }
             int bufferReadResult = audioRecord.read(buffer, 0, buffer.length);
-//            Log.i("Status of Buffer Read", "Result: " + bufferReadResult);
 
             //Convert buffer from type short[] to double[]
             double[] inputSignal = new double[buffer.length];
@@ -183,32 +163,20 @@ public class Calibration extends ActionBarActivity {
             }
 
             double[] outputSignal = fftAnalysis(inputSignal, inputSignalImaginary);
-            //Log.i("outputSignal", "Anything here? " + outputSignal[0] + " " + outputSignal[100] +  " " + outputSignal[200] + " " + outputSignal[300] + " " + outputSignal[400]+ " " + outputSignal[500] + outputSignal[1000] + " " + outputSignal[2000]);
 
             int k = frequency*2048/sampleRate; // Selects the value from the transform array corresponding to the desired frequency
             rmsArray[j] = outputSignal[k];
-//            for(int i = 0; i<inputSignal.length; i = i + 500){
-//                Log.i("Original Recording", "Data Point " + i + ": " + inputSignal[i]);
-//            }
-
-//            for(int i = 0; i<2048; i= i + 500){
-//                Log.i("FFT Results", "Data Point " + i + ": " + outputSignal[i] + " from: " + inputSignalImaginary[i]);
-//            }
 
            // RMS Routine
             double rms = 0;
             for (int i = 0; i < buffer.length; i++) {
                 rms += buffer[i] * buffer[i];
             }
-//            //smoothing of rms
-//            rms = (1 - mAlpha) * rms;
-            double mRmsSmoothed = (1 - mAlpha) * rms;
-          // RMS Decibel Calculation
-            double rmsdB = 20 * Math.log10(mRmsSmoothed * mGain);
+//          //smoothing of rms
+            //double mRmsSmoothed = (1 - mAlpha) * rms;
+            // RMS Decibel Calculation
 
           // FFT Decibel Calculation
-           //rmsArray[j] = 20 * Math.log10(outputSignal[k]/32767);
-           Log.i("RMS Decibel", "RMS Decibel calculation is: " + rmsdB);
             audioRecord.stop();
             audioRecord.release();
 
@@ -217,14 +185,6 @@ public class Calibration extends ActionBarActivity {
         return rmsArray;
     }
 
-//    final private Thread playTone = new Thread(new Runnable(){
-//        public void run(){
-//            AudioTrack audioTrack = playSound(genTone(increment, volume));
-//            audioTrack.play();
-//        }
-//    });
-
-    //public final Thread calibrateThread = new Thread(new Runnable() {
     static void stopThread(){
         running = false;
     }
@@ -243,15 +203,10 @@ public class Calibration extends ActionBarActivity {
                 if (!running){
                     return;
                 }
-//            try {
-//                Thread.sleep(500);
-//            } catch (InterruptedException e) {};
-                Log.i("Silence", "Listening to silence");
                 double backgroundRms[] = dbListen(frequency);
 
                 audioTrack.play();
 
-                Log.i("Audio", "Listening to audio");
                 double soundRms[] = dbListen(frequency);
 
                 double resultingRms[] = new double[5];
@@ -264,14 +219,6 @@ public class Calibration extends ActionBarActivity {
                     Log.i("FFT Decibel", "Reading "+ resultingdB[x]);
                 }
 
-
-//                for (int j = 0; j < 5; j++) {
-//                    resultingRms[j] = Math.pow(10, soundRms[j]) - Math.pow(10, backgroundRms[j]); // raise to power of 10 in order to properly subtract logarithmic scale
-//                    resultingRms[j] = Math.log10(resultingRms[j]); // return to log_10 scale
-//                    //resultingRms[j] -= dbHLCorrectionCoefficients[i]; // convert from dB SPL to dB HL
-//                   //Log.i("Resulting Frequency amplitude", "Equals: " + resultingRms[j]);
-//
-//                }
                 double rmsSum = 0;
                 int numCounter = 0;
                 for (int j = 0; j < 5; j++) {
@@ -292,13 +239,11 @@ public class Calibration extends ActionBarActivity {
                     return;
                 }
 
-
                 try{
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {};
 
             }
-            //Log.i("Calibration Results", "Calibration factors are: " + calibrationArray[0] + " " + calibrationArray[1] + " " + calibrationArray[2] + " " + calibrationArray[3] + " " + calibrationArray[4] + " " + calibrationArray[5]);
             int counter = 0;
             byte calibrationByteArray[] = new byte[calibrationArray.length * 8];
             for (int x = 0; x < calibrationArray.length; x++){
@@ -344,12 +289,8 @@ public class Calibration extends ActionBarActivity {
 
     }
 
-
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.calibration, menu);
         return true;
