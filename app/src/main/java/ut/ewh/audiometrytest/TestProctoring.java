@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -24,7 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class TestProctoring extends Activity {
+public class TestProctoring extends ActionBarActivity {
     private final int duration = 1;
     private final int sampleRate = 44100;
     private final int numSamples = duration * sampleRate;
@@ -116,7 +118,7 @@ public class TestProctoring extends Activity {
      * Writes the parameter byte array to an AudioTrack and plays the array
      * @param generatedSnd- input 16-bit PCM Array
      */
-    public void playSound(byte[] generatedSnd, int ear) {
+    public AudioTrack playSound(byte[] generatedSnd, int ear) {
         AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, sampleRate, AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_16BIT, generatedSnd.length, AudioTrack.MODE_STATIC);
         audioTrack.write(generatedSnd, 0, generatedSnd.length);
         if (ear == 0) {
@@ -125,6 +127,7 @@ public class TestProctoring extends Activity {
             audioTrack.setStereoVolume(AudioTrack.getMaxVolume(), 0);
         }
         audioTrack.play();
+        return audioTrack;
     }
 
     public class testThread extends Thread {
@@ -194,11 +197,11 @@ public class TestProctoring extends Activity {
                                 if (!running){
                                     return;
                                 }
-                                playSound(genTone(increment, actualVolume), s);
+                                AudioTrack audioTrack = playSound(genTone(increment, actualVolume), s);
                                 try {
                                     Thread.sleep(randomTime());
                                 } catch (InterruptedException e) {}
-
+                                audioTrack.release();
                                 if (heard) {
                                     tempResponse++;
                                 }
@@ -280,6 +283,10 @@ public class TestProctoring extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_proctoring);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
+        }
 
         AudioManager am = (AudioManager)getSystemService(AUDIO_SERVICE);
         am.setStreamVolume(AudioManager.STREAM_MUSIC, 9,  0);

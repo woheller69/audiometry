@@ -8,6 +8,7 @@ import android.media.AudioManager;
 import android.media.AudioRecord;
 import android.media.AudioTrack;
 import android.media.MediaRecorder;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -16,6 +17,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -23,7 +25,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 
 
-public class Calibration extends Activity {
+public class Calibration extends ActionBarActivity {
 
     final private int sampleRate = 44100;
     final private int numSamples = 4 * sampleRate;
@@ -243,6 +245,8 @@ public class Calibration extends Activity {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {};
 
+                audioTrack.release();
+
             }
             int counter = 0;
             byte calibrationByteArray[] = new byte[calibrationArray.length * 8];
@@ -274,6 +278,10 @@ public class Calibration extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calibration);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
+        }
         AudioManager am = (AudioManager)getSystemService(AUDIO_SERVICE);
         am.setStreamVolume(AudioManager.STREAM_MUSIC, 9 ,  0);
         Thread runningThread = new Thread(new Runnable() {

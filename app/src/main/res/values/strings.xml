@@ -22,6 +22,9 @@
     <string name="test_proctoring_information">This audiometry test is a simple procedure designed to evaluate your hearing capabilities. Once the test begins, you will hear beeps of various pitches and volumes. Every time you hear a beep, simply tap the screen. That\'s it! Tap the button below when you\'re ready to begin.</string>
 
     <color name="orange">#FF8000</color>
+    <color name="primary">#FF8000</color>
+    <color name="primary_dark">#ffc96500</color>
+    <color name="accent">#FFFFFF</color>
     <color name="dark_orange">#bb4000</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>

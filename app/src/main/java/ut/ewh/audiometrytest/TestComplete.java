@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
@@ -25,7 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class TestComplete extends Activity {
+public class TestComplete extends ActionBarActivity {
 
     private final int[] testingFrequencies = {1000, 500, 1000, 3000, 4000, 6000, 8000};
     SimpleDateFormat sdf = new SimpleDateFormat("MM_dd_yyyy-HHmmss");
@@ -35,6 +37,10 @@ public class TestComplete extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_complete);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
+        }
 //        ActionBar actionbar = getSupportActionBar();
 //        actionbar.setDisplayHomeAsUpEnabled(true);
 

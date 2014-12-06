@@ -1,6 +1,7 @@
 package ut.ewh.audiometrytest;
 
 import android.app.Activity;
+import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
@@ -10,15 +11,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.content.Intent;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 
-public class PreTestInformation extends Activity {
+public class PreTestInformation extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pre_test_information);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
+        }
 //        ActionBar actionbar = getSupportActionBar();
 //        actionbar.setDisplayHomeAsUpEnabled(true);
     }

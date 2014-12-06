@@ -3,12 +3,14 @@ package ut.ewh.audiometrytest;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -19,7 +21,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 
 
-public class TestData extends Activity {
+public class TestData extends ActionBarActivity {
 
     private final int[] testingFrequencies = {1000, 500, 1000, 3000, 4000, 6000, 8000};
     public final static String DESIRED_FILE = "ut.ewh.audiometrytest.DESIRED_FILE";
@@ -33,6 +35,10 @@ public class TestData extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
+        }
 
         setContentView(R.layout.activity_test_data);
         Intent intent = getIntent();

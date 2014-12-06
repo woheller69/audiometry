@@ -26,7 +26,8 @@
         <activity
             android:name="ut.ewh.audiometrytest.PreTestInformation"
             android:label="@string/title_activity_pre_test_information"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:parentActivityName="ut.ewh.audiometrytest.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ut.ewh.audiometrytest.MainActivity" />
@@ -39,14 +40,16 @@
         <activity
             android:name="ut.ewh.audiometrytest.TestComplete"
             android:label="@string/title_activity_test_complete"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:parentActivityName="ut.ewh.audiometrytest.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ut.ewh.audiometrytest.CalibrationComplete" />
+                android:value="ut.ewh.audiometrytest.MainActivity" />
         </activity>
         <activity
             android:name="ut.ewh.audiometrytest.ExportData"
-            android:label="@string/title_activity_export_data" >
+            android:label="@string/title_activity_export_data"
+            android:parentActivityName="ut.ewh.audiometrytest.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ut.ewh.audiometrytest.MainActivity" />
@@ -54,7 +57,8 @@
         <activity
             android:name="ut.ewh.audiometrytest.Pre_Calibration"
             android:label="@string/title_activity_pre__calibration"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:parentActivityName="ut.ewh.audiometrytest.PreTestInformation" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ut.ewh.audiometrytest.PreTestInformation" />
@@ -67,7 +71,8 @@
         <activity
             android:name="ut.ewh.audiometrytest.ExportComplete"
             android:label="@string/title_activity_export_complete"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:parentActivityName="ut.ewh.audiometrytest.ExportData" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ut.ewh.audiometrytest.ExportData" />
@@ -75,7 +80,8 @@
         <activity
             android:name="ut.ewh.audiometrytest.CalibrationComplete"
             android:label="@string/title_activity_calibration_complete"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:parentActivityName="ut.ewh.audiometrytest.Pre_Calibration" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ut.ewh.audiometrytest.Pre_Calibration" />
@@ -83,14 +89,16 @@
         <activity
             android:name="ut.ewh.audiometrytest.Acknowledgements"
             android:label="@string/title_activity_acknowledgements"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:parentActivityName="ut.ewh.audiometrytest.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ut.ewh.audiometrytest.MainActivity" />
         </activity>
         <activity
             android:name="ut.ewh.audiometrytest.ExportError"
-            android:label="@string/title_activity_export_error" >
+            android:label="@string/title_activity_export_error"
+            android:parentActivityName="ut.ewh.audiometrytest.ExportData" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ut.ewh.audiometrytest.ExportData" />

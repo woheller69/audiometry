@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -19,7 +21,7 @@ import android.widget.TextView;
 import java.util.regex.Pattern;
 
 
-public class TestLookup extends Activity {
+public class TestLookup extends ActionBarActivity {
 
     public final static String DESIRED_FILE = "ut.ewh.audiometrytest.DESIRED_FILE";
 
@@ -35,6 +37,10 @@ public class TestLookup extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
+        }
         final String[] allSavedTests = fileList();
         LinearLayout layout = new LinearLayout(this);
         setContentView(layout);
