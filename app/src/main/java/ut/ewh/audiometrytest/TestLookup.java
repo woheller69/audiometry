@@ -92,17 +92,18 @@ public class TestLookup extends ActionBarActivity {
                             time += String.valueOf(names[3].charAt(j)) + String.valueOf(names[3].charAt(j+1));
                         }
                     }
-                    String name = "Test at " +time + ", " + names[2].replaceAll("_", ".") + ", " + names[1] + " Ear";
+                    //String name = "Test at " +time + ", " + names[2].replaceAll("_", ".") + ", " + names[1] + " Ear";
+                    String name = "Test at " +time + ", " + names[2].replaceAll("_", ".");
                     b.setText(name);
                     b.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            
+
                             gotoTestData(view, allSavedTests[number]);
                         }
                     });
                     container.addView(b, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-
+                    i ++;
                 }
 
             }
