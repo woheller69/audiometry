@@ -46,14 +46,14 @@ public class TestLookup extends ActionBarActivity {
         setContentView(layout);
         layout.setBackgroundColor(Color.parseColor("#424242"));
         layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setPadding(0, 16, 16, 16);
+        layout.setPadding(0, 40, 16, 16);
 
         TextView textview = new TextView(this);
-        textview.setText("Audiometer Test History");
+        textview.setText("Test Results");
         textview.setTextColor(Color.parseColor("#FF8000"));
         textview.setTextSize(30);
         textview.setTypeface(null, Typeface.BOLD);
-        textview.setGravity(Gravity.RIGHT);
+        textview.setGravity(Gravity.CENTER);
         layout.addView(textview, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
 
@@ -61,7 +61,9 @@ public class TestLookup extends ActionBarActivity {
             TextView message = new TextView(this);
             message.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             message.setTextColor(Color.parseColor("#FFFFFF"));
+            message.setTextSize(20);
             message.setBackgroundColor(Color.parseColor("#424242"));
+            message.setPadding(40, 30 , 16, 0);
             message.setText("Sorry! It seems there are no tests currently stored in memory. Please take a test, then return to this page to view the results.");
             layout.addView(message, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         } else {

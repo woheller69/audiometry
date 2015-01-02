@@ -116,7 +116,7 @@ public class TestComplete extends ActionBarActivity {
             Values2.setTextSize(25.0f);
             Values2.setTextColor(Color.parseColor("#FFFFFF"));
             Values2.setText(testingFrequencies[i] + " Hz: " + String.format("%.2f", testResultsRight[i]) + "db HL Right");
-            row2.addView(Values);
+            row2.addView(Values2);
             tableResults.addView(row2);
         }
     }
