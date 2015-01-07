@@ -232,10 +232,10 @@ public class Calibration extends ActionBarActivity {
                     }
                 }
                 double dBAverage = 0;
-                for(int q = 0; q < resultingdB.length; q++){
+                for(int q = 1; q < resultingdB.length; q++){
                     dBAverage += resultingdB[q];
                 }
-                dBAverage /= resultingdB.length;
+                dBAverage /= (resultingdB.length - 1);
                 calibrationArray[i] = dBAverage / volume; // create ratio of dB/binary. Will be used in testProctoring for final conversion.
                 if (!running){
                     return;

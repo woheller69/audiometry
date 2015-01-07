@@ -44,10 +44,10 @@
     <string name="test_complete_button_yes">Yes</string>
     <string name="test_complete_button_no">No</string>
     <string name="export_body">Please enter the email address where you would like the results sent.</string>
-    <string name="title_activity_export_complete">ExportComplete</string>
+    <string name="title_activity_export_complete">Export Complete</string>
     <string name="export_data_complete_title">Data Export Complete!</string>
     <string name="export_data_complete_button">Return to Home</string>
-    <string name="title_activity_calibration_complete">CalibrationComplete</string>
+    <string name="title_activity_calibration_complete">Calibration Complete</string>
     <string name="calibration_complete_title">Calibration Complete!</string>
     <string name="calibration_complete_body">Now that calibration is complete, you can take the audiometry test. This audiometry test is a simple procedure designed to evaluate your hearing capabilities. Once the test begins, you will hear beeps of various pitches and volumes. Every time you hear a beep, simply tap the screen. That\'s it! Tap the button below when you\'re ready to begin.</string>
     <string name="calibration_complete_button">Start Test</string>
@@ -58,7 +58,7 @@
     <string name="special_thanks">Special thanks to: Pato Lankenau, Davin Siu, and James Yao</string>
     <string name="reason">Developed for Texas Engineering World Health as a submission for the 2014 EWH Design Competition.</string>
     <string name="final_notes">Questions or concerns about the app? Email reecestevens@utexas.edu.</string>
-    <string name="title_activity_export_error">ExportError</string>
+    <string name="title_activity_export_error">Export Error</string>
     <string name="export_error_title">Oops!</string>
     <string name="export_error_body">Export seems to have run into a problem. Please check your internet connection and try again. You can access your results at any time through the Test Results page and email from there!</string>
     <string name="export_error_button">Back to Main Menu</string>

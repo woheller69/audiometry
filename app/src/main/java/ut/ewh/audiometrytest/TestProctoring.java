@@ -31,6 +31,7 @@ public class TestProctoring extends ActionBarActivity {
     private final int sampleRate = 44100;
     private final int numSamples = duration * sampleRate;
     private final int volume = 32767;
+    //private final int volume = 15000;
     private final int[] testingFrequencies = {1000, 500, 1000, 3000, 4000, 6000, 8000};
     final private double mGain = 0.0044;
     final private double mAlpha = 0.9;
@@ -163,7 +164,7 @@ public class TestProctoring extends ActionBarActivity {
                     for (; ; ) {
                         int tempResponse = 0;
                         int actualVolume = (minVolume + maxVolume) / 2;
-                        if ((maxVolume - minVolume) < 200) { //the test is done if the range is less than 400                            if (s == 0) {
+                        if ((maxVolume - minVolume) < 50) { //the test is done if the range is less than 400                            if (s == 0) {
                                 if (i == 0 || i == 2) {
                                     thresholds_right[i] = actualVolume * calibrationArray[1]; //records volume as threshold
                                 } else if (i == 1){
