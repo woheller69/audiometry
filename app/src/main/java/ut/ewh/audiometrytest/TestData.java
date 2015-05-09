@@ -16,9 +16,15 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 
 
 public class TestData extends ActionBarActivity {
@@ -109,6 +115,35 @@ public class TestData extends ActionBarActivity {
             testResultsLeft[i] = ByteBuffer.wrap(tmpByteBuffer).getDouble();
         }
 
+        // Draw Graph
+        LineChart chart = (LineChart) findViewById(R.id.chart);
+        chart.setNoDataTextDescription("Whoops! No data was found. Try again!");
+        chart.setDescription("Hearing Thresholds (dB HL)");
+        ArrayList<Entry> dataLeft = new ArrayList<Entry>();
+        for (int i = 0; i < testResultsLeft.length; i ++){
+            Entry dataPoint = new Entry((float) testResultsLeft[i] , i);
+            dataLeft.add(dataPoint);
+        }
+        LineDataSet setLeft = new LineDataSet(dataLeft, "Left");
+        ArrayList<Entry> dataRight = new ArrayList<Entry>();
+        for (int i = 0; i < testResultsRight.length; i ++){
+            Entry dataPoint = new Entry((float) testResultsRight[i] , i);
+            dataRight.add(dataPoint);
+        }
+        LineDataSet setRight = new LineDataSet(dataRight, "Right");
+        ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
+        dataSets.add(setLeft);
+        dataSets.add(setRight);
+        ArrayList<String> xVals = new ArrayList<String>();
+        for (int i = 0; i < testingFrequencies.length; i++){
+            xVals.add("" + testingFrequencies[i]);
+        }
+        LineData data = new LineData(xVals, dataSets);
+        chart.setData(data);
+        chart.invalidate(); // refresh
+
+        // Draw Table
+        /*
         TableLayout tableResults = (TableLayout) findViewById(R.id.tableResults);
         tableResults.setPadding(15, 3, 15, 3);
 
@@ -141,6 +176,7 @@ public class TestData extends ActionBarActivity {
             row2.addView(Values2);
             tableResults.addView(row2);
         }
+        */
 
     }
 

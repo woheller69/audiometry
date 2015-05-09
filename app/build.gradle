@@ -6,13 +6,13 @@ android {
 
     defaultConfig {
         minSdkVersion 8
-        targetSdkVersion 20
-        versionCode 12
-        versionName "1.51"
+        targetSdkVersion 21
+        versionCode 14
+        versionName "1.65"
     }
     signingConfigs{
         releaseSign{
-            storeFile file("keystore.jks")
+            storeFile file("/Users/reecestevens/keys/keystore.jks")
             //storePassword System.console().readLine("\nKeystore password: ")
             storePassword System.getenv("KSTOREPWD")
             keyAlias "AppKey"
@@ -30,7 +30,12 @@ android {
     }
 }
 
+repositories {
+    maven { url "https://jitpack.io" }
+}
+
 dependencies {
     compile 'com.android.support:appcompat-v7:21.0.2'
+    compile 'com.github.PhilJay:MPAndroidChart:v2.0.9'
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }

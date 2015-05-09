@@ -9,6 +9,7 @@
     tools:context="ut.ewh.audiometrytest.TestData"
     android:background="@color/background_grey"
     android:orientation="vertical">
+
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -25,21 +26,12 @@
         android:paddingBottom="20sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="200sp"
-        android:paddingBottom="20sp">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TableLayout
-                android:id="@+id/tableResults"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:divider="@android:color/transparent">
-                </TableLayout>
-        </LinearLayout>
-    </ScrollView>
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/chart"
+            android:layout_width="match_parent"
+            android:layout_height="600px" />
+
     <Button
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
