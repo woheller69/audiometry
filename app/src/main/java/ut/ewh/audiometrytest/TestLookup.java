@@ -18,13 +18,12 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import java.util.regex.Pattern;
 
 
 public class TestLookup extends ActionBarActivity {
 
     public final static String DESIRED_FILE = "ut.ewh.audiometrytest.DESIRED_FILE";
-
+    String[] allSavedTests;
     public void gotoTestData(View view, String fileName){
         Intent intent = new Intent(this, TestData.class);
         intent.putExtra(DESIRED_FILE, fileName);
@@ -41,7 +40,10 @@ public class TestLookup extends ActionBarActivity {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
         }
-        final String[] allSavedTests = fileList();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
         LinearLayout layout = new LinearLayout(this);
         setContentView(layout);
         layout.setBackgroundColor(Color.parseColor("#424242"));
@@ -56,14 +58,14 @@ public class TestLookup extends ActionBarActivity {
         textview.setGravity(Gravity.CENTER);
         layout.addView(textview, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
-
+        allSavedTests = fileList();
         if (allSavedTests.length < 2) {
             TextView message = new TextView(this);
             message.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             message.setTextColor(Color.parseColor("#FFFFFF"));
             message.setTextSize(20);
             message.setBackgroundColor(Color.parseColor("#424242"));
-            message.setPadding(40, 30 , 16, 0);
+            message.setPadding(40, 30, 16, 0);
             message.setText("Sorry! It seems there are no tests currently stored in memory. Please take a test, then return to this page to view the results.");
             layout.addView(message, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         } else {
@@ -74,38 +76,32 @@ public class TestLookup extends ActionBarActivity {
 
             for (int i = 0; i < allSavedTests.length; i++) {
                 if (allSavedTests[i].equals("CalibrationPreferences")) {
-                } else{
-               //if (allSavedTests[i].matches("TestResults.*")) {
+                } else {
+                    //if (allSavedTests[i].matches("TestResults.*")) {
                     LinearLayout spacer = new LinearLayout(this);
                     spacer.setLayoutParams(new LinearLayout.LayoutParams(40, 40));
                     container.addView(spacer);
 
                     Button b = new Button(this);
                     final int number = i;
-                    b.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT+50));
+                    b.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT + 50));
                     b.setBackgroundResource(R.drawable.button_background);
                     b.setPadding(10, 20, 10, 20);
                     String[] names = allSavedTests[i].split("-");
                     String time = "";
-                    for (int j=0;j<4;j = j + 2){
-                        if (j != 2){
-                            time += String.valueOf(names[3].charAt(j)) + String.valueOf(names[3].charAt(j+1)) + ":";
+                    for (int j = 0; j < 4; j = j + 2) {
+                        if (j != 2) {
+                            time += String.valueOf(names[3].charAt(j)) + String.valueOf(names[3].charAt(j + 1)) + ":";
                         } else {
-                            time += String.valueOf(names[3].charAt(j)) + String.valueOf(names[3].charAt(j+1));
+                            time += String.valueOf(names[3].charAt(j)) + String.valueOf(names[3].charAt(j + 1));
                         }
                     }
                     //String name = "Test at " +time + ", " + names[2].replaceAll("_", ".") + ", " + names[1] + " Ear";
-                    String name = "Test at " +time + ", " + names[2].replaceAll("_", ".");
+                    String name = "Test at " + time + ", " + names[2].replaceAll("_", ".");
                     b.setText(name);
-                    b.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-
-                            gotoTestData(view, allSavedTests[number]);
-                        }
-                    });
+                    b.setOnClickListener(view -> gotoTestData(view, allSavedTests[number]));
                     container.addView(b, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                    i ++;
+                    i++;
                 }
 
             }

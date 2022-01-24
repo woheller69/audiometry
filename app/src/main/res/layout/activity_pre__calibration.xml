@@ -48,20 +48,6 @@
                   android:adjustViewBounds="true"
                   android:paddingBottom="20sp"/>
 
-
-               <!---<Button
-                android:layout_width="200sp"
-                android:layout_height="wrap_content"
-                android:text="@string/button_begin_calibration"
-                android:background="@drawable/button_background"
-                android:layout_gravity="right"
-                android:gravity="left"
-                android:paddingLeft="10sp"
-                android:paddingRight="10sp"
-                android:paddingTop="20sp"
-                android:paddingBottom="20sp"
-                android:onClick="gotoCalibration"
-                />-->
            </LinearLayout>
          </ScrollView>
     <Button
@@ -87,6 +73,7 @@
         android:background="@drawable/button_background"
         android:layout_gravity="right"
         android:gravity="left"
+        android:layout_marginTop="10dp"
         android:paddingLeft="10sp"
         android:paddingRight="10sp"
         android:paddingTop="20sp"

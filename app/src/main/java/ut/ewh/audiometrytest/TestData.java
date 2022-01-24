@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
@@ -20,21 +19,20 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import static ut.ewh.audiometrytest.TestProctoring.testFrequencies;
 
 public class TestData extends ActionBarActivity {
 
-    private final int[] frequencies = {1000, 500, 1000, 3000, 4000, 6000, 8000};
+    final double[] testResultsRight = new double[testFrequencies.length];
+    final double[] testResultsLeft = new double[testFrequencies.length];
+    String fileName;
     public final static String DESIRED_FILE = "ut.ewh.audiometrytest.DESIRED_FILE";
 
-    public void gotoExport(View view, String string) {
-        Intent exportIntent = new Intent(this, ExportData.class);
-        exportIntent.putExtra(DESIRED_FILE, string);
-        startActivity(exportIntent);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +44,7 @@ public class TestData extends ActionBarActivity {
 
         setContentView(R.layout.activity_test_data);
         Intent intent = getIntent();
-        final String fileName = intent.getStringExtra(TestLookup.DESIRED_FILE);
+        fileName = intent.getStringExtra(TestLookup.DESIRED_FILE);
 
         String[] names = fileName.split("-");
         String fileNameLeft = names[0] + "-Left-" + names[2] + "-" + names[3];
@@ -60,58 +58,30 @@ public class TestData extends ActionBarActivity {
         }
         String name = "Test at " +time + ", " + names[2].replaceAll("_", ".");
 
-        Button b = (Button) findViewById(R.id.email_button);
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                gotoExport(view, fileName);
+        Button b = (Button) findViewById(R.id.share_button);
+        b.setOnClickListener(view -> {
+            String testdata = "Thresholds right\n";
+            for (int i=0; i<testFrequencies.length;i++){
+                testdata+=testFrequencies[i] + " " + testResultsRight[i] + "\n";
             }
+            testdata+="\nThresholds left\n";
+            for (int i=0; i<testFrequencies.length;i++){
+                testdata+=testFrequencies[i] + " " + testResultsLeft[i] + "\n";
+            }
+
+            Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+            sharingIntent.setType("text/plain");
+            sharingIntent.putExtra(Intent.EXTRA_TEXT, testdata);
+            startActivity(Intent.createChooser(sharingIntent, "Share in..."));
         });
+
+        Button d = (Button) findViewById(R.id.delete_button);
+        d.setOnClickListener(view -> deleteTestData());
 
         TextView title = (TextView) findViewById(R.id.test_title);
         title.setText(name);
 
-        byte[] testResultsRightByte = new byte[7*8];
-
-        try{
-            FileInputStream fis = openFileInput(fileName);
-            fis.read(testResultsRightByte, 0, testResultsRightByte.length);
-            fis.close();
-        } catch (IOException e) {};
-
-        byte[] testResultsLeftByte = new byte[7*8];
-
-        try{
-            FileInputStream fis = openFileInput(fileNameLeft);
-            fis.read(testResultsLeftByte, 0, testResultsLeftByte.length);
-            fis.close();
-        } catch (IOException e) {};
-
-
-        final double[] testResultsRight = new double[7];
-        final double[] testResultsLeft = new double[7];
-
-        int counter = 0;
-
-        for (int i = 0; i < testResultsRight.length; i++){
-            byte[] tmpByteBuffer = new byte[8];
-            for (int j = 0; j < 8; j++) {
-                tmpByteBuffer[j] = testResultsRightByte[counter];
-                counter++;
-            }
-            testResultsRight[i] = ByteBuffer.wrap(tmpByteBuffer).getDouble();
-        }
-
-        counter = 0;
-
-        for (int i = 0; i < testResultsLeft.length; i++){
-            byte[] tmpByteBuffer = new byte[8];
-            for (int j = 0; j < 8; j++) {
-                tmpByteBuffer[j] = testResultsLeftByte[counter];
-                counter++;
-            }
-            testResultsLeft[i] = ByteBuffer.wrap(tmpByteBuffer).getDouble();
-        }
+        readTestData(fileName, fileNameLeft);
 
         // Draw Graph
         LineChart chart = (LineChart) findViewById(R.id.chart);
@@ -137,8 +107,8 @@ public class TestData extends ActionBarActivity {
         dataSets.add(setLeft);
         dataSets.add(setRight);
         ArrayList<String> xVals = new ArrayList<String>();
-        for (int i = 0; i < frequencies.length; i++){
-            xVals.add("" + frequencies[i]);
+        for (int i = 0; i < testFrequencies.length; i++){
+            xVals.add("" + testFrequencies[i]);
         }
         LineData data = new LineData(xVals, dataSets);
 
@@ -156,6 +126,59 @@ public class TestData extends ActionBarActivity {
 
     }
 
+    private void readTestData(String fileName, String fileNameLeft) {
+        byte[] testResultsRightByte = new byte[testFrequencies.length*8];
+
+        try{
+            FileInputStream fis = openFileInput(fileName);
+            fis.read(testResultsRightByte, 0, testResultsRightByte.length);
+            fis.close();
+        } catch (IOException e) {}
+        ;
+
+        byte[] testResultsLeftByte = new byte[testFrequencies.length*8];
+
+        try{
+            FileInputStream fis = openFileInput(fileNameLeft);
+            fis.read(testResultsLeftByte, 0, testResultsLeftByte.length);
+            fis.close();
+        } catch (IOException e) {}
+        ;
+
+
+        int counter = 0;
+
+        for (int i = 0; i < testResultsRight.length; i++){
+            byte[] tmpByteBuffer = new byte[8];
+            for (int j = 0; j < 8; j++) {
+                tmpByteBuffer[j] = testResultsRightByte[counter];
+                counter++;
+            }
+            testResultsRight[i] = ByteBuffer.wrap(tmpByteBuffer).getDouble();
+        }
+
+        counter = 0;
+
+        for (int i = 0; i < testResultsLeft.length; i++){
+            byte[] tmpByteBuffer = new byte[8];
+            for (int j = 0; j < 8; j++) {
+                tmpByteBuffer[j] = testResultsLeftByte[counter];
+                counter++;
+            }
+            testResultsLeft[i] = ByteBuffer.wrap(tmpByteBuffer).getDouble();
+        }
+    }
+
+    public void deleteTestData(){
+        String[] names = fileName.split("-");
+        String deleteFileRight = names[0] + "-Right-" + names[2] + "-" + names[3];
+        String deleteFileLeft = names[0] + "-Left-" + names[2] + "-" + names[3];
+        File file = new File(getFilesDir()+"/" + deleteFileRight);
+        file.delete();
+        file = new File(getFilesDir()+"/" + deleteFileLeft);
+        file.delete();
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

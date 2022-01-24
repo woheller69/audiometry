@@ -31,16 +31,13 @@ public class TestProctoring extends ActionBarActivity {
     private final int sampleRate = 44100;
     private final int numSamples = duration * sampleRate;
     private final int volume = 32767;
-    //private final int volume = 15000;
-    private final int[] frequencies = {1000, 500, 1000, 3000, 4000, 6000, 8000};
-    final private double mGain = 0.0044;
-    final private double mAlpha = 0.9;
+    static public final int[] testFrequencies = {125, 250, 500, 1000, 3000, 4000, 6000, 8000};
     private boolean heard = false;
     private boolean loop = true;
     int a = 0;
     public static boolean running = true;
-    public double[] thresholds_right = {0, 0, 0, 0, 0, 0, 0};
-    public double[] thresholds_left = {0, 0, 0, 0, 0, 0, 0};
+    public double[] thresholds_right = new double[testFrequencies.length];
+    public double[] thresholds_left = new double[testFrequencies.length];
     public static void stopThread(){
         running = false;
     }
@@ -137,15 +134,24 @@ public class TestProctoring extends ActionBarActivity {
     }
 
     public class testThread extends Thread {
+        final double[] calibrationArray = new double[Calibration.frequencies.length];
+
+        private double getCalibration(int frequency){
+            for (int i=0; i<Calibration.frequencies.length; i++){
+                if (frequency==Calibration.frequencies[i]){
+                    return calibrationArray[i];
+                }
+            }
+            return 0;
+        }
+
         public void run() {
-            byte[] calibrationByteData = new byte[48];
+            byte[] calibrationByteData = new byte[8*calibrationArray.length];
             try{
                 FileInputStream fis = openFileInput("CalibrationPreferences");
-                fis.read(calibrationByteData, 0, 48);
+                fis.read(calibrationByteData, 0, 8*calibrationArray.length);
                 fis.close();
             } catch (IOException e) {};
-
-            final double[] calibrationArray = new double[6];
 
             int counter = 0;
 
@@ -160,8 +166,8 @@ public class TestProctoring extends ActionBarActivity {
 
             //iterated once for every frequency to be tested
             for (int s = 0; s < 2; s++) {
-                for (int i = 0; i < frequencies.length; i++) {
-                    int frequency = frequencies[i];
+                for (int i = 0; i < testFrequencies.length; i++) {
+                    int frequency = testFrequencies[i];
                     float increment = (float) (Math.PI) * frequency / sampleRate;
                     int maxVolume = volume;
                     int minVolume = 0;
@@ -169,36 +175,13 @@ public class TestProctoring extends ActionBarActivity {
                     for (; ; ) {
                         int tempResponse = 0;
                         int actualVolume = (minVolume + maxVolume) / 2;
-                        showToast(frequency + " " + actualVolume);
+                        //showToast(frequency + " " + actualVolume);
+                        //showToast(Double.toString(getCalibration(frequency)));
                         if (minVolume > 0 && ((float) maxVolume/ (float) minVolume) < Math.sqrt(2)) {
                             if (s==0){
-                                if (i == 0 || i == 2) {
-                                    thresholds_right[i] = actualVolume * calibrationArray[1]; //records volume as threshold
-                                } else if (i == 1){
-                                    thresholds_right[i] = actualVolume * calibrationArray[0]; //records volume as threshold
-                                } else if (i == 3) {
-                                    thresholds_right[i] = actualVolume * calibrationArray[2]; //records volume as threshold
-                                } else if (i == 4) {
-                                    thresholds_right[i] = actualVolume * calibrationArray[3]; //records volume as threshold
-                                } else if (i == 5) {
-                                    thresholds_right[i] = actualVolume * calibrationArray[4]; //records volume as threshold
-                                } else if (i == 6) {
-                                    thresholds_right[i] = actualVolume * calibrationArray[5]; //records volume as threshold
-                                }
+                                thresholds_right[i] = actualVolume * getCalibration(frequency); //records volume as threshold
                             }else{
-                                if (i == 0 || i == 2) {
-                                    thresholds_left[i] = actualVolume * calibrationArray[1]; //records volume as threshold
-                                } else if (i == 1){
-                                    thresholds_left[i] = actualVolume * calibrationArray[0]; //records volume as threshold
-                                } else if (i == 3) {
-                                    thresholds_left[i] = actualVolume * calibrationArray[2]; //records volume as threshold
-                                } else if (i == 4) {
-                                    thresholds_left[i] = actualVolume * calibrationArray[3]; //records volume as threshold
-                                } else if (i == 5) {
-                                    thresholds_left[i] = actualVolume * calibrationArray[4]; //records volume as threshold
-                                } else if (i == 6) {
-                                    thresholds_left[i] = actualVolume * calibrationArray[5]; //records volume as threshold
-                                }
+                                thresholds_left[i] = actualVolume * getCalibration(frequency); //records volume as threshold
                             }
                             break; //go to next frequency
                         } else {

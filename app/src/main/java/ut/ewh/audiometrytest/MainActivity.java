@@ -1,6 +1,6 @@
 package ut.ewh.audiometrytest;
 
-import android.app.Activity;
+import android.Manifest;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,6 +23,7 @@ public class MainActivity extends ActionBarActivity{
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
         }
+        requestPermissions( new String[]{Manifest.permission.RECORD_AUDIO},1);
     }
 
     /**

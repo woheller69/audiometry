@@ -25,14 +25,11 @@ public class Calibration extends ActionBarActivity {
 
     final private int sampleRate = 44100;
     final private int numSamples = 4 * sampleRate;
-    final static public int[] frequencies = {500, 1000, 3000, 4000, 6000, 8000};
+    final static public int[] frequencies = {125, 250, 500, 1000, 3000, 4000, 6000, 8000};
+    final private double[] dbHLCorrectionCoefficients = {45.0, 27.0, 13.5, 7.5, 11.5, 12, 16, 15.5}; //based off of ANSI Standards
     final private int volume = 30000;
-    final private double mGain = 0.0044;
-    final private double mAlpha = 0.9;
     final private int bufferSize = AudioRecord.getMinBufferSize(sampleRate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
     double[] inputSignalImaginary = new double[2048];
-    final private double[] dbHLCorrectionCoefficients = {13.5, 7.5, 11.5, 12, 16, 15.5}; //based off of ANSI Standards
-
 
     public double[] calibrationArray = new double[frequencies.length];
     public static boolean running = true;

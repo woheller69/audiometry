@@ -36,14 +36,29 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:background="@drawable/button_background"
-        android:text="@string/email_option"
+        android:text="@string/share_option"
         android:layout_gravity="right"
         android:paddingRight="20sp"
         android:paddingLeft="30sp"
         android:paddingTop="10sp"
         android:paddingBottom="10sp"
-        android:id="@+id/email_button"
+        android:id="@+id/share_button"
         >
+
+        </Button>
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:background="@drawable/button_background"
+            android:text="@string/delete_option"
+            android:layout_gravity="right"
+            android:layout_marginTop="10dp"
+            android:paddingRight="20sp"
+            android:paddingLeft="30sp"
+            android:paddingTop="10sp"
+            android:paddingBottom="10sp"
+            android:id="@+id/delete_button"
+            >
 
         </Button>
     </LinearLayout>

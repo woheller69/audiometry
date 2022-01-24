@@ -18,7 +18,6 @@
 <string name="title_activity_export_data">Exportez les Données</string>
 <string name="button_export">Résultats de Test</string>
 <string name="title_activity_test_complete">Test Est Terminé!</string>
-<string name="email_hint">Destinataire</string>
 <string name="export_test_title">Exportez les Résultats de Test</string>
 <string name="test_proctoring_information">C\'est un test simple pour évaluer votre audition. Quand il commence, vous entendrez des sons de différentes hauteurs et de volumes. Quand vous entendez un son, tapez l\'écran. Tapez sur le bouton quand tu être prêt á commencer le test.</string>
 
@@ -33,7 +32,6 @@
     <string name="test_complete_body">Voulez-vous garder vos résultats?</string>
     <string name="test_complete_button_yes">Oui</string>
     <string name="test_complete_button_no">Non</string>
-    <string name="export_body">S\'il vous plaît, indiquer le adresse email oú vous voulez envoyer les résultats.</string>
     <string name="title_activity_export_complete">Exportation Est Terminé</string>
     <string name="export_data_complete_title">Exportation de Résultats Est Terminé!</string>
     <string name="export_data_complete_button">Retour á la Maison</string>
@@ -54,8 +52,9 @@
     <string name="export_error_button">Retour á la Maison</string>
     <string name="title_activity_test_lookup">Résultats de Test</string>
     <string name="title_activity_test_data">Données de Test</string>
-    <string name="email_option">Email les Résultats de Test</string>
+    <string name="share_option">Partager les Résultats de Test</string>
     <string name="button_skip_calibration">Sauter l\'étalonnage</string>
+    <string name="delete_option">Effacer</string>
 
 
 </resources>

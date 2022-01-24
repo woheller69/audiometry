@@ -4,26 +4,15 @@ android {
     compileSdkVersion 30
 
     defaultConfig {
-        minSdkVersion 19
+        minSdkVersion 23
         targetSdkVersion 30
         versionCode 14
         versionName "1.65"
-    }
-    signingConfigs{
-        releaseSign{
-            storeFile file("/Users/reecestevens/keys/keystore.jks")
-            //storePassword System.console().readLine("\nKeystore password: ")
-            storePassword System.getenv("KSTOREPWD")
-            keyAlias "AppKey"
-            //keyPassword System.console().readLine("\nKey password: ")
-            keyPassword System.getenv("KEYPWD")
-        }
     }
     buildTypes {
         release {
             minifyEnabled true
             debuggable false
-            signingConfig signingConfigs.releaseSign
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }

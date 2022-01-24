@@ -19,10 +19,10 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import static ut.ewh.audiometrytest.TestProctoring.testFrequencies;
 
 public class TestComplete extends ActionBarActivity {
 
-    private final int[] frequencies = {1000, 500, 1000, 3000, 4000, 6000, 8000};
     SimpleDateFormat sdf = new SimpleDateFormat("MM_dd_yyyy-HHmmss");
     String currentDateTime = sdf.format(new Date());
 
@@ -37,7 +37,7 @@ public class TestComplete extends ActionBarActivity {
 //        ActionBar actionbar = getSupportActionBar();
 //        actionbar.setDisplayHomeAsUpEnabled(true);
 
-        byte testResultsRightByte[] = new byte[7*8];
+        byte testResultsRightByte[] = new byte[testFrequencies.length*8];
 
         try{
             FileInputStream fis = openFileInput("TestResults-Right-" + currentDateTime);
@@ -45,7 +45,7 @@ public class TestComplete extends ActionBarActivity {
             fis.close();
         } catch (IOException e) {};
 
-        final double testResultsRight[] = new double[7];
+        final double testResultsRight[] = new double[testFrequencies.length];
 
         int counter = 0;
 
@@ -58,7 +58,7 @@ public class TestComplete extends ActionBarActivity {
             testResultsRight[i] = ByteBuffer.wrap(tmpByteBuffer).getDouble();
         }
 
-        byte testResultsLeftByte[] = new byte[7 * 8];
+        byte testResultsLeftByte[] = new byte[testFrequencies.length * 8];
 
         try{
             FileInputStream fis = openFileInput("TestResults-Left-" + currentDateTime);
@@ -67,7 +67,7 @@ public class TestComplete extends ActionBarActivity {
         } catch (IOException e) {};
 
 
-        final double testResultsLeft[] = new double[7];
+        final double testResultsLeft[] = new double[testFrequencies.length];
 
         counter = 0;
 
@@ -84,7 +84,7 @@ public class TestComplete extends ActionBarActivity {
         tableResults.setPadding(15, 3, 15, 3);
 
 
-        for (int i = 0; i < 7; i ++) {
+        for (int i = 0; i < testFrequencies.length; i ++) {
             TableRow row = new TableRow(this);
             TableLayout.LayoutParams lp = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
             row.setLayoutParams(lp);
@@ -95,7 +95,7 @@ public class TestComplete extends ActionBarActivity {
             Values.setGravity(Gravity.LEFT);
             Values.setTextSize(25.0f);
             Values.setTextColor(Color.parseColor("#FFFFFF"));
-            Values.setText(frequencies[i] + " Hz: " + String.format("%.2f", testResultsLeft[i]) + "db HL Left");
+            Values.setText(testFrequencies[i] + " Hz: " + String.format("%.2f", testResultsLeft[i]) + "db HL Left");
             row.addView(Values);
             tableResults.addView(row);
 
@@ -108,7 +108,7 @@ public class TestComplete extends ActionBarActivity {
             Values2.setGravity(Gravity.LEFT);
             Values2.setTextSize(25.0f);
             Values2.setTextColor(Color.parseColor("#FFFFFF"));
-            Values2.setText(frequencies[i] + " Hz: " + String.format("%.2f", testResultsRight[i]) + "db HL Right");
+            Values2.setText(testFrequencies[i] + " Hz: " + String.format("%.2f", testResultsRight[i]) + "db HL Right");
             row2.addView(Values2);
             tableResults.addView(row2);
         }

@@ -6,7 +6,6 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -47,14 +46,6 @@
                 android:value="ut.ewh.audiometrytest.MainActivity" />
         </activity>
         <activity
-            android:name="ut.ewh.audiometrytest.ExportData"
-            android:label="@string/title_activity_export_data"
-            android:parentActivityName="ut.ewh.audiometrytest.MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="ut.ewh.audiometrytest.MainActivity" />
-        </activity>
-        <activity
             android:name="ut.ewh.audiometrytest.Pre_Calibration"
             android:label="@string/title_activity_pre__calibration"
             android:screenOrientation="portrait"
@@ -68,15 +59,7 @@
             android:label="@string/title_activity_calibration"
             android:screenOrientation="portrait" >
         </activity>
-        <activity
-            android:name="ut.ewh.audiometrytest.ExportComplete"
-            android:label="@string/title_activity_export_complete"
-            android:screenOrientation="portrait"
-            android:parentActivityName="ut.ewh.audiometrytest.ExportData" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="ut.ewh.audiometrytest.ExportData" />
-        </activity>
+
         <activity
             android:name="ut.ewh.audiometrytest.CalibrationComplete"
             android:label="@string/title_activity_calibration_complete"
@@ -95,14 +78,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ut.ewh.audiometrytest.MainActivity" />
         </activity>
-        <activity
-            android:name="ut.ewh.audiometrytest.ExportError"
-            android:label="@string/title_activity_export_error"
-            android:parentActivityName="ut.ewh.audiometrytest.ExportData" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="ut.ewh.audiometrytest.ExportData" />
-        </activity>
+
         <activity
             android:name="ut.ewh.audiometrytest.TestLookup"
             android:label="@string/title_activity_test_lookup"
