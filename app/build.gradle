@@ -1,12 +1,11 @@
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.1"
+    compileSdkVersion 30
 
     defaultConfig {
-        minSdkVersion 8
-        targetSdkVersion 21
+        minSdkVersion 19
+        targetSdkVersion 30
         versionCode 14
         versionName "1.65"
     }
@@ -22,11 +21,15 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled true;
+            minifyEnabled true
             debuggable false
             signingConfig signingConfigs.releaseSign
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -35,7 +38,8 @@ repositories {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:21.0.2'
-    compile 'com.github.PhilJay:MPAndroidChart:v2.0.9'
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:21.0.2'
+    implementation 'com.github.PhilJay:MPAndroidChart:v2.0.9'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
 }

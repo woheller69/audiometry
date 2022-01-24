@@ -78,4 +78,20 @@
         android:onClick="gotoCalibration"
         />
 
+    <Button
+        android:id="@+id/skip"
+        android:visibility="gone"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:text="@string/button_skip_calibration"
+        android:background="@drawable/button_background"
+        android:layout_gravity="right"
+        android:gravity="left"
+        android:paddingLeft="10sp"
+        android:paddingRight="10sp"
+        android:paddingTop="20sp"
+        android:paddingBottom="20sp"
+        android:onClick="startTest"
+        />
+
 </LinearLayout>

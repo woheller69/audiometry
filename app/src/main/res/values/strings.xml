@@ -38,7 +38,7 @@
     <string name="pre_calibration_info_body">To calibrate your earphones, place them about a thumb\'s width from your device microphone. For best results, perform this calibration in a quiet room.</string>
     <string name="button_begin_calibration">Begin Calibration</string>
     <string name="title_activity_calibration">Calibration</string>
-    <string name="calibration_in_progress">Calibrating...</string>
+    <string name="calibration_in_progress">Calibrating&#8230;</string>
     <string name="test_complete_title">Test Complete!</string>
     <string name="test_complete_body">Do you want to keep your results?</string>
     <string name="test_complete_button_yes">Yes</string>
@@ -65,5 +65,6 @@
     <string name="title_activity_test_lookup">Test Results</string>
     <string name="title_activity_test_data">Test Data</string>
     <string name="email_option">Email Test Results</string>
+    <string name="button_skip_calibration">Skip calibration</string>
 
 </resources>

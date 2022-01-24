@@ -9,7 +9,8 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:background="@color/background_grey"
     tools:context="ut.ewh.audiometrytest.TestProctoring"
-    android:gravity="center">
+    android:gravity="center"
+    android:keepScreenOn="true">
 
     <TextView
         android:text="@string/hello_world"

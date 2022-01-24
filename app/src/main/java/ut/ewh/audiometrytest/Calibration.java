@@ -1,6 +1,5 @@
 package ut.ewh.audiometrytest;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioFormat;
@@ -9,14 +8,11 @@ import android.media.AudioRecord;
 import android.media.AudioTrack;
 import android.media.MediaRecorder;
 import android.os.Build;
-import android.provider.MediaStore;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.WindowManager;
 
 import java.io.FileNotFoundException;
@@ -29,7 +25,7 @@ public class Calibration extends ActionBarActivity {
 
     final private int sampleRate = 44100;
     final private int numSamples = 4 * sampleRate;
-    final private int frequencies[] = {500, 1000, 3000, 4000, 6000, 8000};
+    final static public int[] frequencies = {500, 1000, 3000, 4000, 6000, 8000};
     final private int volume = 30000;
     final private double mGain = 0.0044;
     final private double mAlpha = 0.9;
@@ -38,7 +34,7 @@ public class Calibration extends ActionBarActivity {
     final private double[] dbHLCorrectionCoefficients = {13.5, 7.5, 11.5, 12, 16, 15.5}; //based off of ANSI Standards
 
 
-    public double calibrationArray[] = new double[frequencies.length];
+    public double[] calibrationArray = new double[frequencies.length];
     public static boolean running = true;
 
     public void gotoCalibrationComplete(){
@@ -48,8 +44,8 @@ public class Calibration extends ActionBarActivity {
 
     public byte[] genTone(float increment, int volume) {
         float angle = 0;
-        double sample[] = new double[numSamples];
-        byte generatedSnd[] = new byte[2 * numSamples];
+        double[] sample = new double[numSamples];
+        byte[] generatedSnd = new byte[2 * numSamples];
         for (int i = 0; i < numSamples; i++) {
             sample[i] = Math.sin(angle);
             angle += increment;
@@ -154,7 +150,7 @@ public class Calibration extends ActionBarActivity {
 
             try {
                 audioRecord.startRecording();
-            } catch (IllegalStateException e) {
+            } catch (IllegalStateException e) {System.out.println (e.toString());
             }
             int bufferReadResult = audioRecord.read(buffer, 0, buffer.length);
 
@@ -249,9 +245,9 @@ public class Calibration extends ActionBarActivity {
 
             }
             int counter = 0;
-            byte calibrationByteArray[] = new byte[calibrationArray.length * 8];
+            byte[] calibrationByteArray = new byte[calibrationArray.length * 8];
             for (int x = 0; x < calibrationArray.length; x++){
-                byte tmpByteArray[] = new byte[8];
+                byte[] tmpByteArray = new byte[8];
                 ByteBuffer.wrap(tmpByteArray).putDouble(calibrationArray[x]);
                 for (int j = 0; j < 8; j++){
                     calibrationByteArray[counter] = tmpByteArray[j];
@@ -264,8 +260,8 @@ public class Calibration extends ActionBarActivity {
                 try{
                     fos.write(calibrationByteArray);
                     fos.close();
-                } catch (IOException q) {}
-            } catch (FileNotFoundException e) {
+                } catch (IOException q) {System.out.println (q.toString());}
+            } catch (FileNotFoundException e) {System.out.println (e.toString());
             }
 
             gotoCalibrationComplete();

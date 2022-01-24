@@ -1,21 +1,15 @@
 package ut.ewh.audiometrytest;
 
-import android.app.Activity;
-import android.app.ListActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -26,10 +20,9 @@ import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
 public class TestComplete extends ActionBarActivity {
 
-    private final int[] testingFrequencies = {1000, 500, 1000, 3000, 4000, 6000, 8000};
+    private final int[] frequencies = {1000, 500, 1000, 3000, 4000, 6000, 8000};
     SimpleDateFormat sdf = new SimpleDateFormat("MM_dd_yyyy-HHmmss");
     String currentDateTime = sdf.format(new Date());
 
@@ -102,7 +95,7 @@ public class TestComplete extends ActionBarActivity {
             Values.setGravity(Gravity.LEFT);
             Values.setTextSize(25.0f);
             Values.setTextColor(Color.parseColor("#FFFFFF"));
-            Values.setText(testingFrequencies[i] + " Hz: " + String.format("%.2f", testResultsLeft[i]) + "db HL Left");
+            Values.setText(frequencies[i] + " Hz: " + String.format("%.2f", testResultsLeft[i]) + "db HL Left");
             row.addView(Values);
             tableResults.addView(row);
 
@@ -115,7 +108,7 @@ public class TestComplete extends ActionBarActivity {
             Values2.setGravity(Gravity.LEFT);
             Values2.setTextSize(25.0f);
             Values2.setTextColor(Color.parseColor("#FFFFFF"));
-            Values2.setText(testingFrequencies[i] + " Hz: " + String.format("%.2f", testResultsRight[i]) + "db HL Right");
+            Values2.setText(frequencies[i] + " Hz: " + String.format("%.2f", testResultsRight[i]) + "db HL Right");
             row2.addView(Values2);
             tableResults.addView(row2);
         }

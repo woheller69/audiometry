@@ -28,7 +28,7 @@
     <string name="pre_calibration_info_body">Pour des résultats précis, vos écouteurs doivent être calibrés. S\'il vous plaît, branchez vos écouteurs. Placez-les en face de votre microphone de l\'appareil, mais ne pas touchez le microphone. Pour meilleur résultats, faire dans un piéce calme. Tapez sur le bouton quand tu être prêt á commencer l\'étalonnage.</string>
     <string name="button_begin_calibration">Commencer l\'Étalonnage</string>
     <string name="title_activity_calibration">L\'Étalonnage</string>
-    <string name="calibration_in_progress">L\'Étalonnage...</string>
+    <string name="calibration_in_progress">L\'Étalonnage&#8230;</string>
     <string name="test_complete_title">Test Est Terminé!</string>
     <string name="test_complete_body">Voulez-vous garder vos résultats?</string>
     <string name="test_complete_button_yes">Oui</string>
@@ -55,6 +55,7 @@
     <string name="title_activity_test_lookup">Résultats de Test</string>
     <string name="title_activity_test_data">Données de Test</string>
     <string name="email_option">Email les Résultats de Test</string>
+    <string name="button_skip_calibration">Sauter l\'étalonnage</string>
 
 
 </resources>

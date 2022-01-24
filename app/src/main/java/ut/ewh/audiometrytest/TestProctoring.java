@@ -1,6 +1,5 @@
 package ut.ewh.audiometrytest;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -16,6 +15,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -32,7 +32,7 @@ public class TestProctoring extends ActionBarActivity {
     private final int numSamples = duration * sampleRate;
     private final int volume = 32767;
     //private final int volume = 15000;
-    private final int[] testingFrequencies = {1000, 500, 1000, 3000, 4000, 6000, 8000};
+    private final int[] frequencies = {1000, 500, 1000, 3000, 4000, 6000, 8000};
     final private double mGain = 0.0044;
     final private double mAlpha = 0.9;
     private boolean heard = false;
@@ -45,6 +45,11 @@ public class TestProctoring extends ActionBarActivity {
         running = false;
     }
 
+
+    public void showToast(final String toast)
+    {
+        runOnUiThread(() -> Toast.makeText(TestProctoring.this, toast, Toast.LENGTH_SHORT).show());
+    }
     /**
      * Randomly picks time gap between test tones in ms
      * @return
@@ -99,8 +104,8 @@ public class TestProctoring extends ActionBarActivity {
     public byte[] genTone(float increment, int volume){
 
         float angle = 0;
-        double sample[] = new double[numSamples];
-        byte generatedSnd[] = new byte[2 * numSamples];
+        double[] sample = new double[numSamples];
+        byte[] generatedSnd = new byte[2 * numSamples];
         for (int i = 0; i < numSamples; i++){
             sample[i] = Math.sin(angle);
             angle += increment;
@@ -133,19 +138,19 @@ public class TestProctoring extends ActionBarActivity {
 
     public class testThread extends Thread {
         public void run() {
-            byte calibrationByteData[] = new byte[48];
+            byte[] calibrationByteData = new byte[48];
             try{
                 FileInputStream fis = openFileInput("CalibrationPreferences");
                 fis.read(calibrationByteData, 0, 48);
                 fis.close();
             } catch (IOException e) {};
 
-            final double calibrationArray[] = new double[6];
+            final double[] calibrationArray = new double[6];
 
             int counter = 0;
 
             for (int i = 0; i < calibrationArray.length; i++){
-                byte tmpByteBuffer[] = new byte[8];
+                byte[] tmpByteBuffer = new byte[8];
                 for (int j = 0; j < 8; j++) {
                     tmpByteBuffer[j] = calibrationByteData[counter];
                     counter++;
@@ -155,8 +160,8 @@ public class TestProctoring extends ActionBarActivity {
 
             //iterated once for every frequency to be tested
             for (int s = 0; s < 2; s++) {
-                for (int i = 0; i < testingFrequencies.length; i++) {
-                    int frequency = testingFrequencies[i];
+                for (int i = 0; i < frequencies.length; i++) {
+                    int frequency = frequencies[i];
                     float increment = (float) (Math.PI) * frequency / sampleRate;
                     int maxVolume = volume;
                     int minVolume = 0;
@@ -164,7 +169,9 @@ public class TestProctoring extends ActionBarActivity {
                     for (; ; ) {
                         int tempResponse = 0;
                         int actualVolume = (minVolume + maxVolume) / 2;
-                        if ((maxVolume - minVolume) < 50) { //the test is done if the range is less than 400                            if (s == 0) {
+                        showToast(frequency + " " + actualVolume);
+                        if (minVolume > 0 && ((float) maxVolume/ (float) minVolume) < Math.sqrt(2)) {
+                            if (s==0){
                                 if (i == 0 || i == 2) {
                                     thresholds_right[i] = actualVolume * calibrationArray[1]; //records volume as threshold
                                 } else if (i == 1){
@@ -177,7 +184,8 @@ public class TestProctoring extends ActionBarActivity {
                                     thresholds_right[i] = actualVolume * calibrationArray[4]; //records volume as threshold
                                 } else if (i == 6) {
                                     thresholds_right[i] = actualVolume * calibrationArray[5]; //records volume as threshold
-                                } else {}
+                                }
+                            }else{
                                 if (i == 0 || i == 2) {
                                     thresholds_left[i] = actualVolume * calibrationArray[1]; //records volume as threshold
                                 } else if (i == 1){
@@ -190,7 +198,8 @@ public class TestProctoring extends ActionBarActivity {
                                     thresholds_left[i] = actualVolume * calibrationArray[4]; //records volume as threshold
                                 } else if (i == 6) {
                                     thresholds_left[i] = actualVolume * calibrationArray[5]; //records volume as threshold
-                                } else {}
+                                }
+                            }
                             break; //go to next frequency
                         } else {
                             for (int z = 0; z < 3; z++) { //iterate three times per volume level
@@ -233,11 +242,11 @@ public class TestProctoring extends ActionBarActivity {
 
             counter = 0;
 
-            byte thresholdVolumeRightbyte[] = new byte[thresholds_right.length * 8];
-            for (int x = 0; x < thresholds_right.length; x++){
-                byte tmpByteArray[] = new byte[8];
-                ByteBuffer.wrap(tmpByteArray).putDouble(thresholds_right[x]);
-                for (int j = 0; j < 8; j++){
+            byte[] thresholdVolumeRightbyte = new byte[thresholds_right.length * 8];
+            for (double v : thresholds_right) {
+                byte[] tmpByteArray = new byte[8];
+                ByteBuffer.wrap(tmpByteArray).putDouble(v);
+                for (int j = 0; j < 8; j++) {
                     thresholdVolumeRightbyte[counter] = tmpByteArray[j];
                     counter++;
                 }
@@ -253,11 +262,11 @@ public class TestProctoring extends ActionBarActivity {
 
             counter = 0;
 
-            byte thresholdVolumeLeftbyte[] = new byte[thresholds_left.length * 8];
-            for (int x = 0; x < thresholds_left.length; x++){
-                byte tmpByteArray[] = new byte[8];
-                ByteBuffer.wrap(tmpByteArray).putDouble(thresholds_left[x]);
-                for (int j = 0; j < 8; j++){
+            byte[] thresholdVolumeLeftbyte = new byte[thresholds_left.length * 8];
+            for (double v : thresholds_left) {
+                byte[] tmpByteArray = new byte[8];
+                ByteBuffer.wrap(tmpByteArray).putDouble(v);
+                for (int j = 0; j < 8; j++) {
                     thresholdVolumeLeftbyte[counter] = tmpByteArray[j];
                     counter++;
                 }
