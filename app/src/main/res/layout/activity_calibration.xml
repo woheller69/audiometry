@@ -10,7 +10,8 @@
     tools:context="ut.ewh.audiometrytest.Calibration"
     android:layout_gravity="center"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    android:keepScreenOn="true">
 
     <TextView
         android:text="@string/calibration_in_progress"

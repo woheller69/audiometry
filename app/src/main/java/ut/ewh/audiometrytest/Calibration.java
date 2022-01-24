@@ -145,11 +145,8 @@ public class Calibration extends ActionBarActivity {
             AudioRecord audioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC, sampleRate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, bufferSize);
             short[] buffer = new short[bufferSize];
 
-            try {
-                audioRecord.startRecording();
-            } catch (IllegalStateException e) {System.out.println (e.toString());
-            }
-            int bufferReadResult = audioRecord.read(buffer, 0, buffer.length);
+            audioRecord.startRecording();
+            audioRecord.read(buffer, 0, buffer.length);
 
             //Convert buffer from type short[] to double[]
             double[] inputSignal = new double[buffer.length];

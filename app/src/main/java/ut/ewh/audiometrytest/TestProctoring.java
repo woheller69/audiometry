@@ -24,6 +24,8 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class TestProctoring extends ActionBarActivity {
@@ -33,14 +35,12 @@ public class TestProctoring extends ActionBarActivity {
     private final int volume = 32767;
     static public final int[] testFrequencies = {125, 250, 500, 1000, 3000, 4000, 6000, 8000};
     private boolean heard = false;
-    private boolean loop = true;
     int a = 0;
-    public static boolean running = true;
     public double[] thresholds_right = new double[testFrequencies.length];
     public double[] thresholds_left = new double[testFrequencies.length];
-    public static void stopThread(){
-        running = false;
-    }
+
+    testThread testThread;
+
 
 
     public void showToast(final String toast)
@@ -135,7 +135,7 @@ public class TestProctoring extends ActionBarActivity {
 
     public class testThread extends Thread {
         final double[] calibrationArray = new double[Calibration.frequencies.length];
-
+        private boolean stopped = false;
         private double getCalibration(int frequency){
             for (int i=0; i<Calibration.frequencies.length; i++){
                 if (frequency==Calibration.frequencies[i]){
@@ -143,6 +143,9 @@ public class TestProctoring extends ActionBarActivity {
                 }
             }
             return 0;
+        }
+        public void stopThread(){
+            stopped = true;
         }
 
         public void run() {
@@ -166,13 +169,16 @@ public class TestProctoring extends ActionBarActivity {
 
             //iterated once for every frequency to be tested
             for (int s = 0; s < 2; s++) {
+                if (stopped){break;}
                 for (int i = 0; i < testFrequencies.length; i++) {
+                    if (stopped){break;}
                     int frequency = testFrequencies[i];
                     float increment = (float) (Math.PI) * frequency / sampleRate;
                     int maxVolume = volume;
                     int minVolume = 0;
                     // This is the loop for each individual sample using a binary search algorithm
                     for (; ; ) {
+                        if (stopped){break;}
                         int tempResponse = 0;
                         int actualVolume = (minVolume + maxVolume) / 2;
                         //showToast(frequency + " " + actualVolume);
@@ -186,10 +192,8 @@ public class TestProctoring extends ActionBarActivity {
                             break; //go to next frequency
                         } else {
                             for (int z = 0; z < 3; z++) { //iterate three times per volume level
+                                if (stopped){break;}
                                 heard = false;
-                                if (!running){
-                                    return;
-                                }
                                 AudioTrack audioTrack = playSound(genTone(increment, actualVolume), s);
                                 try {
                                     Thread.sleep(randomTime());
@@ -218,7 +222,7 @@ public class TestProctoring extends ActionBarActivity {
                 }
                 TestProctoring.this.runOnUiThread(bkgrndFlashBlack);
             }
-            loop = false;
+            if (stopped) return;
 
             SimpleDateFormat sdf = new SimpleDateFormat("MM_dd_yyyy-HHmmss");
             String currentDateTime = sdf.format(new Date());
@@ -283,55 +287,23 @@ public class TestProctoring extends ActionBarActivity {
 
         AudioManager am = (AudioManager)getSystemService(AUDIO_SERVICE);
         am.setStreamVolume(AudioManager.STREAM_MUSIC, 9,  0);
-
-        Thread timingThread = new Thread (new Runnable() {
-            public void run() {
-                while (loop) {
-                    if (!running){
-                        return;
-                    }
-                    if (heard) {
-                        try {
-                            Thread.sleep(500);
-                        } catch (InterruptedException x) {}
-                        TestProctoring.this.runOnUiThread(bkgrndFlashBlack);
-                    }
-                }
-            }
-        });
-
-        Thread screenThread = new Thread (new Runnable() {
-            public void run(){
-                while (loop){
-                    if (!running){
-                        return;
-                    }
-                    if (heard){
-                        TestProctoring.this.runOnUiThread(bkgrndFlash);
-                        while (heard){
-
-                        }
-                    }
-                }
-            }
-        });
-        Thread testRunningThread = new Thread(new Runnable(){
-            public void run() {
-                final testThread testThread = new testThread();
-                testThread.run();
-            }
-        });
-        testRunningThread.start();
-        screenThread.start();
-        timingThread.start();
+        testThread = new testThread();
+        testThread.start();
     }
-
-
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent e){
         Log.i("Touch Alert", "Screen was hit!" + a++ + heard);
         heard = true;
+        TestProctoring.this.runOnUiThread(bkgrndFlash);
+        Timer timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                TestProctoring.this.runOnUiThread(bkgrndFlashBlack);
+            }
+        };
+        timer.schedule(timerTask,250);
         return super.dispatchTouchEvent(e);
     }
 
@@ -360,7 +332,7 @@ public class TestProctoring extends ActionBarActivity {
     @Override
     public void onStop(){
         super.onStop();
-        stopThread();
+        testThread.stopThread();
     }
 
 }
