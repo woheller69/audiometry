@@ -14,9 +14,10 @@ at wwww.ewh.org. I went with EWH to Rwanda in the summer of 2014 for two months 
 fix stuff, and see these problems for myself-- if you want to learn more about that, check out my blog at
 reecestevens.svbtle.com. 
 
-This code is under the MIT license, which basically means that you can use bits of this code wherever
-you'd like! If you find something useful for your own project, shoot me an email at reecestevens@utexas.edu.
-I'd love to see how the app is helping you! And if you're feeling generous, feel free to thank AME in your
-project:)
+The current version of this code is published under GNU GPL V3 License.
+
+The original version of this code is under the MIT license, Copyright (c) 2014 Reece Stevens.
+
+Uses FFT.java and Complex.java libraries which are published under GNU Public License V3
 
 Project Start Date: 1.29.14
