@@ -171,18 +171,18 @@ public class TestProctoring extends ActionBarActivity {
                     float increment = (float) (Math.PI) * frequency / sampleRate;
                     int maxVolume = volume;
                     int minVolume = 0;
+                    int thresVolume = maxVolume;
                     // This is the loop for each individual sample using a binary search algorithm
                     for (; ; ) {
                         if (stopped){break;}
                         int tempResponse = 0;
                         int actualVolume = (minVolume + maxVolume) / 2;
-                        //showToast(frequency + " " + actualVolume);
-                        //showToast(Double.toString(getCalibration(frequency)));
+
                         if (minVolume > 0 && ((float) maxVolume/ (float) minVolume) < Math.sqrt(2)) {
                             if (s==0){
-                                thresholds_right[i] = actualVolume * getCalibration(frequency); //records volume as threshold
+                                thresholds_right[i] = thresVolume * getCalibration(frequency); //records volume as threshold
                             }else{
-                                thresholds_left[i] = actualVolume * getCalibration(frequency); //records volume as threshold
+                                thresholds_left[i] = thresVolume * getCalibration(frequency); //records volume as threshold
                             }
                             break; //go to next frequency
                         } else {
@@ -208,6 +208,7 @@ public class TestProctoring extends ActionBarActivity {
                             }
                             //If the response was positive two out of three times, register as heard
                             if (tempResponse >= 2) {
+                                thresVolume = actualVolume;
                                 maxVolume = actualVolume;
                             } else {
                                 minVolume = actualVolume;
