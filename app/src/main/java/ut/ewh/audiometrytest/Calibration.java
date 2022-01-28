@@ -15,11 +15,6 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.ByteBuffer;
-
 
 public class Calibration extends ActionBarActivity {
 
@@ -29,6 +24,7 @@ public class Calibration extends ActionBarActivity {
     final private double[] dbHLCorrectionCoefficients = {45.0, 27.0, 13.5, 7.5, 11.5, 12, 16, 15.5}; //based off of ANSI Standards
     final private int volume = 30000;
     final private int bufferSize = AudioRecord.getMinBufferSize(sampleRate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
+    private Context context;
 
     public double[] calibrationArray = new double[frequencies.length];
     public static boolean running = true;
@@ -162,25 +158,9 @@ public class Calibration extends ActionBarActivity {
                 audioTrack.release();
 
             }
-            int counter = 0;
-            byte[] calibrationByteArray = new byte[calibrationArray.length * 8];
-            for (int x = 0; x < calibrationArray.length; x++){
-                byte[] tmpByteArray = new byte[8];
-                ByteBuffer.wrap(tmpByteArray).putDouble(calibrationArray[x]);
-                for (int j = 0; j < 8; j++){
-                    calibrationByteArray[counter] = tmpByteArray[j];
-                    counter++;
-                }
 
-            }
-            try{
-                FileOutputStream fos = openFileOutput("CalibrationPreferences", Context.MODE_PRIVATE);
-                try{
-                    fos.write(calibrationByteArray);
-                    fos.close();
-                } catch (IOException q) {System.out.println (q.toString());}
-            } catch (FileNotFoundException e) {System.out.println (e.toString());
-            }
+            FileOperations fileOperations = new FileOperations();
+            fileOperations.writeCalibration(calibrationArray, context);
 
             gotoCalibrationComplete();
 
@@ -188,10 +168,12 @@ public class Calibration extends ActionBarActivity {
         }
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calibration);
+        context=this;
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
         AudioManager am = (AudioManager)getSystemService(AUDIO_SERVICE);

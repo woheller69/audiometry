@@ -1,5 +1,6 @@
 package ut.ewh.audiometrytest;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -14,21 +15,20 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import static ut.ewh.audiometrytest.TestProctoring.testFrequencies;
 
 public class TestComplete extends ActionBarActivity {
-
+    double[][] testResults = new double[2][testFrequencies.length];
+    Context context;
     SimpleDateFormat sdf = new SimpleDateFormat("MM_dd_yyyy-HHmmss");
     String currentDateTime = sdf.format(new Date());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context=this;
         setContentView(R.layout.activity_test_complete);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -37,48 +37,8 @@ public class TestComplete extends ActionBarActivity {
 //        ActionBar actionbar = getSupportActionBar();
 //        actionbar.setDisplayHomeAsUpEnabled(true);
 
-        byte testResultsRightByte[] = new byte[testFrequencies.length*8];
-
-        try{
-            FileInputStream fis = openFileInput("TestResults-Right-" + currentDateTime);
-            fis.read(testResultsRightByte, 0, testResultsRightByte.length);
-            fis.close();
-        } catch (IOException e) {};
-
-        final double testResultsRight[] = new double[testFrequencies.length];
-
-        int counter = 0;
-
-        for (int i = 0; i < testResultsRight.length; i++){
-            byte tmpByteBuffer[] = new byte[8];
-            for (int j = 0; j < 8; j++) {
-                tmpByteBuffer[j] = testResultsRightByte[counter];
-                counter++;
-            }
-            testResultsRight[i] = ByteBuffer.wrap(tmpByteBuffer).getDouble();
-        }
-
-        byte testResultsLeftByte[] = new byte[testFrequencies.length * 8];
-
-        try{
-            FileInputStream fis = openFileInput("TestResults-Left-" + currentDateTime);
-            fis.read(testResultsLeftByte, 0, testResultsLeftByte.length);
-            fis.close();
-        } catch (IOException e) {};
-
-
-        final double testResultsLeft[] = new double[testFrequencies.length];
-
-        counter = 0;
-
-        for (int i = 0; i < testResultsLeft.length; i++){
-            byte tmpByteBuffer[] = new byte[8];
-            for (int j = 0; j < 8; j++) {
-                tmpByteBuffer[j] = testResultsLeftByte[counter];
-                counter++;
-            }
-            testResultsLeft[i] = ByteBuffer.wrap(tmpByteBuffer).getDouble();
-        }
+        FileOperations fileOperations = new FileOperations();
+        testResults=fileOperations.readTestData("TestResults-Right-" + currentDateTime, "TestResults-Left-" + currentDateTime, context);
 
         TableLayout tableResults = (TableLayout) findViewById(R.id.tableResults);
         tableResults.setPadding(15, 3, 15, 3);
@@ -95,7 +55,7 @@ public class TestComplete extends ActionBarActivity {
             Values.setGravity(Gravity.LEFT);
             Values.setTextSize(25.0f);
             Values.setTextColor(Color.parseColor("#FFFFFF"));
-            Values.setText(testFrequencies[i] + " Hz: " + String.format("%.2f", testResultsLeft[i]) + "db HL Left");
+            Values.setText(testFrequencies[i] + " Hz: " + String.format("%.2f", testResults[0][i]) + "db HL Left");
             row.addView(Values);
             tableResults.addView(row);
 
@@ -108,7 +68,7 @@ public class TestComplete extends ActionBarActivity {
             Values2.setGravity(Gravity.LEFT);
             Values2.setTextSize(25.0f);
             Values2.setTextColor(Color.parseColor("#FFFFFF"));
-            Values2.setText(testFrequencies[i] + " Hz: " + String.format("%.2f", testResultsRight[i]) + "db HL Right");
+            Values2.setText(testFrequencies[i] + " Hz: " + String.format("%.2f", testResults[1][i]) + "db HL Right");
             row2.addView(Values2);
             tableResults.addView(row2);
         }

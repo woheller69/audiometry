@@ -17,13 +17,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -38,7 +31,7 @@ public class TestProctoring extends ActionBarActivity {
     int a = 0;
     public double[] thresholds_right = new double[testFrequencies.length];
     public double[] thresholds_left = new double[testFrequencies.length];
-
+    private Context context;
     testThread testThread;
 
 
@@ -149,24 +142,9 @@ public class TestProctoring extends ActionBarActivity {
         }
 
         public void run() {
-            byte[] calibrationByteData = new byte[8*calibrationArray.length];
-            try{
-                FileInputStream fis = openFileInput("CalibrationPreferences");
-                fis.read(calibrationByteData, 0, 8*calibrationArray.length);
-                fis.close();
-            } catch (IOException e) {};
-
-            int counter = 0;
-
-            for (int i = 0; i < calibrationArray.length; i++){
-                byte[] tmpByteBuffer = new byte[8];
-                for (int j = 0; j < 8; j++) {
-                    tmpByteBuffer[j] = calibrationByteData[counter];
-                    counter++;
-                }
-                calibrationArray[i] = ByteBuffer.wrap(tmpByteBuffer).getDouble();
-                Log.i("Array Check", "Calibration: " + Calibration.frequencies[i] + " " + calibrationArray[i]);
-            }
+            FileOperations fileOperations = new FileOperations();
+            fileOperations.readCalibration(calibrationArray, context);
+            int counter;
 
             //iterated once for every frequency to be tested
             for (int s = 0; s < 2; s++) {
@@ -225,50 +203,11 @@ public class TestProctoring extends ActionBarActivity {
             }
             if (stopped) return;
 
-            SimpleDateFormat sdf = new SimpleDateFormat("MM_dd_yyyy-HHmmss");
-            String currentDateTime = sdf.format(new Date());
-
-            counter = 0;
-
-            byte[] thresholdVolumeRightbyte = new byte[thresholds_right.length * 8];
-            for (double v : thresholds_right) {
-                byte[] tmpByteArray = new byte[8];
-                ByteBuffer.wrap(tmpByteArray).putDouble(v);
-                for (int j = 0; j < 8; j++) {
-                    thresholdVolumeRightbyte[counter] = tmpByteArray[j];
-                    counter++;
-                }
-
-            }
-            try{
-                FileOutputStream fos = openFileOutput("TestResults-Right-" + currentDateTime, Context.MODE_PRIVATE);
-                try{
-                    fos.write(thresholdVolumeRightbyte);
-                    fos.close();
-                } catch (IOException q) {}
-            } catch (FileNotFoundException e) {}
-
-            counter = 0;
-
-            byte[] thresholdVolumeLeftbyte = new byte[thresholds_left.length * 8];
-            for (double v : thresholds_left) {
-                byte[] tmpByteArray = new byte[8];
-                ByteBuffer.wrap(tmpByteArray).putDouble(v);
-                for (int j = 0; j < 8; j++) {
-                    thresholdVolumeLeftbyte[counter] = tmpByteArray[j];
-                    counter++;
-                }
-
-            }
-            try{
-                FileOutputStream fos = openFileOutput("TestResults-Left-" + currentDateTime, Context.MODE_PRIVATE);
-                try{
-                    fos.write(thresholdVolumeLeftbyte);
-                    fos.close();
-                } catch (IOException q) {}
-            } catch (FileNotFoundException e) {}
+            fileOperations.writeTestResult(thresholds_right, thresholds_left, context);
             gotoComplete();
         }
+
+
     }
 
 
@@ -280,6 +219,7 @@ public class TestProctoring extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context=this;
         setContentView(R.layout.activity_test_proctoring);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);

@@ -1,5 +1,6 @@
 package ut.ewh.audiometrytest;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -19,24 +20,20 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import static ut.ewh.audiometrytest.TestProctoring.testFrequencies;
 
 public class TestData extends ActionBarActivity {
 
-    final double[] testResultsRight = new double[testFrequencies.length];
-    final double[] testResultsLeft = new double[testFrequencies.length];
+    double[][] testResults = new double[2][testFrequencies.length];
     String fileName;
     public final static String DESIRED_FILE = "ut.ewh.audiometrytest.DESIRED_FILE";
-
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context=this;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
@@ -62,11 +59,11 @@ public class TestData extends ActionBarActivity {
         b.setOnClickListener(view -> {
             String testdata = "Thresholds right\n";
             for (int i=0; i<testFrequencies.length;i++){
-                testdata+=testFrequencies[i] + " " + testResultsRight[i] + "\n";
+                testdata+=testFrequencies[i] + " " + testResults[1][i] + "\n";
             }
             testdata+="\nThresholds left\n";
             for (int i=0; i<testFrequencies.length;i++){
-                testdata+=testFrequencies[i] + " " + testResultsLeft[i] + "\n";
+                testdata+=testFrequencies[i] + " " + testResults[0][i] + "\n";
             }
 
             Intent sharingIntent = new Intent(Intent.ACTION_SEND);
@@ -75,29 +72,30 @@ public class TestData extends ActionBarActivity {
             startActivity(Intent.createChooser(sharingIntent, "Share in..."));
         });
 
+        FileOperations fileOperations = new FileOperations();
+        testResults=fileOperations.readTestData(fileName, fileNameLeft, context);
+
         Button d = (Button) findViewById(R.id.delete_button);
-        d.setOnClickListener(view -> deleteTestData());
+        d.setOnClickListener(view -> fileOperations.deleteTestData(fileName,context));
 
         TextView title = (TextView) findViewById(R.id.test_title);
         title.setText(name);
-
-        readTestData(fileName, fileNameLeft);
 
         // Draw Graph
         LineChart chart = (LineChart) findViewById(R.id.chart);
         chart.setNoDataTextDescription("Whoops! No data was found. Try again!");
         chart.setDescription("Hearing Thresholds (dB HL)");
         ArrayList<Entry> dataLeft = new ArrayList<Entry>();
-        for (int i = 0; i < testResultsLeft.length; i ++){
-            Entry dataPoint = new Entry((float) testResultsLeft[i] , i);
+        for (int i = 0; i < testResults[0].length; i ++){
+            Entry dataPoint = new Entry((float) testResults[0][i] , i);
             dataLeft.add(dataPoint);
         }
         LineDataSet setLeft = new LineDataSet(dataLeft, "Left");
         setLeft.setCircleColor(getResources().getColor(R.color.green));
         setLeft.setColor(getResources().getColor(R.color.green));
         ArrayList<Entry> dataRight = new ArrayList<Entry>();
-        for (int i = 0; i < testResultsRight.length; i ++){
-            Entry dataPoint = new Entry((float) testResultsRight[i] , i);
+        for (int i = 0; i < testResults[1].length; i ++){
+            Entry dataPoint = new Entry((float) testResults[1][i] , i);
             dataRight.add(dataPoint);
         }
         LineDataSet setRight = new LineDataSet(dataRight, "Right");
@@ -126,59 +124,7 @@ public class TestData extends ActionBarActivity {
 
     }
 
-    private void readTestData(String fileName, String fileNameLeft) {
-        byte[] testResultsRightByte = new byte[testFrequencies.length*8];
 
-        try{
-            FileInputStream fis = openFileInput(fileName);
-            fis.read(testResultsRightByte, 0, testResultsRightByte.length);
-            fis.close();
-        } catch (IOException e) {}
-        ;
-
-        byte[] testResultsLeftByte = new byte[testFrequencies.length*8];
-
-        try{
-            FileInputStream fis = openFileInput(fileNameLeft);
-            fis.read(testResultsLeftByte, 0, testResultsLeftByte.length);
-            fis.close();
-        } catch (IOException e) {}
-        ;
-
-
-        int counter = 0;
-
-        for (int i = 0; i < testResultsRight.length; i++){
-            byte[] tmpByteBuffer = new byte[8];
-            for (int j = 0; j < 8; j++) {
-                tmpByteBuffer[j] = testResultsRightByte[counter];
-                counter++;
-            }
-            testResultsRight[i] = ByteBuffer.wrap(tmpByteBuffer).getDouble();
-        }
-
-        counter = 0;
-
-        for (int i = 0; i < testResultsLeft.length; i++){
-            byte[] tmpByteBuffer = new byte[8];
-            for (int j = 0; j < 8; j++) {
-                tmpByteBuffer[j] = testResultsLeftByte[counter];
-                counter++;
-            }
-            testResultsLeft[i] = ByteBuffer.wrap(tmpByteBuffer).getDouble();
-        }
-    }
-
-    public void deleteTestData(){
-        String[] names = fileName.split("-");
-        String deleteFileRight = names[0] + "-Right-" + names[2] + "-" + names[3];
-        String deleteFileLeft = names[0] + "-Left-" + names[2] + "-" + names[3];
-        File file = new File(getFilesDir()+"/" + deleteFileRight);
-        file.delete();
-        file = new File(getFilesDir()+"/" + deleteFileLeft);
-        file.delete();
-
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
