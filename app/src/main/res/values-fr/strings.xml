@@ -13,7 +13,7 @@
 <string name="pretest_info_body">Avant le test commence, les écouteurs doivant être calibrés. Tapez sur le bouton quand tu être prêt continuer. </string>
 <string name="pretest_button">Instructions d\'Étalonnage</string>
 <string name="title_activity_test_proctoring">Tapez Quand Vous Entendez Un Son</string>
-<string name="hello_world">Test En Cours!</string>
+<string name="test_running">Test En Cours!</string>
 <string name="title_activity_test_proctoring_revised">Test En Cours!</string>
 <string name="title_activity_export_data">Exportez les Données</string>
 <string name="button_export">Résultats de Test</string>
@@ -55,6 +55,7 @@
     <string name="share_option">Partager les Résultats de Test</string>
     <string name="button_skip_calibration">Sauter l\'étalonnage</string>
     <string name="delete_option">Effacer</string>
-
+    <string name="right_ear">Oreille droite</string>
+    <string name="left_ear">Oreille gauche</string>
 
 </resources>

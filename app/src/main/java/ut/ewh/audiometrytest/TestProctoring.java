@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Timer;
@@ -33,6 +34,8 @@ public class TestProctoring extends ActionBarActivity {
     public double[] thresholds_left = new double[testFrequencies.length];
     private Context context;
     testThread testThread;
+    TextView earView;
+    TextView frequencyView;
 
 
 
@@ -40,6 +43,15 @@ public class TestProctoring extends ActionBarActivity {
     {
         runOnUiThread(() -> Toast.makeText(TestProctoring.this, toast, Toast.LENGTH_SHORT).show());
     }
+
+    public void setEarView(final int textID){
+        runOnUiThread(() -> earView.setText(textID));
+    }
+
+    public void setFrequencyView(final int freq){
+        runOnUiThread(() -> frequencyView.setText(freq + " Hz"));
+    }
+
     /**
      * Randomly picks time gap between test tones in ms
      * @return
@@ -79,10 +91,10 @@ public class TestProctoring extends ActionBarActivity {
     };
 
     /**
-     * go to TestComplete activity
+     * go to MainActivity
      */
-    public void gotoComplete(){
-        Intent intent = new Intent(this, TestComplete.class);
+    public void gotoMain(){
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     };
 
@@ -148,10 +160,14 @@ public class TestProctoring extends ActionBarActivity {
 
             //iterated once for every frequency to be tested
             for (int s = 0; s < 2; s++) {
+                if (s==0) setEarView(R.string.right_ear);
+                else setEarView(R.string.left_ear);
+
                 if (stopped){break;}
                 for (int i = 0; i < testFrequencies.length; i++) {
                     if (stopped){break;}
                     int frequency = testFrequencies[i];
+                    setFrequencyView(frequency);
                     float increment = (float) (Math.PI) * frequency / sampleRate;
                     int maxVolume = volume;
                     int minVolume = 0;
@@ -204,7 +220,7 @@ public class TestProctoring extends ActionBarActivity {
             if (stopped) return;
 
             fileOperations.writeTestResult(thresholds_right, thresholds_left, context);
-            gotoComplete();
+            gotoMain();
         }
 
 
@@ -221,6 +237,8 @@ public class TestProctoring extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         context=this;
         setContentView(R.layout.activity_test_proctoring);
+        earView = findViewById(R.id.ear);
+        frequencyView = findViewById(R.id.frequency);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));

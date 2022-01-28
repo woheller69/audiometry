@@ -13,12 +13,40 @@
     android:keepScreenOn="true">
 
     <TextView
-        android:text="@string/hello_world"
-        android:layout_width="wrap_content"
+        android:layout_above="@id/ear"
+        android:layout_marginBottom="40dp"
+        android:text="@string/test_running"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="40sp"
         android:textColor="@color/orange"
         android:textStyle="bold"
         android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/ear"
+        android:layout_above="@id/frequency"
+        android:background="@drawable/button_background"
+        android:text="@string/right_ear"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:textSize="40sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/frequency"
+        android:background="@drawable/button_background"
+        android:text="8000 Hz"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="40sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:gravity="center_horizontal"/>
 
 </RelativeLayout>

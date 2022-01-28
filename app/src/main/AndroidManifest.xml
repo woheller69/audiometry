@@ -37,15 +37,6 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="ut.ewh.audiometrytest.TestComplete"
-            android:label="@string/title_activity_test_complete"
-            android:screenOrientation="portrait"
-            android:parentActivityName="ut.ewh.audiometrytest.MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="ut.ewh.audiometrytest.MainActivity" />
-        </activity>
-        <activity
             android:name="ut.ewh.audiometrytest.Pre_Calibration"
             android:label="@string/title_activity_pre__calibration"
             android:screenOrientation="portrait"

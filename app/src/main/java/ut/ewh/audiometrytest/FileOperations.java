@@ -67,84 +67,61 @@ public class FileOperations {
 
         counter = 0;
 
-        byte[] thresholdVolumeRightbyte = new byte[thresholds_right.length * 8];
+        byte[] thresholdVolume = new byte[thresholds_right.length * 8 + thresholds_left.length * 8];
+
         for (double v : thresholds_right) {
             byte[] tmpByteArray = new byte[8];
             ByteBuffer.wrap(tmpByteArray).putDouble(v);
             for (int j = 0; j < 8; j++) {
-                thresholdVolumeRightbyte[counter] = tmpByteArray[j];
+                thresholdVolume[counter] = tmpByteArray[j];
                 counter++;
             }
-
         }
-        try{
-            FileOutputStream fos = context.openFileOutput("TestResults-Right-" + currentDateTime, Context.MODE_PRIVATE);
-            try{
-                fos.write(thresholdVolumeRightbyte);
-                fos.close();
-            } catch (IOException q) {}
-        } catch (FileNotFoundException e) {}
-
-        counter = 0;
-
-        byte[] thresholdVolumeLeftbyte = new byte[thresholds_left.length * 8];
         for (double v : thresholds_left) {
             byte[] tmpByteArray = new byte[8];
             ByteBuffer.wrap(tmpByteArray).putDouble(v);
             for (int j = 0; j < 8; j++) {
-                thresholdVolumeLeftbyte[counter] = tmpByteArray[j];
+                thresholdVolume[counter] = tmpByteArray[j];
                 counter++;
             }
-
         }
+
         try{
-            FileOutputStream fos = context.openFileOutput("TestResults-Left-" + currentDateTime, Context.MODE_PRIVATE);
+            FileOutputStream fos = context.openFileOutput("TestResults-" + currentDateTime, Context.MODE_PRIVATE);
             try{
-                fos.write(thresholdVolumeLeftbyte);
+                fos.write(thresholdVolume);
                 fos.close();
             } catch (IOException q) {}
         } catch (FileNotFoundException e) {}
+
     }
 
-    public double[][] readTestData(String fileName, String fileNameLeft, Context context) {
-        byte[] testResultsRightByte = new byte[testFrequencies.length*8];
+    public double[][] readTestData(String fileName, Context context) {
+        byte[] testResultsByte = new byte[testFrequencies.length*8+testFrequencies.length*8];
 
         try{
             FileInputStream fis = context.openFileInput(fileName);
-            fis.read(testResultsRightByte, 0, testResultsRightByte.length);
+            fis.read(testResultsByte, 0, testResultsByte.length);
             fis.close();
-        } catch (IOException e) {}
-        ;
+        } catch (IOException e) {};
 
-        byte[] testResultsLeftByte = new byte[testFrequencies.length*8];
-
-        try{
-            FileInputStream fis = context.openFileInput(fileNameLeft);
-            fis.read(testResultsLeftByte, 0, testResultsLeftByte.length);
-            fis.close();
-        } catch (IOException e) {}
-        ;
-
-
-        double[][] testResults= new double[2][testFrequencies.length];    //left=0, right=1
+        double[][] testResults= new double[2][testFrequencies.length];    //left=1, right=0
 
         int counter = 0;
 
         for (int i = 0; i < testFrequencies.length; i++){
             byte[] tmpByteBuffer = new byte[8];
             for (int j = 0; j < 8; j++) {
-                tmpByteBuffer[j] = testResultsRightByte[counter];
+                tmpByteBuffer[j] = testResultsByte[counter];
                 counter++;
             }
             testResults[0][i] = ByteBuffer.wrap(tmpByteBuffer).getDouble();
         }
 
-        counter = 0;
-
         for (int i = 0; i < testFrequencies.length; i++){
             byte[] tmpByteBuffer = new byte[8];
             for (int j = 0; j < 8; j++) {
-                tmpByteBuffer[j] = testResultsLeftByte[counter];
+                tmpByteBuffer[j] = testResultsByte[counter];
                 counter++;
             }
             testResults[1][i] = ByteBuffer.wrap(tmpByteBuffer).getDouble();
@@ -153,13 +130,9 @@ public class FileOperations {
     }
 
     public void deleteTestData(String fileName, Context context){
-        String[] names = fileName.split("-");
-        String deleteFileRight = names[0] + "-Right-" + names[2] + "-" + names[3];
-        String deleteFileLeft = names[0] + "-Left-" + names[2] + "-" + names[3];
-        File file = new File(context.getFilesDir()+"/" + deleteFileRight);
+        File file = new File(context.getFilesDir()+"/" + fileName);
         file.delete();
-        file = new File(context.getFilesDir()+"/" + deleteFileLeft);
-        file.delete();
+
 
     }
 

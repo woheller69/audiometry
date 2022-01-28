@@ -18,6 +18,10 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
 
 public class TestLookup extends ActionBarActivity {
@@ -58,8 +62,14 @@ public class TestLookup extends ActionBarActivity {
         textview.setGravity(Gravity.CENTER);
         layout.addView(textview, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
-        allSavedTests = fileList();
-        if (allSavedTests.length < 2) {
+        List<String> list = new ArrayList<String>(Arrays.asList(fileList()));
+        for (Iterator<String> iterator = list.iterator(); iterator.hasNext();) {
+            String string = iterator.next();
+            if (string.equals("CalibrationPreferences")) iterator.remove();
+        }
+        allSavedTests = list.toArray(new String[0]);
+
+        if (allSavedTests.length < 1) {
             TextView message = new TextView(this);
             message.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             message.setTextColor(Color.parseColor("#FFFFFF"));
@@ -75,38 +85,26 @@ public class TestLookup extends ActionBarActivity {
             container.setOrientation(LinearLayout.VERTICAL);
 
             for (int i = 0; i < allSavedTests.length; i++) {
-                if (allSavedTests[i].equals("CalibrationPreferences")) {
-                } else {
-                    //if (allSavedTests[i].matches("TestResults.*")) {
-                    LinearLayout spacer = new LinearLayout(this);
-                    spacer.setLayoutParams(new LinearLayout.LayoutParams(40, 40));
-                    container.addView(spacer);
 
-                    Button b = new Button(this);
-                    final int number = i;
-                    b.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT + 50));
-                    b.setBackgroundResource(R.drawable.button_background);
-                    b.setPadding(10, 20, 10, 20);
-                    String[] names = allSavedTests[i].split("-");
-                    String time = "";
-                    for (int j = 0; j < 4; j = j + 2) {
-                        if (j != 2) {
-                            time += String.valueOf(names[3].charAt(j)) + String.valueOf(names[3].charAt(j + 1)) + ":";
-                        } else {
-                            time += String.valueOf(names[3].charAt(j)) + String.valueOf(names[3].charAt(j + 1));
-                        }
-                    }
-                    //String name = "Test at " +time + ", " + names[2].replaceAll("_", ".") + ", " + names[1] + " Ear";
-                    String name = "Test at " + time + ", " + names[2].replaceAll("_", ".");
-                    b.setText(name);
-                    b.setOnClickListener(view -> gotoTestData(view, allSavedTests[number]));
-                    container.addView(b, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                    i++;
-                }
+                LinearLayout spacer = new LinearLayout(this);
+                spacer.setLayoutParams(new LinearLayout.LayoutParams(40, 40));
+                container.addView(spacer);
 
+                Button b = new Button(this);
+                b.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT + 50));
+                b.setBackgroundResource(R.drawable.button_background);
+                b.setPadding(10, 20, 10, 20);
+                String[] names = allSavedTests[i].split("-");
+                String time = "" + (names[2].charAt(0)) + (names[2].charAt(1)) + ":" + (names[2].charAt(2)) + (names[2].charAt(3));
+                String name = "Test at " + time + ", " + names[1].replaceAll("_", ".");
+                b.setText(name);
+                int finalI = i;
+                b.setOnClickListener(view -> gotoTestData(view, allSavedTests[finalI]));
+                container.addView(b, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             }
             scrollview.addView(container);
             layout.addView(scrollview);
+
         }
 
     }

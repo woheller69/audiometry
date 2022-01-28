@@ -12,7 +12,7 @@
     <string name="pretest_info_body">Before the audiometry test is performed, the headphones must be calibrated. Ensure that the headphones being used are firmly plugged into the headphone jack. Press the button below when you\'re ready to see calibration instructions. Once the headphones are calibrated, you can begin the audiometry test.</string>
     <string name="pretest_button">Calibration Instructions</string>
     <string name="title_activity_test_proctoring">Tap When You Hear A Beep</string>
-    <string name="hello_world">Test in Progress!</string>
+    <string name="test_running">Test in Progress!</string>
     <string name="title_activity_test_proctoring_revised">Test Has Begun!</string>
     <string name="title_activity_export_data">Export Data</string>
     <string name="button_export">Test Results</string>
@@ -65,5 +65,7 @@
     <string name="share_option">Share Test Results</string>
     <string name="button_skip_calibration">Skip calibration</string>
     <string name="delete_option">Delete</string>
+    <string name="right_ear">Right Ear</string>
+    <string name="left_ear">Left Ear</string>
 
 </resources>

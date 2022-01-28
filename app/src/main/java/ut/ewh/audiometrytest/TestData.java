@@ -44,28 +44,21 @@ public class TestData extends ActionBarActivity {
         fileName = intent.getStringExtra(TestLookup.DESIRED_FILE);
 
         String[] names = fileName.split("-");
-        String fileNameLeft = names[0] + "-Left-" + names[2] + "-" + names[3];
-        String time = "";
-        for (int j=0;j<4;j = j + 2){
-            if (j != 2){
-                time += String.valueOf(names[3].charAt(j)) + String.valueOf(names[3].charAt(j+1)) + ":";
-            } else {
-                time += String.valueOf(names[3].charAt(j)) + String.valueOf(names[3].charAt(j+1));
-            }
-        }
-        String name = "Test at " +time + ", " + names[2].replaceAll("_", ".");
+
+        String time = ""+ (names[2].charAt(0)) + (names[2].charAt(1)) + ":" + (names[2].charAt(2)) + (names[2].charAt(3));
+        String name = "Test at " +time + ", " + names[1].replaceAll("_", ".");
 
         Button b = (Button) findViewById(R.id.share_button);
         b.setOnClickListener(view -> {
             String testdata = "Thresholds right\n";
             for (int i=0; i<testFrequencies.length;i++){
-                testdata+=testFrequencies[i] + " " + testResults[1][i] + "\n";
+                testdata+=testFrequencies[i] + " " + testResults[0][i] + "\n";
             }
             testdata+="\nThresholds left\n";
             for (int i=0; i<testFrequencies.length;i++){
                 testdata+=testFrequencies[i] + " " + testResults[0][i] + "\n";
             }
-
+            testdata+="\n";
             Intent sharingIntent = new Intent(Intent.ACTION_SEND);
             sharingIntent.setType("text/plain");
             sharingIntent.putExtra(Intent.EXTRA_TEXT, testdata);
@@ -73,7 +66,7 @@ public class TestData extends ActionBarActivity {
         });
 
         FileOperations fileOperations = new FileOperations();
-        testResults=fileOperations.readTestData(fileName, fileNameLeft, context);
+        testResults=fileOperations.readTestData(fileName, context);
 
         Button d = (Button) findViewById(R.id.delete_button);
         d.setOnClickListener(view -> fileOperations.deleteTestData(fileName,context));
@@ -86,16 +79,16 @@ public class TestData extends ActionBarActivity {
         chart.setNoDataTextDescription("Whoops! No data was found. Try again!");
         chart.setDescription("Hearing Thresholds (dB HL)");
         ArrayList<Entry> dataLeft = new ArrayList<Entry>();
-        for (int i = 0; i < testResults[0].length; i ++){
-            Entry dataPoint = new Entry((float) testResults[0][i] , i);
+        for (int i = 0; i < testResults[1].length; i ++){
+            Entry dataPoint = new Entry((float) testResults[1][i] , i);
             dataLeft.add(dataPoint);
         }
         LineDataSet setLeft = new LineDataSet(dataLeft, "Left");
         setLeft.setCircleColor(getResources().getColor(R.color.green));
         setLeft.setColor(getResources().getColor(R.color.green));
         ArrayList<Entry> dataRight = new ArrayList<Entry>();
-        for (int i = 0; i < testResults[1].length; i ++){
-            Entry dataPoint = new Entry((float) testResults[1][i] , i);
+        for (int i = 0; i < testResults[0].length; i ++){
+            Entry dataPoint = new Entry((float) testResults[0][i] , i);
             dataRight.add(dataPoint);
         }
         LineDataSet setRight = new LineDataSet(dataRight, "Right");
