@@ -133,14 +133,13 @@ public class Calibration extends ActionBarActivity {
                 double[] resultingdB = new double[5];
 
                 for(int x = 1; x < resultingRms.length; x++){  //do not use first measurement, sound maybe not yet running or still running
-                    resultingRms[x] = soundRms[x]/backgroundRms[x];
-                    resultingdB[x] = 20 * Math.log10(resultingRms[x]) + 70;
+                    resultingRms[x] = soundRms[x]/backgroundRms[x]; //problem if no noise measured and backgroundRms=0
+                    resultingdB[x] = 20 * Math.log10(resultingRms[x]) + 70; //why 70?
                     if (Double.isNaN(resultingdB[x])) {
                         resultingdB[x]=0;  //workaround if calibration not working
                         showToast("Error during calibration");
                     }
                     resultingdB[x] -= dbHLCorrectionCoefficients[i];
-                    Log.i("FFT Decibel", "Reading "+ resultingdB[x]);
                 }
                 Log.i("Array Check", "Correction: "  + " " + resultingdB[1] + " " + resultingdB[2] + " " + resultingdB[3] + " " + resultingdB[4]);
 
