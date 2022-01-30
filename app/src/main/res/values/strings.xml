@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Audiometry Made Easy</string>
+    <string name="app_name">Audiometry</string>
     <string name="action_settings">Settings</string>
-    <string name="main_menu_greeting">Audiometry Made Easy</string>
+    <string name="main_menu_greeting">Audiometry</string>
     <string name="main_menu_greeting_body">Quick and Simple Hearing Evaluation</string>
     <string name="button_start">Begin Test</string>
     <string name="button_acknowledgements">Acknowledgements</string>
     <string name="title_activity_pre_test_information">Before We Begin</string>
-    <string name="pretest_title">Instructions</string>
-    <string name="pretest_info_body">Before the audiometry test is performed, the headphones must be calibrated. Ensure that the headphones being used are firmly plugged into the headphone jack. Press the button below when you\'re ready to see calibration instructions. Once the headphones are calibrated, you can begin the audiometry test.</string>
-    <string name="pretest_button">Calibration Instructions</string>
+
     <string name="title_activity_test_proctoring">Tap When You Hear A Beep</string>
     <string name="test_running">Test in Progress!</string>
     <string name="title_activity_test_proctoring_revised">Test Has Begun!</string>
@@ -18,15 +16,12 @@
     <string name="button_export">Test Results</string>
     <string name="title_activity_test_complete">Test Complete!</string>
     <string name="export_test_title">Export Test Results</string>
-    <string name="test_proctoring_information">This audiometry test is a simple procedure designed to evaluate your hearing capabilities. Once the test begins, you will hear beeps of various pitches and volumes. Every time you hear a beep, simply tap the screen. That\'s it! Tap the button below when you\'re ready to begin.</string>
-
-
 
     <string name="title_activity_pre__calibration">Pre-Calibration</string>
     <string name="button_calibration">Calibration</string>
     <string name="pre_calibration_title">Audiometer Calibration</string>
-    <string name="pre_calibration_info_body">Calibration of your earphones must be performed in a quiet place by a normally hearing person between the ages of 18 and 35.</string>
-    <string name="button_begin_calibration">Begin Calibration</string>
+    <string name="pre_calibration_info_body">Before the audiometry test is performed, the headphones must be calibrated. Ensure that the headphones being used are firmly plugged into the headphone jack. Calibration of your earphones must be performed in a quiet place by at least one normally hearing person between the ages of 18 and 35. Once the test begins, you will hear beeps of various pitches and volumes. Every time you hear a beep, simply tap the screen.</string>
+    <string name="button_begin_calibration">Add calibration</string>
     <string name="title_activity_calibration">Calibration</string>
     <string name="calibration_in_progress">Calibrating&#8230;</string>
     <string name="test_complete_title">Test Complete!</string>

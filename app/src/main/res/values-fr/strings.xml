@@ -2,16 +2,14 @@
 <resources>
 
 
-<string name="app_name">Audiometry Made Easy</string>
+<string name="app_name">Audiometry</string>
 <string name="action_settings">Settings</string>
-<string name="main_menu_greeting">The University of Texas at Austin EWH Audiometry Test</string>
+<string name="main_menu_greeting">Audiometry</string>
 <string name="main_menu_greeting_body">Que choisirez-vous?</string>
 <string name="button_start">Nouveau Test</string>
 <string name="button_acknowledgements">Remerciement</string>
 <string name="title_activity_pre_test_information">Avant De Commencer</string>
-<string name="pretest_title">Instructions</string>
-<string name="pretest_info_body">Avant le test commence, les écouteurs doivant être calibrés. Tapez sur le bouton quand tu être prêt continuer. </string>
-<string name="pretest_button">Instructions d\'Étalonnage</string>
+
 <string name="title_activity_test_proctoring">Tapez Quand Vous Entendez Un Son</string>
 <string name="test_running">Test En Cours!</string>
 <string name="title_activity_test_proctoring_revised">Test En Cours!</string>
@@ -19,13 +17,12 @@
 <string name="button_export">Résultats de Test</string>
 <string name="title_activity_test_complete">Test Est Terminé!</string>
 <string name="export_test_title">Exportez les Résultats de Test</string>
-<string name="test_proctoring_information">C\'est un test simple pour évaluer votre audition. Quand il commence, vous entendrez des sons de différentes hauteurs et de volumes. Quand vous entendez un son, tapez l\'écran. Tapez sur le bouton quand tu être prêt á commencer le test.</string>
 
-    <string name="title_activity_pre__calibration">Avant l\'Étalonnage</string>
+    <string name="title_activity_pre__calibration">Avant l\'etalonnage</string>
     <string name="button_calibration">L\'Étalonnage</string>
-    <string name="pre_calibration_title">L\'Étalonnage de Audiométrie</string>
-    <string name="pre_calibration_info_body">Le calibrage doit être effectué dans un endroit calme par une personne normalement entendante âgée de 18 à 35 ans. </string>
-    <string name="button_begin_calibration">Commencer l\'Étalonnage</string>
+    <string name="pre_calibration_title">L\'Étalonnage de audiométrie</string>
+    <string name="pre_calibration_info_body">Avant d\'effectuer le test d\'audiométrie, les écouteurs doivent être calibrés. Assurez-vous que le casque utilisé est fermement branché dans la prise casque. Le calibrage de vos écouteurs doit être effectué dans un endroit calme par au moins une personne normalement entendante âgée de 18 à 35 ans. Une fois le test commencé, vous entendrez des bips de différentes hauteurs et volumes. Chaque fois que vous entendez un bip, appuyez simplement sur l\'écran.  </string>
+    <string name="button_begin_calibration">Ajouter un étalonnage</string>
     <string name="title_activity_calibration">L\'Étalonnage</string>
     <string name="calibration_in_progress">L\'Étalonnage&#8230;</string>
     <string name="test_complete_title">Test Est Terminé!</string>

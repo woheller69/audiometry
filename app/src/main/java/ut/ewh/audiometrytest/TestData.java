@@ -48,7 +48,7 @@ public class TestData extends ActionBarActivity {
 
         String[] names = fileName.split("-");
 
-        String time = DateFormat.getDateInstance(DateFormat.SHORT).format(Long.parseLong(names[1]))+" "+DateFormat.getTimeInstance(DateFormat.SHORT).format(Long.parseLong(names[1]));
+        String time = DateFormat.getTimeInstance(DateFormat.SHORT).format(Long.parseLong(names[1])) + ", " + DateFormat.getDateInstance(DateFormat.SHORT).format(Long.parseLong(names[1]));
         String name = "Test at " +time;
 
         Button b = (Button) findViewById(R.id.share_button);

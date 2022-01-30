@@ -71,6 +71,8 @@
             android:elevation="5dp"/>
 
         <Button
+            android:id="@+id/main_results"
+            android:visibility="gone"
             android:layout_width="220sp"
             android:layout_height="wrap_content"
             android:text="@string/button_export"

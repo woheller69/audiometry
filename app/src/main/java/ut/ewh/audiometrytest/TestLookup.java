@@ -61,7 +61,7 @@ public class TestLookup extends ActionBarActivity {
         textview.setTextSize(30);
         textview.setTypeface(null, Typeface.BOLD);
         textview.setGravity(Gravity.CENTER);
-        layout.addView(textview, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        layout.addView(textview, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
         List<String> list = new ArrayList<String>(Arrays.asList(fileList()));
         for (Iterator<String> iterator = list.iterator(); iterator.hasNext();) {
@@ -81,7 +81,7 @@ public class TestLookup extends ActionBarActivity {
             layout.addView(message, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         } else {
             ScrollView scrollview = new ScrollView(this);
-            scrollview.setLayoutParams(new ScrollView.LayoutParams(ScrollView.LayoutParams.FILL_PARENT, ScrollView.LayoutParams.WRAP_CONTENT));
+            scrollview.setLayoutParams(new ScrollView.LayoutParams(ScrollView.LayoutParams.MATCH_PARENT, ScrollView.LayoutParams.WRAP_CONTENT));
             LinearLayout container = new LinearLayout(this);
             container.setOrientation(LinearLayout.VERTICAL);
 
@@ -97,7 +97,7 @@ public class TestLookup extends ActionBarActivity {
                 b.setPadding(10, 20, 10, 20);
                 String[] names = allSavedTests[i].split("-");
 
-                String time = DateFormat.getDateInstance(DateFormat.SHORT).format(Long.parseLong(names[1]))+" "+DateFormat.getTimeInstance(DateFormat.SHORT).format(Long.parseLong(names[1]));
+                String time = DateFormat.getTimeInstance(DateFormat.SHORT).format(Long.parseLong(names[1])) + ", " + DateFormat.getDateInstance(DateFormat.SHORT).format(Long.parseLong(names[1]));
                 String name = "Test at " +time;
                 b.setText(name);
                 int finalI = i;

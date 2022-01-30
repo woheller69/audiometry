@@ -20,11 +20,12 @@ public class MainActivity extends ActionBarActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button startTest = findViewById(R.id.main_startTest);
+        Button testResults = findViewById(R.id.main_results);
         getSupportActionBar().getThemedContext();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
         requestPermissions( new String[]{Manifest.permission.RECORD_AUDIO},1);
-        if (FileOperations.isCalibrated(this)) startTest.setVisibility(View.VISIBLE);
+        if (FileOperations.isCalibrated(this)) {startTest.setVisibility(View.VISIBLE); testResults.setVisibility(View.VISIBLE);}
     }
 
     /**
