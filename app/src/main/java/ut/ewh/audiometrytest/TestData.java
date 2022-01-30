@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -20,8 +21,10 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import static ut.ewh.audiometrytest.TestProctoring.testFrequencies;
 
@@ -32,6 +35,16 @@ public class TestData extends ActionBarActivity {
     String fileName;
     public final static String DESIRED_FILE = "ut.ewh.audiometrytest.DESIRED_FILE";
     private Context context;
+
+    public float scaleCbr(double cbr) {
+        //return (float)(Math.log10(cbr));
+        return (float) (Math.log10(cbr/125)/Math.log10(2));
+    }
+
+    public float unScaleCbr(double cbr) {
+        double calcVal = Math.pow(2,cbr)*125;
+        return (float)(calcVal);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,21 +102,23 @@ public class TestData extends ActionBarActivity {
 
         ArrayList<Entry> dataLeft = new ArrayList<Entry>();
         for (int i = 0; i < testResults[1].length; i ++){
-            Entry dataPoint = new Entry( testFrequencies[i],(float) (testResults[1][i]-calibrationArray[i]) );
+            Entry dataPoint = new Entry( scaleCbr(testFrequencies[i]),(float) (testResults[1][i]-calibrationArray[i]) );
             dataLeft.add(dataPoint);
         }
         LineDataSet setLeft = new LineDataSet(dataLeft, "Left");
         setLeft.setCircleColor(getResources().getColor(R.color.green));
         setLeft.setColor(getResources().getColor(R.color.green));
+        setLeft.setValueTextColor(Color.WHITE);
 
         ArrayList<Entry> dataRight = new ArrayList<Entry>();
         for (int i = 0; i < testResults[0].length; i ++){
-            Entry dataPoint = new Entry( testFrequencies[i], (float)(testResults[0][i]-calibrationArray[i]));
+            Entry dataPoint = new Entry( scaleCbr(testFrequencies[i]), (float)(testResults[0][i]-calibrationArray[i]));
             dataRight.add(dataPoint);
         }
         LineDataSet setRight = new LineDataSet(dataRight, "Right");
         setRight.setCircleColor(getResources().getColor(R.color.dark_orange));
         setRight.setColor(getResources().getColor(R.color.dark_orange));
+        setRight.setValueTextColor(Color.WHITE);
 
         LineData data = new LineData(setLeft,setRight);
 
@@ -115,6 +130,19 @@ public class TestData extends ActionBarActivity {
         rightAxis.setTextColor(Color.WHITE);
         Legend legend = chart.getLegend();
         legend.setTextColor(Color.WHITE);
+
+        xAxis.setValueFormatter(new IAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                DecimalFormat mFormat;
+                mFormat = new DecimalFormat("##0.#"); // use one decimal.
+                    return mFormat.format(unScaleCbr(value));
+            }
+            @Override
+            public int getDecimalDigits() {
+                return 0;
+            }
+        });
 
         chart.setData(data);
         chart.invalidate(); // refresh
