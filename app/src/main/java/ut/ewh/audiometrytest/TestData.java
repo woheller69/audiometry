@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -20,12 +21,14 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import static ut.ewh.audiometrytest.TestProctoring.testFrequencies;
 
 public class TestData extends ActionBarActivity {
 
     double[][] testResults = new double[2][testFrequencies.length];
+    double[] calibrationArray = new double[testFrequencies.length];
     String fileName;
     public final static String DESIRED_FILE = "ut.ewh.audiometrytest.DESIRED_FILE";
     private Context context;
@@ -45,18 +48,18 @@ public class TestData extends ActionBarActivity {
 
         String[] names = fileName.split("-");
 
-        String time = ""+ (names[2].charAt(0)) + (names[2].charAt(1)) + ":" + (names[2].charAt(2)) + (names[2].charAt(3));
-        String name = "Test at " +time + ", " + names[1].replaceAll("_", ".");
+        String time = DateFormat.getDateInstance(DateFormat.SHORT).format(Long.parseLong(names[1]))+" "+DateFormat.getTimeInstance(DateFormat.SHORT).format(Long.parseLong(names[1]));
+        String name = "Test at " +time;
 
         Button b = (Button) findViewById(R.id.share_button);
         b.setOnClickListener(view -> {
             String testdata = "Thresholds right\n";
             for (int i=0; i<testFrequencies.length;i++){
-                testdata+=testFrequencies[i] + " " + testResults[0][i] + "\n";
+                testdata+=testFrequencies[i] + " " + (testResults[0][i]-calibrationArray[i]) + "\n";
             }
             testdata+="\nThresholds left\n";
             for (int i=0; i<testFrequencies.length;i++){
-                testdata+=testFrequencies[i] + " " + testResults[0][i] + "\n";
+                testdata+=testFrequencies[i] + " " + (testResults[1][i]-calibrationArray[i]) + "\n";
             }
             testdata+="\n";
             Intent sharingIntent = new Intent(Intent.ACTION_SEND);
@@ -67,6 +70,7 @@ public class TestData extends ActionBarActivity {
 
         FileOperations fileOperations = new FileOperations();
         testResults=fileOperations.readTestData(fileName, context);
+        calibrationArray=fileOperations.readCalibration(context);
 
         Button d = (Button) findViewById(R.id.delete_button);
         d.setOnClickListener(view -> fileOperations.deleteTestData(fileName,context));
@@ -76,32 +80,32 @@ public class TestData extends ActionBarActivity {
 
         // Draw Graph
         LineChart chart = (LineChart) findViewById(R.id.chart);
-        chart.setNoDataTextDescription("Whoops! No data was found. Try again!");
-        chart.setDescription("Hearing Thresholds (dB HL)");
+        chart.setNoDataText("Whoops! No data was found. Try again!");
+        Description description = new Description();
+        description.setText("Hearing Thresholds (dB nHL)");
+        description.setTextSize(15);
+        description.setTextColor(getResources().getColor(R.color.white));
+        chart.setDescription(description);
+
         ArrayList<Entry> dataLeft = new ArrayList<Entry>();
         for (int i = 0; i < testResults[1].length; i ++){
-            Entry dataPoint = new Entry((float) testResults[1][i] , i);
+            Entry dataPoint = new Entry( testFrequencies[i],(float) (testResults[1][i]-calibrationArray[i]) );
             dataLeft.add(dataPoint);
         }
         LineDataSet setLeft = new LineDataSet(dataLeft, "Left");
         setLeft.setCircleColor(getResources().getColor(R.color.green));
         setLeft.setColor(getResources().getColor(R.color.green));
+
         ArrayList<Entry> dataRight = new ArrayList<Entry>();
         for (int i = 0; i < testResults[0].length; i ++){
-            Entry dataPoint = new Entry((float) testResults[0][i] , i);
+            Entry dataPoint = new Entry( testFrequencies[i], (float)(testResults[0][i]-calibrationArray[i]));
             dataRight.add(dataPoint);
         }
         LineDataSet setRight = new LineDataSet(dataRight, "Right");
         setRight.setCircleColor(getResources().getColor(R.color.dark_orange));
         setRight.setColor(getResources().getColor(R.color.dark_orange));
-        ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
-        dataSets.add(setLeft);
-        dataSets.add(setRight);
-        ArrayList<String> xVals = new ArrayList<String>();
-        for (int i = 0; i < testFrequencies.length; i++){
-            xVals.add("" + testFrequencies[i]);
-        }
-        LineData data = new LineData(xVals, dataSets);
+
+        LineData data = new LineData(setLeft,setRight);
 
         XAxis xAxis = chart.getXAxis();
         xAxis.setTextColor(Color.WHITE);

@@ -139,24 +139,14 @@ public class TestProctoring extends ActionBarActivity {
     }
 
     public class testThread extends Thread {
-        final double[] calibrationArray = new double[Calibration.frequencies.length];
+
         private boolean stopped = false;
-        private double getCalibration(int frequency){
-            for (int i=0; i<Calibration.frequencies.length; i++){
-                if (frequency==Calibration.frequencies[i]){
-                    return calibrationArray[i];
-                }
-            }
-            return 0;
-        }
+
         public void stopThread(){
             stopped = true;
         }
 
         public void run() {
-            FileOperations fileOperations = new FileOperations();
-            fileOperations.readCalibration(calibrationArray, context);
-            int counter;
 
             //iterated once for every frequency to be tested
             for (int s = 0; s < 2; s++) {
@@ -180,9 +170,9 @@ public class TestProctoring extends ActionBarActivity {
 
                         if (minVolume > 0 && ((float) maxVolume/ (float) minVolume) < Math.sqrt(2)) {
                             if (s==0){
-                                thresholds_right[i] = thresVolume * getCalibration(frequency); //records volume as threshold
+                                thresholds_right[i] = 20*Math.log10(thresVolume); //records volume as threshold
                             }else{
-                                thresholds_left[i] = thresVolume * getCalibration(frequency); //records volume as threshold
+                                thresholds_left[i] = 20*Math.log10(thresVolume); //records volume as threshold
                             }
                             break; //go to next frequency
                         } else {
@@ -220,7 +210,19 @@ public class TestProctoring extends ActionBarActivity {
             }
             if (stopped) return;
 
-            fileOperations.writeTestResult(thresholds_right, thresholds_left, context);
+            Intent intent = getIntent();
+            FileOperations fileOperations = new FileOperations();
+            if (intent.getStringExtra("Action").equals("Test")){
+                fileOperations.writeTestResult(thresholds_right, thresholds_left, context);
+            }
+            else{
+                double[] calibrationArray = new double[testFrequencies.length+1];  //last field is used later for number of calibrations
+                for(int i=0;i<testFrequencies.length;i++){  //for calibration average left/right channels
+                    calibrationArray[i]=(thresholds_left[i]+thresholds_right[i])/2;
+                }
+                fileOperations.writeCalibration(calibrationArray, context);
+            }
+
             gotoMain();
         }
 

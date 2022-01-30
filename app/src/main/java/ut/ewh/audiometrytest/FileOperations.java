@@ -9,16 +9,42 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static ut.ewh.audiometrytest.TestProctoring.testFrequencies;
 
 public class FileOperations {
 
+    public static boolean isCalibrated(Context context){
+        List<String> list = new ArrayList<String>(Arrays.asList(context.fileList()));
+        if (list.contains("CalibrationPreferences")) return true;
+        else return false;
+    }
+
+    public void deleteCalibration(Context context){
+        File file = new File(context.getFilesDir()+"/" + "CalibrationPreferences");
+        file.delete();
+    }
+
     public void writeCalibration(double[] calibrationArray, Context context) {
+        double numCalibrations=0;
+        double[] calibrationArrayOld = new double[testFrequencies.length+1];
+        if (isCalibrated(context)) {
+            calibrationArrayOld=readCalibration(context);
+            numCalibrations = calibrationArrayOld[testFrequencies.length];
+        }
+        if (numCalibrations>0){
+            for(int i=0;i<testFrequencies.length;i++){
+                calibrationArray[i]=(calibrationArray[i]+calibrationArrayOld[i]*numCalibrations)/(numCalibrations+1);
+            }
+        }
+        numCalibrations++;
+        calibrationArray[testFrequencies.length]=numCalibrations;
+
         int counter = 0;
-        byte[] calibrationByteArray = new byte[calibrationArray.length * 8];
+        byte[] calibrationByteArray = new byte[calibrationArray.length * 8]; //
         for (int x = 0; x < calibrationArray.length; x++){
             byte[] tmpByteArray = new byte[8];
             ByteBuffer.wrap(tmpByteArray).putDouble(calibrationArray[x]);
@@ -38,14 +64,14 @@ public class FileOperations {
         }
     }
 
-    public void readCalibration(double[] calibrationArray, Context context) {
+    public double[] readCalibration(Context context) {
+        double[] calibrationArray = new double[testFrequencies.length+1];
         byte[] calibrationByteData = new byte[8*calibrationArray.length];
         try{
             FileInputStream fis = context.openFileInput("CalibrationPreferences");
             fis.read(calibrationByteData, 0, 8*calibrationArray.length);
             fis.close();
         } catch (IOException e) {}
-        ;
 
         int counter = 0;
 
@@ -56,14 +82,15 @@ public class FileOperations {
                 counter++;
             }
             calibrationArray[i] = ByteBuffer.wrap(tmpByteBuffer).getDouble();
-            Log.i("Array Check", "Calibration: " + Calibration.frequencies[i] + " " + calibrationArray[i]);
+            Log.i("Array Check", "Calibration: " + i + " " + calibrationArray[i]);
         }
+        return calibrationArray;
     }
 
     public void writeTestResult(double[] thresholds_right, double[] thresholds_left, Context context) {
         int counter;
-        SimpleDateFormat sdf = new SimpleDateFormat("MM_dd_yyyy-HHmmss");
-        String currentDateTime = sdf.format(new Date());
+
+        String currentDateTime = Long.toString(System.currentTimeMillis());
 
         counter = 0;
 

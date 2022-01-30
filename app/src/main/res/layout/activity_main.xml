@@ -36,49 +36,67 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-<Button
-    android:layout_width="270sp"
-    android:layout_height="wrap_content"
-    android:text="@string/button_start"
-    android:onClick="gotoPreCalibration"
-    android:background="@drawable/button_background"
-    android:paddingLeft="30sp"
-    android:paddingRight="10sp"
-    android:paddingTop="20sp"
-    android:paddingBottom="20sp"
-    android:layout_marginTop="15sp"
-    android:layout_marginBottom="15sp"
-    android:layout_gravity="left"
-    android:gravity="right"
-    android:elevation="5dp"/>
-<Button
-    android:layout_width="220sp"
-    android:layout_height="wrap_content"
-    android:text="@string/button_export"
-    android:paddingLeft="30sp"
-    android:paddingRight="10sp"
-    android:paddingTop="20sp"
-    android:paddingBottom="20sp"
-    android:onClick="gotoExport"
-    android:background="@drawable/button_background"
-    android:layout_gravity="left"
-    android:gravity="right"
-    android:elevation="5dp"/>
+            android:orientation="vertical"
+            android:layout_marginTop="20sp">
+        <Button
+            android:id="@+id/main_startTest"
+            android:visibility="gone"
+            android:layout_width="320sp"
+            android:layout_height="wrap_content"
+            android:text="@string/button_start"
+            android:paddingLeft="30sp"
+            android:paddingRight="10sp"
+            android:paddingTop="20sp"
+            android:paddingBottom="20sp"
+            android:layout_marginBottom="15sp"
+            android:onClick="gotoTest"
+            android:background="@drawable/button_background"
+            android:layout_gravity="left"
+            android:gravity="right"
+            android:elevation="5dp"/>
 
- <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button_acknowledgements"
-        android:paddingLeft="20sp"
-        android:paddingRight="10sp"
-        android:paddingTop="20sp"
-        android:paddingBottom="20sp"
-        android:layout_marginTop="15sp"
-        android:onClick="gotoAcknowledgements"
-        android:background="@drawable/button_background"
-        android:gravity="right"
-     android:elevation="5dp"/>
+        <Button
+            android:layout_width="270sp"
+            android:layout_height="wrap_content"
+            android:text="@string/button_begin_calibration"
+            android:onClick="gotoPreCalibration"
+            android:background="@drawable/button_background"
+            android:paddingLeft="30sp"
+            android:paddingRight="10sp"
+            android:paddingTop="20sp"
+            android:paddingBottom="20sp"
+            android:layout_marginBottom="15sp"
+            android:layout_gravity="left"
+            android:gravity="right"
+            android:elevation="5dp"/>
+
+        <Button
+            android:layout_width="220sp"
+            android:layout_height="wrap_content"
+            android:text="@string/button_export"
+            android:paddingLeft="30sp"
+            android:paddingRight="10sp"
+            android:paddingTop="20sp"
+            android:paddingBottom="20sp"
+            android:onClick="gotoExport"
+            android:background="@drawable/button_background"
+            android:layout_gravity="left"
+            android:gravity="right"
+            android:elevation="5dp"/>
+
+         <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_acknowledgements"
+            android:paddingLeft="20sp"
+            android:paddingRight="10sp"
+            android:paddingTop="20sp"
+            android:paddingBottom="20sp"
+            android:layout_marginTop="15sp"
+            android:onClick="gotoAcknowledgements"
+            android:background="@drawable/button_background"
+            android:gravity="right"
+            android:elevation="5dp"/>
 
         </LinearLayout>
     </ScrollView>

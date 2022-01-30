@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 
 
 public class MainActivity extends ActionBarActivity{
@@ -18,12 +19,12 @@ public class MainActivity extends ActionBarActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Button startTest = findViewById(R.id.main_startTest);
         getSupportActionBar().getThemedContext();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
-        }
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
         requestPermissions( new String[]{Manifest.permission.RECORD_AUDIO},1);
+        if (FileOperations.isCalibrated(this)) startTest.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -32,6 +33,16 @@ public class MainActivity extends ActionBarActivity{
      */
     public void gotoPreCalibration(View view){
         Intent intent = new Intent(this, Pre_Calibration.class);
+        startActivity(intent);
+    }
+
+    /**
+     * goes to TestProctoring activity
+     * @param view- current view
+     */
+    public void gotoTest(View view){
+        Intent intent = new Intent(this, TestProctoring.class);
+        intent.putExtra("Action","Test");
         startActivity(intent);
     }
 

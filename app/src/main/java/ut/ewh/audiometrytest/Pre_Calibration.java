@@ -12,9 +12,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-
 
 public class Pre_Calibration extends ActionBarActivity {
 
@@ -23,26 +20,28 @@ public class Pre_Calibration extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pre__calibration);
         Button skip = findViewById(R.id.skip);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
-        }
-        try{
-            FileInputStream fis = openFileInput("CalibrationPreferences");
-            if (fis.available()>0) skip.setVisibility(View.VISIBLE);
-            fis.close();
-        } catch (IOException e) {};
-//        ActionBar actionbar = getSupportActionBar();
-//        actionbar.setDisplayHomeAsUpEnabled(true);
+        Button delete = findViewById(R.id.delete);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
+        if (FileOperations.isCalibrated(this)) {skip.setVisibility(View.VISIBLE);delete.setVisibility(View.VISIBLE);}
     }
 
     public void gotoCalibration(View view){
-        Intent intent = new Intent(this, Calibration.class);
+        Intent intent = new Intent(this, TestProctoring.class);
+        intent.putExtra("Action","Calibrate");
         startActivity(intent);
-
     }
+
+    public void deleteCalibration(View view){
+        FileOperations fileOperations = new FileOperations();
+        fileOperations.deleteCalibration(this);
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
     public void startTest(View view){
         Intent intent = new Intent(this, TestProctoring.class);
+        intent.putExtra("Action","Test");
         startActivity(intent);
     }
 

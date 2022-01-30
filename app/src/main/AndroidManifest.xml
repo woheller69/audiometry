@@ -22,15 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="ut.ewh.audiometrytest.PreTestInformation"
-            android:label="@string/title_activity_pre_test_information"
-            android:screenOrientation="portrait"
-            android:parentActivityName="ut.ewh.audiometrytest.MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="ut.ewh.audiometrytest.MainActivity" />
-        </activity>
+
         <activity
             android:name="ut.ewh.audiometrytest.TestProctoring"
             android:label="@string/title_activity_test_proctoring"

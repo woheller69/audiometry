@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -95,8 +96,9 @@ public class TestLookup extends ActionBarActivity {
                 b.setBackgroundResource(R.drawable.button_background);
                 b.setPadding(10, 20, 10, 20);
                 String[] names = allSavedTests[i].split("-");
-                String time = "" + (names[2].charAt(0)) + (names[2].charAt(1)) + ":" + (names[2].charAt(2)) + (names[2].charAt(3));
-                String name = "Test at " + time + ", " + names[1].replaceAll("_", ".");
+
+                String time = DateFormat.getDateInstance(DateFormat.SHORT).format(Long.parseLong(names[1]))+" "+DateFormat.getTimeInstance(DateFormat.SHORT).format(Long.parseLong(names[1]));
+                String name = "Test at " +time;
                 b.setText(name);
                 int finalI = i;
                 b.setOnClickListener(view -> gotoTestData(view, allSavedTests[finalI]));

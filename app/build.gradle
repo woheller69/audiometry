@@ -28,7 +28,7 @@ repositories {
 
 dependencies {
     implementation 'com.android.support:appcompat-v7:21.0.2'
-    implementation 'com.github.PhilJay:MPAndroidChart:v2.0.9'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.0'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
 }

@@ -41,15 +41,9 @@
                 android:text="@string/pre_calibration_info_body"
                 android:textColor="#FFFFFF" />
 
-              <ImageView
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:src="@drawable/calibration_diagram"
-                  android:adjustViewBounds="true"
-                  android:paddingBottom="20sp"/>
-
            </LinearLayout>
          </ScrollView>
+
     <Button
         android:layout_width="200sp"
         android:layout_height="wrap_content"
@@ -62,6 +56,23 @@
         android:paddingTop="20sp"
         android:paddingBottom="20sp"
         android:onClick="gotoCalibration"
+        />
+
+    <Button
+        android:id="@+id/delete"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="@string/button_delete_calibration"
+        android:background="@drawable/button_background"
+        android:layout_gravity="right"
+        android:gravity="left"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="10sp"
+        android:paddingRight="10sp"
+        android:paddingTop="20sp"
+        android:paddingBottom="20sp"
+        android:onClick="deleteCalibration"
         />
 
     <Button

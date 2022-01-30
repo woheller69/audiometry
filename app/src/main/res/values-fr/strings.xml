@@ -24,7 +24,7 @@
     <string name="title_activity_pre__calibration">Avant l\'Étalonnage</string>
     <string name="button_calibration">L\'Étalonnage</string>
     <string name="pre_calibration_title">L\'Étalonnage de Audiométrie</string>
-    <string name="pre_calibration_info_body">Pour des résultats précis, vos écouteurs doivent être calibrés. S\'il vous plaît, branchez vos écouteurs. Placez-les en face de votre microphone de l\'appareil, mais ne pas touchez le microphone. Pour meilleur résultats, faire dans un piéce calme. Tapez sur le bouton quand tu être prêt á commencer l\'étalonnage.</string>
+    <string name="pre_calibration_info_body">Le calibrage doit être effectué dans un endroit calme par une personne normalement entendante âgée de 18 à 35 ans. </string>
     <string name="button_begin_calibration">Commencer l\'Étalonnage</string>
     <string name="title_activity_calibration">L\'Étalonnage</string>
     <string name="calibration_in_progress">L\'Étalonnage&#8230;</string>
@@ -57,5 +57,6 @@
     <string name="delete_option">Effacer</string>
     <string name="right_ear">Oreille droite</string>
     <string name="left_ear">Oreille gauche</string>
+    <string name="button_delete_calibration">Supprimer l\'étalonnage</string>
 
 </resources>
