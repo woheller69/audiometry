@@ -26,7 +26,7 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import static ut.ewh.audiometrytest.TestProctoring.testFrequencies;
+import static ut.ewh.audiometrytest.PerformTest.testFrequencies;
 
 public class TestData extends ActionBarActivity {
 

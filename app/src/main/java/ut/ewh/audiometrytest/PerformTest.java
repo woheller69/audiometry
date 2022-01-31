@@ -22,12 +22,12 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class TestProctoring extends ActionBarActivity {
+public class PerformTest extends ActionBarActivity {
     private final int duration = 1;
     private final int sampleRate = 44100;
     private final int numSamples = duration * sampleRate;
     private final int volume = 32767;
-    static public final int[] testFrequencies = {125, 250, 500, 1000, 3000, 4000, 6000, 8000};
+    static public final int[] testFrequencies = {125, 250, 500, 1000, 2000, 3000, 4000, 6000, 8000};
     private boolean heard = false;
     int a = 0;
     public double[] thresholds_right = new double[testFrequencies.length];
@@ -41,7 +41,7 @@ public class TestProctoring extends ActionBarActivity {
 
     public void showToast(final String toast)
     {
-        runOnUiThread(() -> Toast.makeText(TestProctoring.this, toast, Toast.LENGTH_SHORT).show());
+        runOnUiThread(() -> Toast.makeText(PerformTest.this, toast, Toast.LENGTH_SHORT).show());
     }
 
     public void setEarView(final int textID){
@@ -206,7 +206,7 @@ public class TestProctoring extends ActionBarActivity {
                         } //continue with test
                     }
                 }
-                TestProctoring.this.runOnUiThread(bkgrndFlashBlack);
+                PerformTest.this.runOnUiThread(bkgrndFlashBlack);
             }
             if (stopped) return;
 
@@ -242,10 +242,8 @@ public class TestProctoring extends ActionBarActivity {
         setContentView(R.layout.activity_test_proctoring);
         earView = findViewById(R.id.ear);
         frequencyView = findViewById(R.id.frequency);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
-        }
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
 
         AudioManager am = (AudioManager)getSystemService(AUDIO_SERVICE);
         am.setStreamVolume(AudioManager.STREAM_MUSIC, 9,  0);
@@ -257,12 +255,12 @@ public class TestProctoring extends ActionBarActivity {
     public boolean dispatchTouchEvent(MotionEvent e){
         Log.i("Touch Alert", "Screen was hit!" + a++ + heard);
         heard = true;
-        TestProctoring.this.runOnUiThread(bkgrndFlash);
+        PerformTest.this.runOnUiThread(bkgrndFlash);
         Timer timer = new Timer();
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                TestProctoring.this.runOnUiThread(bkgrndFlashBlack);
+                PerformTest.this.runOnUiThread(bkgrndFlashBlack);
             }
         };
         timer.schedule(timerTask,250);

@@ -1,9 +1,6 @@
 package ut.ewh.audiometrytest;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 
 public class Pre_Calibration extends ActionBarActivity {
@@ -19,15 +17,17 @@ public class Pre_Calibration extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pre__calibration);
-        Button skip = findViewById(R.id.skip);
         Button delete = findViewById(R.id.delete);
+        TextView num = findViewById(R.id.numCalibrations);
+        FileOperations fileOperations = new FileOperations();
+        num.setText(String.format(getResources().getString(R.string.num_calibrations), fileOperations.readNumCalibrations(this)));
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
-        if (FileOperations.isCalibrated(this)) {skip.setVisibility(View.VISIBLE);delete.setVisibility(View.VISIBLE);}
+        if (FileOperations.isCalibrated(this)) {delete.setVisibility(View.VISIBLE);}
     }
 
     public void gotoCalibration(View view){
-        Intent intent = new Intent(this, TestProctoring.class);
+        Intent intent = new Intent(this, PerformTest.class);
         intent.putExtra("Action","Calibrate");
         startActivity(intent);
     }
@@ -39,11 +39,6 @@ public class Pre_Calibration extends ActionBarActivity {
         startActivity(intent);
     }
 
-    public void startTest(View view){
-        Intent intent = new Intent(this, TestProctoring.class);
-        intent.putExtra("Action","Test");
-        startActivity(intent);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

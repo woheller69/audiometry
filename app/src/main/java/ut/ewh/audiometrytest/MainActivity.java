@@ -2,7 +2,6 @@ package ut.ewh.audiometrytest;
 
 import android.Manifest;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -42,7 +41,7 @@ public class MainActivity extends ActionBarActivity{
      * @param view- current view
      */
     public void gotoTest(View view){
-        Intent intent = new Intent(this, TestProctoring.class);
+        Intent intent = new Intent(this, PerformTest.class);
         intent.putExtra("Action","Test");
         startActivity(intent);
     }

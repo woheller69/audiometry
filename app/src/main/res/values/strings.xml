@@ -54,5 +54,6 @@
     <string name="right_ear">Right Ear</string>
     <string name="left_ear">Left Ear</string>
     <string name="button_delete_calibration">Delete Calibration</string>
+    <string name="num_calibrations">%d calibrations stored</string>
 
 </resources>

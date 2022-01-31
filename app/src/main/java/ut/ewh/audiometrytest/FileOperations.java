@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static ut.ewh.audiometrytest.TestProctoring.testFrequencies;
+import static ut.ewh.audiometrytest.PerformTest.testFrequencies;
 
 public class FileOperations {
 
@@ -62,6 +62,12 @@ public class FileOperations {
             } catch (IOException q) {System.out.println (q.toString());}
         } catch (FileNotFoundException e) {System.out.println (e.toString());
         }
+    }
+
+    public int readNumCalibrations(Context context){
+        double[] calibrationArray = new double[testFrequencies.length+1];
+        calibrationArray=readCalibration(context);
+        return (int) calibrationArray[testFrequencies.length];
     }
 
     public double[] readCalibration(Context context) {

@@ -44,6 +44,23 @@
            </LinearLayout>
          </ScrollView>
 
+    <TextView
+        android:id="@+id/numCalibrations"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Num calibrations"
+        android:textSize="20dp"
+        android:textColor="@color/white"
+        android:background="@drawable/button_background"
+        android:layout_gravity="right"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="10sp"
+        android:paddingRight="10sp"
+        android:paddingTop="20sp"
+        android:paddingBottom="20sp"
+        />
+
     <Button
         android:layout_width="200sp"
         android:layout_height="wrap_content"
@@ -51,6 +68,7 @@
         android:background="@drawable/button_background"
         android:layout_gravity="right"
         android:gravity="left"
+        android:layout_marginTop="10dp"
         android:paddingLeft="10sp"
         android:paddingRight="10sp"
         android:paddingTop="20sp"
@@ -73,23 +91,6 @@
         android:paddingTop="20sp"
         android:paddingBottom="20sp"
         android:onClick="deleteCalibration"
-        />
-
-    <Button
-        android:id="@+id/skip"
-        android:visibility="gone"
-        android:layout_width="200sp"
-        android:layout_height="wrap_content"
-        android:text="@string/button_skip_calibration"
-        android:background="@drawable/button_background"
-        android:layout_gravity="right"
-        android:gravity="left"
-        android:layout_marginTop="10dp"
-        android:paddingLeft="10sp"
-        android:paddingRight="10sp"
-        android:paddingTop="20sp"
-        android:paddingBottom="20sp"
-        android:onClick="startTest"
         />
 
 </LinearLayout>

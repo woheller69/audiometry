@@ -24,7 +24,7 @@
         </activity>
 
         <activity
-            android:name="ut.ewh.audiometrytest.TestProctoring"
+            android:name="ut.ewh.audiometrytest.PerformTest"
             android:label="@string/title_activity_test_proctoring"
             android:screenOrientation="portrait" >
         </activity>
@@ -37,21 +37,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ut.ewh.audiometrytest.MainActivity" />
         </activity>
-        <activity
-            android:name="ut.ewh.audiometrytest.Calibration"
-            android:label="@string/title_activity_calibration"
-            android:screenOrientation="portrait" >
-        </activity>
 
-        <activity
-            android:name="ut.ewh.audiometrytest.CalibrationComplete"
-            android:label="@string/title_activity_calibration_complete"
-            android:screenOrientation="portrait"
-            android:parentActivityName="ut.ewh.audiometrytest.Pre_Calibration" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="ut.ewh.audiometrytest.Pre_Calibration" />
-        </activity>
         <activity
             android:name="ut.ewh.audiometrytest.Acknowledgements"
             android:label="@string/title_activity_acknowledgements"
