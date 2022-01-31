@@ -41,10 +41,8 @@ public class TestLookup extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark,getTheme()));
-        }
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark,getTheme()));
     }
     @Override
     protected void onResume() {
@@ -56,7 +54,7 @@ public class TestLookup extends ActionBarActivity {
         layout.setPadding(0, 40, 16, 16);
 
         TextView textview = new TextView(this);
-        textview.setText("Test Results");
+        textview.setText(R.string.test_results);
         textview.setTextColor(Color.parseColor("#FF8000"));
         textview.setTextSize(30);
         textview.setTypeface(null, Typeface.BOLD);
@@ -77,7 +75,7 @@ public class TestLookup extends ActionBarActivity {
             message.setTextSize(20);
             message.setBackgroundColor(Color.parseColor("#424242"));
             message.setPadding(40, 30, 16, 0);
-            message.setText("Sorry! It seems there are no tests currently stored in memory. Please take a test, then return to this page to view the results.");
+            message.setText(R.string.no_test_results);
             layout.addView(message, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         } else {
             ScrollView scrollview = new ScrollView(this);

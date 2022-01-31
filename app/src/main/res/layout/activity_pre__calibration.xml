@@ -48,7 +48,7 @@
         android:id="@+id/numCalibrations"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Num calibrations"
+        android:text="@string/num_calibrations_text"
         android:textSize="20dp"
         android:textColor="@color/white"
         android:background="@drawable/button_background"

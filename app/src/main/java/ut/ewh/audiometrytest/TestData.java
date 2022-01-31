@@ -37,7 +37,6 @@ public class TestData extends ActionBarActivity {
     private Context context;
 
     public float scaleCbr(double cbr) {
-        //return (float)(Math.log10(cbr));
         return (float) (Math.log10(cbr/125)/Math.log10(2));
     }
 
@@ -50,10 +49,8 @@ public class TestData extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context=this;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark,getTheme()));
-        }
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark,getTheme()));
 
         setContentView(R.layout.activity_test_data);
         Intent intent = getIntent();
@@ -95,7 +92,7 @@ public class TestData extends ActionBarActivity {
         LineChart chart = (LineChart) findViewById(R.id.chart);
         chart.setNoDataText("Whoops! No data was found. Try again!");
         Description description = new Description();
-        description.setText("Hearing Thresholds (dB nHL)");
+        description.setText(getResources().getString(R.string.chart_description));
         description.setTextSize(15);
         description.setTextColor(getResources().getColor(R.color.white,getTheme()));
         chart.setDescription(description);

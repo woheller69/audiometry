@@ -23,6 +23,13 @@ public class FileOperations {
         else return false;
     }
 
+    public double read0dBSPL(Context context){  //0dB SPL equals hearing threshold at 1000Hz
+        for (int i=0; i<testFrequencies.length;i++){
+            if(testFrequencies[i]==1000) return readCalibration(context)[i];
+        }
+        return 0;
+    }
+
     public void deleteCalibration(Context context){
         File file = new File(context.getFilesDir()+"/" + "CalibrationPreferences");
         file.delete();

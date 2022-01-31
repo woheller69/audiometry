@@ -52,5 +52,9 @@
     <string name="button_delete_calibration">Delete Calibration</string>
     <string name="num_calibrations">%d calibrations stored</string>
     <string name="button_singlestart">Test single frequency</string>
+    <string name="test_results">Test Results</string>
+    <string name="no_test_results">Sorry! It seems there are no tests currently stored in memory. Please take a test, then return to this page to view the results.</string>
+    <string name="num_calibrations_text">Num calibrations</string>
+    <string name="chart_description">Hearing Thresholds (dB HL)</string>
 
 </resources>

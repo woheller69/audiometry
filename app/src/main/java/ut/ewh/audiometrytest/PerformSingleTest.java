@@ -54,7 +54,7 @@ public class PerformSingleTest extends ActionBarActivity {
     }
 
     public void setdBView(final double db){
-        runOnUiThread(() -> dBView.setText(String.format("%.0f dB", db)));
+        runOnUiThread(() -> dBView.setText(String.format("%.0f dB HL", db)));
     }
 
     /**
@@ -127,14 +127,12 @@ public class PerformSingleTest extends ActionBarActivity {
                 @Override
                 public void onClick(View v) {
                     s =(s +1)%2;
-                    actualVolume = (minVolume + maxVolume) / 2;
                 }
             });
             frequencyView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     i=(i+1)%testFrequencies.length;
-                    actualVolume = (minVolume + maxVolume) / 2;
                 }
             });
             while (!stopped) {
