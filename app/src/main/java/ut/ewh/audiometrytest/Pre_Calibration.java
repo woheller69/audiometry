@@ -22,7 +22,7 @@ public class Pre_Calibration extends ActionBarActivity {
         FileOperations fileOperations = new FileOperations();
         num.setText(String.format(getResources().getString(R.string.num_calibrations), fileOperations.readNumCalibrations(this)));
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
+        getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark,getTheme()));
         if (FileOperations.isCalibrated(this)) {delete.setVisibility(View.VISIBLE);}
     }
 

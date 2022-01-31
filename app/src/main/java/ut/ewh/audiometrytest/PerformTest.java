@@ -200,7 +200,7 @@ public class PerformTest extends ActionBarActivity {
         earView = findViewById(R.id.ear);
         frequencyView = findViewById(R.id.frequency);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
+        getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark,getTheme()));
 
         AudioManager am = (AudioManager)getSystemService(AUDIO_SERVICE);
         am.setStreamVolume(AudioManager.STREAM_MUSIC, 9,  0);

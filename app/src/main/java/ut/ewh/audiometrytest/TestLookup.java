@@ -43,7 +43,7 @@ public class TestLookup extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
+            getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark,getTheme()));
         }
     }
     @Override

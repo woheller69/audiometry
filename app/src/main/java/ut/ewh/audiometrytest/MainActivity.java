@@ -22,7 +22,7 @@ public class MainActivity extends ActionBarActivity{
         Button testResults = findViewById(R.id.main_results);
         getSupportActionBar().getThemedContext();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
+        getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark,getTheme()));
         requestPermissions( new String[]{Manifest.permission.RECORD_AUDIO},1);
         if (FileOperations.isCalibrated(this)) {startTest.setVisibility(View.VISIBLE); testResults.setVisibility(View.VISIBLE);}
     }

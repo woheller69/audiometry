@@ -52,7 +52,7 @@ public class TestData extends ActionBarActivity {
         context=this;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
+            getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark,getTheme()));
         }
 
         setContentView(R.layout.activity_test_data);
@@ -97,7 +97,7 @@ public class TestData extends ActionBarActivity {
         Description description = new Description();
         description.setText("Hearing Thresholds (dB nHL)");
         description.setTextSize(15);
-        description.setTextColor(getResources().getColor(R.color.white));
+        description.setTextColor(getResources().getColor(R.color.white,getTheme()));
         chart.setDescription(description);
 
         ArrayList<Entry> dataLeft = new ArrayList<Entry>();
@@ -106,8 +106,8 @@ public class TestData extends ActionBarActivity {
             dataLeft.add(dataPoint);
         }
         LineDataSet setLeft = new LineDataSet(dataLeft, "Left");
-        setLeft.setCircleColor(getResources().getColor(R.color.green));
-        setLeft.setColor(getResources().getColor(R.color.green));
+        setLeft.setCircleColor(getResources().getColor(R.color.green,getTheme()));
+        setLeft.setColor(getResources().getColor(R.color.green,getTheme()));
         setLeft.setValueTextColor(Color.WHITE);
 
         ArrayList<Entry> dataRight = new ArrayList<Entry>();
@@ -116,8 +116,8 @@ public class TestData extends ActionBarActivity {
             dataRight.add(dataPoint);
         }
         LineDataSet setRight = new LineDataSet(dataRight, "Right");
-        setRight.setCircleColor(getResources().getColor(R.color.dark_orange));
-        setRight.setColor(getResources().getColor(R.color.dark_orange));
+        setRight.setCircleColor(getResources().getColor(R.color.dark_orange,getTheme()));
+        setRight.setColor(getResources().getColor(R.color.dark_orange,getTheme()));
         setRight.setValueTextColor(Color.WHITE);
 
         LineData data = new LineData(setLeft,setRight);
