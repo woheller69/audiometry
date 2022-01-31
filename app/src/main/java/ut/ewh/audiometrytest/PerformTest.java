@@ -29,7 +29,6 @@ public class PerformTest extends ActionBarActivity {
     private final int volume = 32767;
     static public final int[] testFrequencies = {125, 250, 500, 1000, 2000, 3000, 4000, 6000, 8000};
     private boolean heard = false;
-    int a = 0;
     public double[] thresholds_right = new double[testFrequencies.length];
     public double[] thresholds_left = new double[testFrequencies.length];
     private Context context;
@@ -98,46 +97,6 @@ public class PerformTest extends ActionBarActivity {
         startActivity(intent);
     };
 
-    /**
-     * Generates the tone based on the increment and volume, used in inner loop
-     * @param increment - the amount to increment by
-     * @param volume - the volume to generate
-     */
-    public byte[] genTone(float increment, int volume){
-
-        float angle = 0;
-        double[] sample = new double[numSamples];
-        byte[] generatedSnd = new byte[2 * numSamples];
-        for (int i = 0; i < numSamples; i++){
-            sample[i] = Math.sin(angle);
-            angle += increment;
-        }
-        int idx = 0;
-        for (final double dVal : sample) {
-            final short val = (short) ((dVal * volume));
-            //volume controlled by the value multiplied by dVal; max value is 32767
-            generatedSnd[idx++] = (byte) (val & 0x00ff);
-            generatedSnd[idx++] = (byte) ((val & 0xff00) >>> 8);
-        }
-        return generatedSnd;
-    }
-
-    /**
-     * Writes the parameter byte array to an AudioTrack and plays the array
-     * @param generatedSnd- input 16-bit PCM Array
-     */
-    public AudioTrack playSound(byte[] generatedSnd, int ear) {
-        AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, sampleRate, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT, generatedSnd.length, AudioTrack.MODE_STATIC);
-        audioTrack.write(generatedSnd, 0, generatedSnd.length);
-        if (ear == 0) {
-            audioTrack.setStereoVolume(0, AudioTrack.getMaxVolume());
-        } else {
-            audioTrack.setStereoVolume(AudioTrack.getMaxVolume(), 0);
-        }
-        audioTrack.play();
-        return audioTrack;
-    }
-
     public class testThread extends Thread {
 
         private boolean stopped = false;
@@ -147,7 +106,7 @@ public class PerformTest extends ActionBarActivity {
         }
 
         public void run() {
-
+            Sound sound = new Sound();
             //iterated once for every frequency to be tested
             for (int s = 0; s < 2; s++) {
                 if (s==0) setEarView(R.string.right_ear);
@@ -179,7 +138,7 @@ public class PerformTest extends ActionBarActivity {
                             for (int z = 0; z < 3; z++) { //iterate three times per volume level
                                 if (stopped){break;}
                                 heard = false;
-                                AudioTrack audioTrack = playSound(genTone(increment, actualVolume), s);
+                                AudioTrack audioTrack = sound.playSound(sound.genTone(increment, actualVolume, numSamples), s, sampleRate);
                                 try {
                                     Thread.sleep(randomTime());
                                 } catch (InterruptedException e) {}
@@ -253,7 +212,6 @@ public class PerformTest extends ActionBarActivity {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent e){
-        Log.i("Touch Alert", "Screen was hit!" + a++ + heard);
         heard = true;
         PerformTest.this.runOnUiThread(bkgrndFlash);
         Timer timer = new Timer();
