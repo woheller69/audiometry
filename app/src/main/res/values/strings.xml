@@ -20,7 +20,7 @@
     <string name="title_activity_pre__calibration">Pre-Calibration</string>
     <string name="button_calibration">Calibration</string>
     <string name="pre_calibration_title">Audiometer Calibration</string>
-    <string name="pre_calibration_info_body">Before the audiometry test is performed, the headphones must be calibrated. Ensure that the headphones being used are firmly plugged into the headphone jack. Calibration of your earphones must be performed in a quiet place by at least one normally hearing person between the ages of 18 and 35. Once the test begins, you will hear beeps of various pitches and volumes. Every time you hear a beep, simply tap the screen.</string>
+    <string name="pre_calibration_info_body">Before the audiometry test is performed, the headphones must be calibrated. Calibration of your earphones must be performed in a quiet place by at least one normally hearing person between the ages of 18 and 35. Once the test begins, you will hear beeps of various pitches and volumes. Every time you hear a beep, simply tap the screen.</string>
     <string name="button_begin_calibration">Add calibration</string>
     <string name="title_activity_calibration">Calibration</string>
     <string name="calibration_in_progress">Calibrating&#8230;</string>
@@ -31,10 +31,6 @@
     <string name="title_activity_export_complete">Export Complete</string>
     <string name="export_data_complete_title">Data Export Complete!</string>
     <string name="export_data_complete_button">Return to Home</string>
-    <string name="title_activity_calibration_complete">Calibration Complete</string>
-    <string name="calibration_complete_title">Calibration Complete!</string>
-    <string name="calibration_complete_body">Now that calibration is complete, you can take the audiometry test. This audiometry test is a simple procedure designed to evaluate your hearing capabilities. Once the test begins, you will hear beeps of various pitches and volumes. Every time you hear a beep, simply tap the screen. That\'s it! Tap the button below when you\'re ready to begin.</string>
-    <string name="calibration_complete_button">Start Test</string>
     <string name="export_data_complete_caveat">If you can\'t find the test results in your inbox, be sure to check your junk or spam folder.</string>
     <string name="title_activity_acknowledgements">Acknowledgements</string>
     <string name="acknowledgements_title">Acknowledgements</string>
