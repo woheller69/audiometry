@@ -5,7 +5,7 @@
     <string name="action_settings">Settings</string>
     <string name="main_menu_greeting">Audiometry</string>
     <string name="main_menu_greeting_body">Quick and Simple Hearing Evaluation</string>
-    <string name="button_start">Begin Test</string>
+    <string name="button_start">Start Full Test</string>
     <string name="button_acknowledgements">Acknowledgements</string>
     <string name="title_activity_pre_test_information">Before We Begin</string>
 
@@ -51,5 +51,6 @@
     <string name="left_ear">Left Ear</string>
     <string name="button_delete_calibration">Delete Calibration</string>
     <string name="num_calibrations">%d calibrations stored</string>
+    <string name="button_singlestart">Test single frequency</string>
 
 </resources>

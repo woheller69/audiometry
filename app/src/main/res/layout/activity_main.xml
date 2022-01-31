@@ -41,7 +41,7 @@
         <Button
             android:id="@+id/main_startTest"
             android:visibility="gone"
-            android:layout_width="320sp"
+            android:layout_width="330sp"
             android:layout_height="wrap_content"
             android:text="@string/button_start"
             android:paddingLeft="30sp"
@@ -56,7 +56,24 @@
             android:elevation="5dp"/>
 
         <Button
-            android:layout_width="270sp"
+            android:id="@+id/main_startSingleTest"
+            android:visibility="gone"
+            android:layout_width="290sp"
+            android:layout_height="wrap_content"
+            android:text="@string/button_singlestart"
+            android:paddingLeft="30sp"
+            android:paddingRight="10sp"
+            android:paddingTop="20sp"
+            android:paddingBottom="20sp"
+            android:layout_marginBottom="15sp"
+            android:onClick="gotoSingleTest"
+            android:background="@drawable/button_background"
+            android:layout_gravity="left"
+            android:gravity="right"
+            android:elevation="5dp"/>
+
+        <Button
+            android:layout_width="250sp"
             android:layout_height="wrap_content"
             android:text="@string/button_begin_calibration"
             android:onClick="gotoPreCalibration"
@@ -73,7 +90,7 @@
         <Button
             android:id="@+id/main_results"
             android:visibility="gone"
-            android:layout_width="220sp"
+            android:layout_width="210sp"
             android:layout_height="wrap_content"
             android:text="@string/button_export"
             android:paddingLeft="30sp"

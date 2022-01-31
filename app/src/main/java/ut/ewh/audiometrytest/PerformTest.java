@@ -196,7 +196,7 @@ public class PerformTest extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context=this;
-        setContentView(R.layout.activity_test_proctoring);
+        setContentView(R.layout.activity_performtest);
         earView = findViewById(R.id.ear);
         frequencyView = findViewById(R.id.frequency);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -229,7 +229,7 @@ public class PerformTest extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.test_proctoring, menu);
+        getMenuInflater().inflate(R.menu.test_perform, menu);
         return true;
     }
 

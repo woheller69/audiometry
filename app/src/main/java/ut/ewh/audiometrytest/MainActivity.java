@@ -19,12 +19,13 @@ public class MainActivity extends ActionBarActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button startTest = findViewById(R.id.main_startTest);
+        Button startSingleTest = findViewById(R.id.main_startSingleTest);
         Button testResults = findViewById(R.id.main_results);
         getSupportActionBar().getThemedContext();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark,getTheme()));
         requestPermissions( new String[]{Manifest.permission.RECORD_AUDIO},1);
-        if (FileOperations.isCalibrated(this)) {startTest.setVisibility(View.VISIBLE); testResults.setVisibility(View.VISIBLE);}
+        if (FileOperations.isCalibrated(this)) {startTest.setVisibility(View.VISIBLE); testResults.setVisibility(View.VISIBLE);startSingleTest.setVisibility(View.VISIBLE);}
     }
 
     /**
@@ -43,6 +44,15 @@ public class MainActivity extends ActionBarActivity{
     public void gotoTest(View view){
         Intent intent = new Intent(this, PerformTest.class);
         intent.putExtra("Action","Test");
+        startActivity(intent);
+    }
+
+    /**
+     * goes to TestProctoring activity
+     * @param view- current view
+     */
+    public void gotoSingleTest(View view){
+        Intent intent = new Intent(this, PerformSingleTest.class);
         startActivity(intent);
     }
 
