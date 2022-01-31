@@ -3,13 +3,10 @@ package ut.ewh.audiometrytest;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -32,6 +29,7 @@ public class PerformTest extends ActionBarActivity {
     public double[] thresholds_right = new double[testFrequencies.length];
     public double[] thresholds_left = new double[testFrequencies.length];
     private Context context;
+    private final Sound sound = new Sound();
     testThread testThread;
     TextView earView;
     TextView frequencyView;
@@ -56,16 +54,9 @@ public class PerformTest extends ActionBarActivity {
      * @return
      */
     public int randomTime(){
-        int time;
+
         double num = Math.random();
-        if (num < 0.3){
-            time = 2000;
-        } else if (num < 0.67 && num >= 0.3){
-            time = 2500;
-        }else{
-            time = 3000;
-        };
-        return time;
+        return (int) (1500+1500*num);
     }
 
     /**
@@ -106,7 +97,7 @@ public class PerformTest extends ActionBarActivity {
         }
 
         public void run() {
-            Sound sound = new Sound();
+
             //iterated once for every frequency to be tested
             for (int s = 0; s < 2; s++) {
                 if (s==0) setEarView(R.string.right_ear);
@@ -114,56 +105,12 @@ public class PerformTest extends ActionBarActivity {
 
                 if (stopped){break;}
                 for (int i = 0; i < testFrequencies.length; i++) {
-                    if (stopped){break;}
-                    int frequency = testFrequencies[i];
-                    setFrequencyView(frequency);
-                    float increment = (float) (Math.PI) * frequency / sampleRate;
-                    int maxVolume = volume;
-                    int minVolume = 0;
-                    int thresVolume = maxVolume;
-                    // This is the loop for each individual sample using a binary search algorithm
-                    for (; ; ) {
-                        if (stopped){break;}
-                        int tempResponse = 0;
-                        int actualVolume = (minVolume + maxVolume) / 2;
-
-                        if (minVolume > 0 && ((float) maxVolume/ (float) minVolume) < Math.sqrt(2)) {
-                            if (s==0){
-                                thresholds_right[i] = 20*Math.log10(thresVolume); //records volume as threshold
-                            }else{
-                                thresholds_left[i] = 20*Math.log10(thresVolume); //records volume as threshold
-                            }
-                            break; //go to next frequency
-                        } else {
-                            for (int z = 0; z < 3; z++) { //iterate three times per volume level
-                                if (stopped){break;}
-                                heard = false;
-                                AudioTrack audioTrack = sound.playSound(sound.genTone(increment, actualVolume, numSamples), s, sampleRate);
-                                try {
-                                    Thread.sleep(randomTime());
-                                } catch (InterruptedException e) {}
-                                audioTrack.release();
-                                if (heard) {
-                                    tempResponse++;
-                                }
-//                                // Checks if the first two test were positive, and skips the third if true. Helps speed the test along.
-                                if (tempResponse >= 2){
-                                    break;
-                                }
-                                // Check if the first two tests were misses, and skips the third if this is the case.
-                                if (z == 1 && tempResponse == 0){
-                                    break;
-                                }
-                            }
-                            //If the response was positive two out of three times, register as heard
-                            if (tempResponse >= 2) {
-                                thresVolume = actualVolume;
-                                maxVolume = actualVolume;
-                            } else {
-                                minVolume = actualVolume;
-                            }
-                        } //continue with test
-                    }
+                    double threshold = singleTest(s, i);
+                        if (s==0){
+                            thresholds_right[i] = threshold; //records volume as threshold
+                        }else{
+                            thresholds_left[i] = threshold; //records volume as threshold
+                        }
                 }
                 PerformTest.this.runOnUiThread(bkgrndFlashBlack);
             }
@@ -183,6 +130,57 @@ public class PerformTest extends ActionBarActivity {
             }
 
             gotoMain();
+        }
+
+        public double singleTest(int s, int i) {
+
+            int frequency = testFrequencies[i];
+            setFrequencyView(frequency);
+            float increment = (float) (Math.PI) * frequency / sampleRate;
+            int maxVolume = volume;
+            int minVolume = 0;
+            int thresVolume = maxVolume;
+            // This is the loop for each individual sample using a binary search algorithm
+            while (!stopped) {
+                int tempResponse = 0;
+                int actualVolume = (minVolume + maxVolume) / 2;
+
+                if (minVolume > 0 && ((float) maxVolume / (float) minVolume) < Math.sqrt(2)) {
+                    return 20 * Math.log10(thresVolume);
+                } else {
+                    for (int z = 0; z < 3; z++) { //iterate three times per volume level
+                        if (stopped) {
+                            break;
+                        }
+                        heard = false;
+                        AudioTrack audioTrack = sound.playSound(sound.genTone(increment, actualVolume, numSamples), s, sampleRate);
+                        try {
+                            Thread.sleep(randomTime());
+                        } catch (InterruptedException e) {
+                        }
+                        audioTrack.release();
+                        if (heard) {
+                            tempResponse++;
+                        }
+//                                // Checks if the first two test were positive, and skips the third if true. Helps speed the test along.
+                        if (tempResponse >= 2) {
+                            break;
+                        }
+                        // Check if the first two tests were misses, and skips the third if this is the case.
+                        if (z == 1 && tempResponse == 0) {
+                            break;
+                        }
+                    }
+                    //If the response was positive two out of three times, register as heard
+                    if (tempResponse >= 2) {
+                        thresVolume = actualVolume;
+                        maxVolume = actualVolume;
+                    } else {
+                        minVolume = actualVolume;
+                    }
+                } //continue with test
+            }
+            return 0;
         }
 
 
