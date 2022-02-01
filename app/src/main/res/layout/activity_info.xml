@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:textSize="30sp"
         android:textStyle="bold"
-        android:textColor="#FF8000"
+        android:textColor="@color/orange"
         android:gravity="center"
         android:layout_gravity="center"/>
     <ScrollView
@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:textStyle="bold"
-                android:textColor="#FF8000"
+                android:textColor="@color/white"
                 android:gravity="left"
                 android:layout_gravity="center"/>
         </LinearLayout>

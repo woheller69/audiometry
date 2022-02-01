@@ -113,8 +113,8 @@ public class TestData extends ActionBarActivity {
             dataRight.add(dataPoint);
         }
         LineDataSet setRight = new LineDataSet(dataRight, "Right");
-        setRight.setCircleColor(getResources().getColor(R.color.dark_orange,getTheme()));
-        setRight.setColor(getResources().getColor(R.color.dark_orange,getTheme()));
+        setRight.setCircleColor(getResources().getColor(R.color.primary_dark,getTheme()));
+        setRight.setColor(getResources().getColor(R.color.primary_dark,getTheme()));
         setRight.setValueTextColor(Color.WHITE);
 
         LineData data = new LineData(setLeft,setRight);

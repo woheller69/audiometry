@@ -2,15 +2,11 @@
 <resources>
 
     <color name="orange">#FF8000</color>
-    <color name="primary">#FF8000</color>
     <color name="primary_dark">#ffc96500</color>
-    <color name="accent">#FFFFFF</color>
-    <color name="dark_orange">#bb4000</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
     <color name="grey">#888888</color>
     <color name="green">#adce49</color>
     <color name="background_grey">#424242</color>
-
 
 </resources>

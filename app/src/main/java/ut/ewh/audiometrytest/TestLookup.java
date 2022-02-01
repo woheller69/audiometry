@@ -55,7 +55,7 @@ public class TestLookup extends ActionBarActivity {
 
         TextView textview = new TextView(this);
         textview.setText(R.string.test_results);
-        textview.setTextColor(Color.parseColor("#FF8000"));
+        textview.setTextColor(getResources().getColor(R.color.orange,getTheme()));
         textview.setTextSize(30);
         textview.setTypeface(null, Typeface.BOLD);
         textview.setGravity(Gravity.CENTER);
@@ -71,7 +71,7 @@ public class TestLookup extends ActionBarActivity {
         if (allSavedTests.length < 1) {
             TextView message = new TextView(this);
             message.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            message.setTextColor(Color.parseColor("#FFFFFF"));
+            message.setTextColor(getResources().getColor(R.color.white,getTheme()));
             message.setTextSize(20);
             message.setBackgroundColor(Color.parseColor("#424242"));
             message.setPadding(40, 30, 16, 0);

@@ -18,7 +18,7 @@
     android:text="@string/main_menu_greeting"
     android:textSize="40sp"
     android:textStyle="bold"
-    android:textColor="#FF8000"
+    android:textColor="@color/orange"
     android:layout_marginBottom="20sp"
     android:gravity="right"
     android:layout_gravity="right"/>
@@ -27,7 +27,7 @@
     android:layout_height="wrap_content"
     android:text="@string/main_menu_greeting_body"
     android:textSize="20sp"
-    android:textColor="#FFFFFF"
+    android:textColor="@color/white"
     android:layout_gravity="right"
     android:gravity="right"/>
     <ScrollView
