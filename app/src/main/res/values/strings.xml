@@ -6,12 +6,10 @@
     <string name="main_menu_greeting">Audiometry</string>
     <string name="main_menu_greeting_body">Quick and Simple Hearing Evaluation</string>
     <string name="button_start">Start Full Test</string>
-    <string name="button_acknowledgements">Acknowledgements</string>
-    <string name="title_activity_pre_test_information">Before We Begin</string>
+    <string name="button_info">Instructions</string>
 
-    <string name="title_activity_test_proctoring">Tap When You Hear A Beep</string>
+    <string name="title_activity_performTest">Tap When You Hear A Beep</string>
     <string name="test_running">Test in Progress!</string>
-    <string name="title_activity_test_proctoring_revised">Test Has Begun!</string>
     <string name="title_activity_export_data">Export Data</string>
     <string name="button_export">Test Results</string>
     <string name="title_activity_test_complete">Test Complete!</string>
@@ -36,12 +34,8 @@
     <string name="export_data_complete_title">Data Export Complete!</string>
     <string name="export_data_complete_button">Return to Home</string>
     <string name="export_data_complete_caveat">If you can\'t find the test results in your inbox, be sure to check your junk or spam folder.</string>
-    <string name="title_activity_acknowledgements">Acknowledgements</string>
-    <string name="acknowledgements_title">Acknowledgements</string>
-    <string name="developer">Developer: Reece Stevens</string>
-    <string name="special_thanks">Special thanks to: Pato Lankenau, Davin Siu, and James Yao</string>
-    <string name="reason">Developed for Texas Engineering World Health as a submission for the 2014 EWH Design Competition.</string>
-    <string name="final_notes">Questions or concerns about the app? Email reecestevens@utexas.edu.</string>
+    <string name="title_activity_info">Instructions</string>
+
     <string name="title_activity_export_error">Export Error</string>
     <string name="export_error_title">Oops!</string>
     <string name="export_error_body">Export seems to have run into a problem. Please check your internet connection and try again. You can access your results at any time through the Test Results page and email from there!</string>
@@ -60,5 +54,7 @@
     <string name="no_test_results">Sorry! It seems there are no tests currently stored in memory. Please take a test, then return to this page to view the results.</string>
     <string name="num_calibrations_text">Num calibrations</string>
     <string name="chart_description">Hearing Thresholds (dB HL)</string>
+    <string name="instructions">This app can evaluate your hearing capabilities.\nFirst your earphones must be calibrated. You can either perform a full test which requires one or better several persons between the ages of 18 and 35 with normal hearing. Or you can perform a simple calibration at 1000Hz only (assuming good hearing at this frequency). In this case it is assumed that the earphones are linear across the frequency range and calibration values for the other frequencies are then calculated using the ISO226:2003 standard.\n\nWhenever you hear a beep simply touch the screen.\n\nIf you have several persons available for calibration simply press "Add Calibration" and an average value of existing calibrations will be calculated. You may also delete the whole calibration.\n\nAfter that you can perform tests and view them in test results.\n\nYou can then also perform tests at single frequencies. There you can manually select ear, frequency, and sound amplitude by clicking on the buttons.
+</string>
 
 </resources>

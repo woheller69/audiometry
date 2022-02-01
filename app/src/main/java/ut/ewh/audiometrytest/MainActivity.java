@@ -38,7 +38,7 @@ public class MainActivity extends ActionBarActivity{
     }
 
     /**
-     * goes to TestProctoring activity
+     * goes to PerformTest activity
      * @param view- current view
      */
     public void gotoTest(View view){
@@ -48,7 +48,7 @@ public class MainActivity extends ActionBarActivity{
     }
 
     /**
-     * goes to TestProctoring activity
+     * goes to PerformTest activity
      * @param view- current view
      */
     public void gotoSingleTest(View view){
@@ -65,7 +65,7 @@ public class MainActivity extends ActionBarActivity{
         startActivity(intent);
     }
     public void gotoAcknowledgements(View view){
-        Intent intent = new Intent(this, Acknowledgements.class);
+        Intent intent = new Intent(this, Info.class);
         startActivity(intent);
     }
 

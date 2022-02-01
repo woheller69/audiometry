@@ -1,23 +1,25 @@
-UT Engineering World Health Audiometry App
+Android Audiometry App
 ------------------------------------------------
 
-**This project is no longer actively maintained**
+Audiometry Made Easy
 
-![alt tag](https://github.com/ReeceStevens/ut_ewh_audiometer_2014/raw/master/TitleScreenshot.png)
+This app can evaluate your hearing capabilities. 
+First your earphones must be calibrated. You can either perform a full test which requires one or better several persons
+between the ages of 18 and 35 with normal hearing. Or you can perform a simple calibration at 1000Hz only (assuming good hearing at
+this frequency). In this case it is assumed that the earphones are linear across the frequency range and calibration values for the 
+other frequencies are then calculated using the ISO226:2003 standard.
+Whenever you hear a beep simply touch the screen.
+If you have several persons available for calibration simply press "Add Calibration" and an average value of existing calibrations
+will be calculated. You may also delete the whole calibration.
 
-Welcome to Audiometry Made Easy!
+After that you can perform tests and view them in test results.
 
-This project was originally created for the Engineering World Health 2014 Design Competition, which 
-is a competition focused on designing novel solutions to issues in the medical world of developing
-countries. Engineering World Health is an awesome organization, and you can find out more about them
-at wwww.ewh.org. I went with EWH to Rwanda in the summer of 2014 for two months to work in local hospitals,
-fix stuff, and see these problems for myself-- if you want to learn more about that, check out my blog at
-reecestevens.svbtle.com. 
+You can then also perform tests at single frequencies.
+There you can manually select ear, frequency, and sound amplitude by clicking on the buttons.
+
 
 The current version of this code is published under GNU GPL V3 License.
 
 The original version of this code is under the MIT license, Copyright (c) 2014 Reece Stevens.
+https://github.com/ReeceStevens/ut_ewh_audiometer_2014
 
-Uses FFT.java and Complex.java libraries which are published under GNU Public License V3
-
-Project Start Date: 1.29.14
