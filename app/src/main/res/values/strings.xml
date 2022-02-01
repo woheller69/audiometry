@@ -21,8 +21,8 @@
     <string name="button_calibration">Calibration</string>
     <string name="pre_calibration_title">Audiometer Calibration</string>
     <string name="pre_calibration_info_body">Calibration of your earphones must be performed in a quiet place by at least one normally hearing person between the ages of 18 and 35. Once the test begins, you will hear beeps of various pitches and volumes. Every time you hear a beep, simply tap the screen.</string>
-    <string name="pre_calibration_info_simple">Simple Calibration: Only tests at 1000 Hz and assumes your earphones are linear in whole range.</string>
-    <string name="pre_calibration_info_full">Full Calibration: Tests between 125 Hz and 8000 Hz.</string>
+    <string name="pre_calibration_info_simple">Simple Calibration: Requires good hearing at 1000 Hz and headphones are linear across the frequency range.</string>
+    <string name="pre_calibration_info_full">Full Calibration: Extensive tests between 125 Hz and 8000 Hz.</string>
     <string name="button_begin_calibration">Add calibration</string>
     <string name="button_begin_full_calibration">Add full calibration</string>
     <string name="button_begin_simple_calibration">Add simple calibration</string>

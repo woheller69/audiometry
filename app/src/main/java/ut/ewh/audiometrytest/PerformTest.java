@@ -26,7 +26,7 @@ public class PerformTest extends ActionBarActivity {
     private final int numSamples = duration * sampleRate;
     private final int volume = 32767;
     static public final int[] testFrequencies = {125, 250, 500, 1000, 2000, 3000, 4000, 6000, 8000};
-    static final float[] correctiondBSPLtodBHL ={37.5f,19.5f,6f,0f,1.5f,4f,4.5f,8.5f,8f}; //derived from  ANSI S3.6-1996, adjusted to correction @1000Hz = 0
+    static final float[] correctiondBSPLtodBHL ={19.7f,9.0f,2.0f,0f,-3.7f,-8.1f,-7.8f, 2.1f,10.2f}; //estimated from  ISO226:2003 hearing threshold. Taken from https://github.com/IoSR-Surrey/MatlabToolbox/blob/master/%2Biosr/%2Bauditory/iso226.m Corrected to value=0 @1000Hz
     private boolean heard = false;
     public double[] thresholds_right = new double[testFrequencies.length];
     public double[] thresholds_left = new double[testFrequencies.length];
