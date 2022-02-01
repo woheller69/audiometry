@@ -46,6 +46,10 @@ public class Pre_Calibration extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void gotoMain(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -61,8 +65,10 @@ public class Pre_Calibration extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id){
+            case android.R.id.home:
+                gotoMain();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

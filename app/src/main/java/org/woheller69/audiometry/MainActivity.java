@@ -26,7 +26,12 @@ public class MainActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark,getTheme()));
         requestPermissions( new String[]{Manifest.permission.RECORD_AUDIO},1);
-        if (FileOperations.isCalibrated(this)) {startTest.setVisibility(View.VISIBLE); testResults.setVisibility(View.VISIBLE);startSingleTest.setVisibility(View.VISIBLE);}
+        if (FileOperations.isCalibrated(this)) {
+            startTest.setVisibility(View.VISIBLE);
+            testResults.setVisibility(View.VISIBLE);
+            startSingleTest.setVisibility(View.VISIBLE);
+            if (GithubStar.shouldShowStarDialog(this)) GithubStar.starDialog(this,"https://github.com/woheller69/audiometer");
+        }
     }
 
     /**
@@ -65,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, TestLookup.class);
         startActivity(intent);
     }
-    public void gotoAcknowledgements(View view){
+    public void gotoInfo(View view){
         Intent intent = new Intent(this, Info.class);
         startActivity(intent);
     }
@@ -85,9 +90,7 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
+
         return super.onOptionsItemSelected(item);
     }
 
