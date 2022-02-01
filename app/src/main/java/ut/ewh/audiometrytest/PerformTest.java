@@ -6,7 +6,8 @@ import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -20,7 +21,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class PerformTest extends ActionBarActivity {
+public class PerformTest extends AppCompatActivity {
     private final int duration = 1;
     private final int sampleRate = 44100;
     private final int numSamples = duration * sampleRate;

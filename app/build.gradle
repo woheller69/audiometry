@@ -6,8 +6,8 @@ android {
     defaultConfig {
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 14
-        versionName "1.65"
+        versionCode 100
+        versionName "1.0"
     }
     buildTypes {
         release {
@@ -27,8 +27,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.android.support:appcompat-v7:21.0.2'
+    implementation 'androidx.appcompat:appcompat:1.0.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.0'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
 }

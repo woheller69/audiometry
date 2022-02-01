@@ -3,9 +3,9 @@ package ut.ewh.audiometrytest;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
@@ -28,7 +28,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import static ut.ewh.audiometrytest.PerformTest.testFrequencies;
 
-public class TestData extends ActionBarActivity {
+public class TestData extends AppCompatActivity {
 
     double[][] testResults = new double[2][testFrequencies.length];
     double[] calibrationArray = new double[testFrequencies.length];

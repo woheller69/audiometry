@@ -1,7 +1,6 @@
 package ut.ewh.audiometrytest;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,8 +9,10 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 
-public class Pre_Calibration extends ActionBarActivity {
+
+public class Pre_Calibration extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

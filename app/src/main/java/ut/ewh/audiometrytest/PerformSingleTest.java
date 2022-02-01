@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,10 +14,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static ut.ewh.audiometrytest.PerformTest.testFrequencies;
+import androidx.appcompat.app.AppCompatActivity;
 
 
-public class PerformSingleTest extends ActionBarActivity {
+public class PerformSingleTest extends AppCompatActivity {
     private final int duration = 1;
     private final int sampleRate = 44100;
     private final int numSamples = duration * sampleRate;

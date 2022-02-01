@@ -1,13 +1,9 @@
 package ut.ewh.audiometrytest;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,7 +23,7 @@ import java.util.Iterator;
 import java.util.List;
 
 
-public class TestLookup extends ActionBarActivity {
+public class TestLookup extends AppCompatActivity {
 
     public final static String DESIRED_FILE = "ut.ewh.audiometrytest.DESIRED_FILE";
     String[] allSavedTests;
