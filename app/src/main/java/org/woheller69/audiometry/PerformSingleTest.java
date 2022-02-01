@@ -189,7 +189,7 @@ public class PerformSingleTest extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.test_perform, menu);
+        getMenuInflater().inflate(R.menu.test_performsingle, menu);
         return true;
     }
 
@@ -199,8 +199,10 @@ public class PerformSingleTest extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id){
+            case android.R.id.home:
+                gotoMain();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
