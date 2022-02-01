@@ -1,4 +1,4 @@
-package ut.ewh.audiometrytest;
+package org.woheller69.audiometry;
 
 import android.content.Context;
 import android.content.Intent;
@@ -26,7 +26,7 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import static ut.ewh.audiometrytest.PerformTest.testFrequencies;
+import static org.woheller69.audiometry.PerformTest.testFrequencies;
 
 public class TestData extends AppCompatActivity {
 

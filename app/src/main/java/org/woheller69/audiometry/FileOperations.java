@@ -1,4 +1,4 @@
-package ut.ewh.audiometrytest;
+package org.woheller69.audiometry;
 
 import android.content.Context;
 import android.util.Log;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static ut.ewh.audiometrytest.PerformTest.testFrequencies;
+import static org.woheller69.audiometry.PerformTest.testFrequencies;
 
 public class FileOperations {
 

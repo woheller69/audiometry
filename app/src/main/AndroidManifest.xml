@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ut.ewh.audiometrytest"
+    package="org.woheller69.audiometry"
+
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -13,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="ut.ewh.audiometrytest.MainActivity"
+            android:name="MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -23,53 +24,53 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="ut.ewh.audiometrytest.PerformSingleTest"
+            android:name="PerformSingleTest"
             android:label="@string/title_activity_performSingleTest"
             android:screenOrientation="portrait" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="ut.ewh.audiometrytest.MainActivity" />
-        </activity>
-        <activity
-            android:name="ut.ewh.audiometrytest.PerformTest"
-            android:label="@string/title_activity_performTest"
-            android:screenOrientation="portrait" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="ut.ewh.audiometrytest.MainActivity" />
-        </activity>
-        <activity
-            android:name="ut.ewh.audiometrytest.Pre_Calibration"
-            android:label="@string/title_activity_pre__calibration"
-            android:screenOrientation="portrait"
-            android:parentActivityName="ut.ewh.audiometrytest.MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="ut.ewh.audiometrytest.MainActivity" />
-        </activity>
-
-        <activity
-            android:name="ut.ewh.audiometrytest.Info"
-            android:label="@string/title_activity_info"
-            android:screenOrientation="portrait"
-            android:parentActivityName="ut.ewh.audiometrytest.MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="ut.ewh.audiometrytest.MainActivity" />
-        </activity>
-
-        <activity
-            android:name="ut.ewh.audiometrytest.TestLookup"
-            android:label="@string/title_activity_test_lookup"
-            android:parentActivityName="ut.ewh.audiometrytest.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="MainActivity" />
         </activity>
         <activity
-            android:name="ut.ewh.audiometrytest.TestData"
+            android:name="PerformTest"
+            android:label="@string/title_activity_performTest"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="MainActivity" />
+        </activity>
+        <activity
+            android:name="Pre_Calibration"
+            android:label="@string/title_activity_pre__calibration"
+            android:screenOrientation="portrait"
+            android:parentActivityName="MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="MainActivity" />
+        </activity>
+
+        <activity
+            android:name="Info"
+            android:label="@string/title_activity_info"
+            android:screenOrientation="portrait"
+            android:parentActivityName="MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="MainActivity" />
+        </activity>
+
+        <activity
+            android:name="TestLookup"
+            android:label="@string/title_activity_test_lookup"
+            android:parentActivityName="MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="MainActivity" />
+        </activity>
+        <activity
+            android:name="TestData"
             android:label="@string/title_activity_test_data"
-            android:parentActivityName="ut.ewh.audiometrytest.TestLookup">
+            android:parentActivityName="TestLookup">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="TestLookup" />

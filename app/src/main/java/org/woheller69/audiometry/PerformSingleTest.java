@@ -1,4 +1,4 @@
-package ut.ewh.audiometrytest;
+package org.woheller69.audiometry;
 
 import android.content.Context;
 import android.content.Intent;

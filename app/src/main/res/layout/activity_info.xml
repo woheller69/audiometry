@@ -9,7 +9,7 @@
     android:background="@color/background_grey"
     android:orientation="vertical"
     android:gravity="center_vertical"
-    tools:context="ut.ewh.audiometrytest.Info">
+    tools:context="org.woheller69.audiometry.Info">
 
     <TextView
         android:text="@string/title_activity_info"
