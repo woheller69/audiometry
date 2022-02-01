@@ -24,7 +24,7 @@ public class PerformSingleTest extends ActionBarActivity {
     private final int numSamples = duration * sampleRate;
     private int maxVolume = 32767;
     private int minVolume = 0;
-    private int actualVolume = 0;
+    private double actualVolume = 0;
     private Context context;
     static public final int[] testFrequencies = {125, 250, 500, 1000, 2000, 3000, 4000, 6000, 8000};
     double[] calibrationArray = new double[testFrequencies.length];
@@ -37,8 +37,6 @@ public class PerformSingleTest extends ActionBarActivity {
     Button plusView;
     private int s=0;
     private int i=0;
-
-
 
     public void showToast(final String toast)
     {
@@ -120,7 +118,7 @@ public class PerformSingleTest extends ActionBarActivity {
             minusView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    actualVolume = (int) (actualVolume/Math.sqrt(2d));
+                    actualVolume = (actualVolume/Math.sqrt(2d));
                 }
             });
             earView.setOnClickListener(new View.OnClickListener() {
@@ -132,7 +130,10 @@ public class PerformSingleTest extends ActionBarActivity {
             frequencyView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    int j=i;
                     i=(i+1)%testFrequencies.length;
+                    actualVolume=actualVolume*Math.pow(10,(calibrationArray[i]-calibrationArray[j])/20);
+                    if (actualVolume>maxVolume) actualVolume=maxVolume;
                 }
             });
             while (!stopped) {
@@ -142,7 +143,7 @@ public class PerformSingleTest extends ActionBarActivity {
                 setFrequencyView(frequency);
                 setdBView(20*Math.log10(actualVolume)-calibrationArray[i]);
                 float increment = (float) (Math.PI) * frequency / sampleRate;
-                AudioTrack audioTrack = sound.playSound(sound.genTone(increment, actualVolume, numSamples), s, sampleRate);
+                AudioTrack audioTrack = sound.playSound(sound.genTone(increment,(int) actualVolume, numSamples), s, sampleRate);
                 try {
                     Thread.sleep(randomTime());
                 } catch (InterruptedException e) {}

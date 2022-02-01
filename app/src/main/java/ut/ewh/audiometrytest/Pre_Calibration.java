@@ -28,7 +28,13 @@ public class Pre_Calibration extends ActionBarActivity {
 
     public void gotoCalibration(View view){
         Intent intent = new Intent(this, PerformTest.class);
-        intent.putExtra("Action","Calibrate");
+        intent.putExtra("Action","FullCalibration");
+        startActivity(intent);
+    }
+
+    public void gotoSimpleCalibration(View view){
+        Intent intent = new Intent(this, PerformTest.class);
+        intent.putExtra("Action","SimpleCalibration");
         startActivity(intent);
     }
 

@@ -40,57 +40,92 @@
                 android:textSize="20sp"
                 android:text="@string/pre_calibration_info_body"
                 android:textColor="#FFFFFF" />
+              <TextView
+                  android:id="@+id/pre_calibration_info_simple"
+                  android:layout_marginTop="15sp"
+                  android:layout_marginBottom="15sp"
+                  android:layout_marginRight="@dimen/activity_horizontal_margin"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textSize="20sp"
+                  android:text="@string/pre_calibration_info_simple"
+                  android:textColor="#FFFFFF" />
+              <TextView
+                  android:id="@+id/pre_calibration_info_full"
+                  android:layout_marginTop="15sp"
+                  android:layout_marginBottom="15sp"
+                  android:layout_marginRight="@dimen/activity_horizontal_margin"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textSize="20sp"
+                  android:text="@string/pre_calibration_info_full"
+                  android:textColor="#FFFFFF" />
+
+              <TextView
+                  android:id="@+id/numCalibrations"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:text="@string/num_calibrations_text"
+                  android:textSize="20dp"
+                  android:textColor="@color/white"
+                  android:background="@drawable/button_background"
+                  android:layout_gravity="right"
+                  android:gravity="center_horizontal"
+                  android:layout_marginTop="10dp"
+                  android:paddingLeft="10sp"
+                  android:paddingRight="10sp"
+                  android:paddingTop="20sp"
+                  android:paddingBottom="20sp"
+                  />
+
+              <Button
+                  android:layout_width="200sp"
+                  android:layout_height="wrap_content"
+                  android:text="@string/button_begin_full_calibration"
+                  android:background="@drawable/button_background"
+                  android:layout_gravity="right"
+                  android:gravity="left"
+                  android:layout_marginTop="10dp"
+                  android:paddingLeft="10sp"
+                  android:paddingRight="10sp"
+                  android:paddingTop="20sp"
+                  android:paddingBottom="20sp"
+                  android:onClick="gotoCalibration"
+                  />
+
+              <Button
+                  android:layout_width="200sp"
+                  android:layout_height="wrap_content"
+                  android:text="@string/button_begin_simple_calibration"
+                  android:background="@drawable/button_background"
+                  android:layout_gravity="right"
+                  android:gravity="left"
+                  android:layout_marginTop="10dp"
+                  android:paddingLeft="10sp"
+                  android:paddingRight="10sp"
+                  android:paddingTop="20sp"
+                  android:paddingBottom="20sp"
+                  android:onClick="gotoSimpleCalibration"
+                  />
+
+              <Button
+                  android:id="@+id/delete"
+                  android:layout_width="200sp"
+                  android:layout_height="wrap_content"
+                  android:visibility="gone"
+                  android:text="@string/button_delete_calibration"
+                  android:background="@drawable/button_background"
+                  android:layout_gravity="right"
+                  android:gravity="left"
+                  android:layout_marginTop="10dp"
+                  android:paddingLeft="10sp"
+                  android:paddingRight="10sp"
+                  android:paddingTop="20sp"
+                  android:paddingBottom="20sp"
+                  android:onClick="deleteCalibration"
+                  />
 
            </LinearLayout>
          </ScrollView>
-
-    <TextView
-        android:id="@+id/numCalibrations"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/num_calibrations_text"
-        android:textSize="20dp"
-        android:textColor="@color/white"
-        android:background="@drawable/button_background"
-        android:layout_gravity="right"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:paddingLeft="10sp"
-        android:paddingRight="10sp"
-        android:paddingTop="20sp"
-        android:paddingBottom="20sp"
-        />
-
-    <Button
-        android:layout_width="200sp"
-        android:layout_height="wrap_content"
-        android:text="@string/button_begin_calibration"
-        android:background="@drawable/button_background"
-        android:layout_gravity="right"
-        android:gravity="left"
-        android:layout_marginTop="10dp"
-        android:paddingLeft="10sp"
-        android:paddingRight="10sp"
-        android:paddingTop="20sp"
-        android:paddingBottom="20sp"
-        android:onClick="gotoCalibration"
-        />
-
-    <Button
-        android:id="@+id/delete"
-        android:layout_width="200sp"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:text="@string/button_delete_calibration"
-        android:background="@drawable/button_background"
-        android:layout_gravity="right"
-        android:gravity="left"
-        android:layout_marginTop="10dp"
-        android:paddingLeft="10sp"
-        android:paddingRight="10sp"
-        android:paddingTop="20sp"
-        android:paddingBottom="20sp"
-        android:onClick="deleteCalibration"
-        />
 
 </LinearLayout>

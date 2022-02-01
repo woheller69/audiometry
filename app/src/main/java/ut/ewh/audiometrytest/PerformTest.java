@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -25,6 +26,7 @@ public class PerformTest extends ActionBarActivity {
     private final int numSamples = duration * sampleRate;
     private final int volume = 32767;
     static public final int[] testFrequencies = {125, 250, 500, 1000, 2000, 3000, 4000, 6000, 8000};
+    static final float[] correctiondBSPLtodBHL ={37.5f,19.5f,6f,0f,1.5f,4f,4.5f,8.5f,8f}; //derived from  ANSI S3.6-1996, adjusted to correction @1000Hz = 0
     private boolean heard = false;
     public double[] thresholds_right = new double[testFrequencies.length];
     public double[] thresholds_left = new double[testFrequencies.length];
@@ -33,6 +35,7 @@ public class PerformTest extends ActionBarActivity {
     testThread testThread;
     TextView earView;
     TextView frequencyView;
+    Intent intent;
 
 
 
@@ -102,26 +105,36 @@ public class PerformTest extends ActionBarActivity {
             for (int s = 0; s < 2; s++) {
                 if (s==0) setEarView(R.string.right_ear);
                 else setEarView(R.string.left_ear);
-
                 if (stopped){break;}
-                for (int i = 0; i < testFrequencies.length; i++) {
-                    double threshold = singleTest(s, i);
-                        if (s==0){
+                if (!intent.getStringExtra("Action").equals("SimpleCalibration")) {
+                    for (int i = 0; i < testFrequencies.length; i++) {
+                        double threshold = singleTest(s, i);
+                        if (s == 0) {
                             thresholds_right[i] = threshold; //records volume as threshold
-                        }else{
+                        } else {
                             thresholds_left[i] = threshold; //records volume as threshold
                         }
+                    }
+                }else{
+                    double threshold = singleTest(s, Arrays.binarySearch(testFrequencies, 1000));  // Test at 1000Hz
+                    if (s == 0) {
+                        for (int i=0;i<testFrequencies.length;i++) thresholds_right[i] = correctiondBSPLtodBHL[i] + threshold;
+                    } else {
+                        for (int i=0;i<testFrequencies.length;i++) thresholds_left[i] = correctiondBSPLtodBHL[i] + threshold;
+                    }
                 }
+
                 PerformTest.this.runOnUiThread(bkgrndFlashBlack);
             }
             if (stopped) return;
 
-            Intent intent = getIntent();
+
             FileOperations fileOperations = new FileOperations();
-            if (intent.getStringExtra("Action").equals("Test")){
+            if (!intent.getStringExtra("Action").equals("SimpleCalibration")){
                 fileOperations.writeTestResult(thresholds_right, thresholds_left, context);
             }
-            else{
+
+            if (!intent.getStringExtra("Action").equals("Test")){
                 double[] calibrationArray = new double[testFrequencies.length+1];  //last field is used later for number of calibrations
                 for(int i=0;i<testFrequencies.length;i++){  //for calibration average left/right channels
                     calibrationArray[i]=(thresholds_left[i]+thresholds_right[i])/2;
@@ -199,6 +212,7 @@ public class PerformTest extends ActionBarActivity {
         setContentView(R.layout.activity_performtest);
         earView = findViewById(R.id.ear);
         frequencyView = findViewById(R.id.frequency);
+        intent = getIntent();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark,getTheme()));
 
