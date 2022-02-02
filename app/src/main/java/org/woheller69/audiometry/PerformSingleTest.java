@@ -2,7 +2,6 @@ package org.woheller69.audiometry;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.os.Bundle;
@@ -121,7 +120,7 @@ public class PerformSingleTest extends AppCompatActivity {
                 else setEarView(R.string.left_ear);
                 setFrequencyView(frequency);
                 setdBView(20*Math.log10(actualVolume)-calibrationArray[i]);
-                float increment = (float) (Math.PI) * frequency / sampleRate;
+                float increment = (float) (2*Math.PI) * frequency / sampleRate;
                 audioTrack = sound.playSound(sound.genTone(increment,(int) actualVolume, numSamples), s, sampleRate);
                 try {
                     Thread.sleep(randomTime());

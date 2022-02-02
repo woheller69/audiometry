@@ -150,7 +150,7 @@ public class PerformTest extends AppCompatActivity {
             AudioTrack audioTrack;
             int frequency = testFrequencies[i];
             setFrequencyView(frequency);
-            float increment = (float) (Math.PI) * frequency / sampleRate;
+            float increment = (float) (2*Math.PI) * frequency / sampleRate;
             int maxVolume = volume;
             int minVolume = 0;
             int thresVolume = maxVolume;
