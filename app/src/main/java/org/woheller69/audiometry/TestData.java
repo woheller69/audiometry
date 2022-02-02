@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -61,7 +61,7 @@ public class TestData extends AppCompatActivity {
         String time = DateFormat.getTimeInstance(DateFormat.SHORT).format(Long.parseLong(names[1])) + ", " + DateFormat.getDateInstance(DateFormat.SHORT).format(Long.parseLong(names[1]));
         String name = "Test at " +time;
 
-        Button b = (Button) findViewById(R.id.share_button);
+        ImageButton b = (ImageButton) findViewById(R.id.share_button);
         b.setOnClickListener(view -> {
             String testdata = "Thresholds right\n";
             for (int i=0; i<testFrequencies.length;i++){
@@ -82,7 +82,7 @@ public class TestData extends AppCompatActivity {
         testResults=fileOperations.readTestData(fileName, context);
         calibrationArray=fileOperations.readCalibration(context);
 
-        Button d = (Button) findViewById(R.id.delete_button);
+        ImageButton d = (ImageButton) findViewById(R.id.delete_button);
         d.setOnClickListener(view -> fileOperations.deleteTestData(fileName,context));
 
         TextView title = (TextView) findViewById(R.id.test_title);
@@ -90,6 +90,7 @@ public class TestData extends AppCompatActivity {
 
         // Draw Graph
         LineChart chart = (LineChart) findViewById(R.id.chart);
+        chart.setExtraTopOffset(10);
         chart.setNoDataText("Whoops! No data was found. Try again!");
         Description description = new Description();
         description.setText(getResources().getString(R.string.chart_description));
@@ -106,6 +107,7 @@ public class TestData extends AppCompatActivity {
         setLeft.setCircleColor(getResources().getColor(R.color.green,getTheme()));
         setLeft.setColor(getResources().getColor(R.color.green,getTheme()));
         setLeft.setValueTextColor(Color.WHITE);
+        setLeft.setValueTextSize(12);
 
         ArrayList<Entry> dataRight = new ArrayList<Entry>();
         for (int i = 0; i < testResults[0].length; i ++){
@@ -116,19 +118,24 @@ public class TestData extends AppCompatActivity {
         setRight.setCircleColor(getResources().getColor(R.color.primary_dark,getTheme()));
         setRight.setColor(getResources().getColor(R.color.primary_dark,getTheme()));
         setRight.setValueTextColor(Color.WHITE);
+        setRight.setValueTextSize(12);
 
         LineData data = new LineData(setLeft,setRight);
 
         XAxis xAxis = chart.getXAxis();
         xAxis.setTextColor(Color.WHITE);
+        xAxis.setTextSize(15);
         YAxis leftAxis = chart.getAxisLeft();
+        leftAxis.setTextSize(15);
         leftAxis.setInverted(true);
         leftAxis.setTextColor(Color.WHITE);
         YAxis rightAxis = chart.getAxisRight();
         rightAxis.setInverted(true);
+        rightAxis.setTextSize(15);
         rightAxis.setTextColor(Color.WHITE);
         Legend legend = chart.getLegend();
         legend.setTextColor(Color.WHITE);
+        legend.setTextSize(15);
 
         xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
