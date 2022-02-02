@@ -22,6 +22,7 @@
             android:textColor="@color/orange"
             android:textSize="30sp"
             android:textStyle="bold"
+            android:layout_marginBottom="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -33,7 +34,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="right"
+            android:gravity="end"
             android:layout_marginTop="15dp"
             android:orientation="horizontal">
             <ImageButton
@@ -41,9 +42,9 @@
                 android:layout_width="wrap_content"
                 android:background="@drawable/button_background"
                 android:src="@drawable/ic_share_black_24dp"
-                android:layout_gravity="right"
+                android:layout_gravity="end"
                 android:paddingRight="20sp"
-                android:paddingLeft="30sp"
+                android:paddingLeft="20sp"
                 android:paddingTop="10sp"
                 android:paddingBottom="10sp"
                 android:id="@+id/share_button"/>
@@ -53,10 +54,10 @@
                 android:layout_width="wrap_content"
                 android:background="@drawable/button_background"
                 android:src="@drawable/ic_delete_black_24dp"
-                android:layout_gravity="right"
-                android:layout_marginLeft="15dp"
+                android:layout_gravity="end"
+                android:layout_marginStart="15dp"
                 android:paddingRight="20sp"
-                android:paddingLeft="30sp"
+                android:paddingLeft="20sp"
                 android:paddingTop="10sp"
                 android:paddingBottom="10sp"
                 android:id="@+id/delete_button"/>
