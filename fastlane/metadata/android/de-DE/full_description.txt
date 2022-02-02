@@ -1,0 +1,11 @@
+Diese App kann Ihr Hörvermögen bewerten. Zuerst müssen Ihre Kopfhörer kalibriert werden. Sie können entweder einen vollständigen Test durchführen, für den eine oder besser mehrere Personen zwischen 18 und 35 Jahren mit normalem Gehör erforderlich sind. Oder Sie können eine einfache Kalibrierung nur bei 1000 Hz durchführen (vorausgesetzt, Sie hören bei dieser Frequenz gut). In diesem Fall wird davon ausgegangen, dass die Ohrhörer über den Frequenzbereich linear sind, und die Kalibrierungswerte für die anderen Frequenzen werden dann unter Verwendung des ISO226:2003-Standards berechnet. Wenn Sie einen Piepton hören, berühren Sie einfach den Bildschirm. Wenn Sie mehrere Personen für die Kalibrierung zur Verfügung haben, drücken Sie einfach auf „Kalibrierung hinzufügen“ und es wird ein Durchschnittswert aus vorhandenen Kalibrierungen berechnet. Sie können auch die gesamte Kalibrierung löschen.
+
+Danach können Sie Tests durchführen und diese in den Testergebnissen anzeigen.
+
+Sie können dann auch Tests bei Einzelfrequenzen durchführen. Dort können Sie Ohr, Frequenz und Tonamplitude manuell auswählen, indem Sie auf die Schaltflächen klicken. 
+
+Nötige Berechtigungen:
+ - Mikrofon
+
+Keine Werbung, kein Tracking.
+

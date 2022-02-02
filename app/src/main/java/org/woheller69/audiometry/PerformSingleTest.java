@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import static org.woheller69.audiometry.PerformTest.testFrequencies;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,7 +26,6 @@ public class PerformSingleTest extends AppCompatActivity {
     private int minVolume = 0;
     private double actualVolume = 0;
     private Context context;
-    static public final int[] testFrequencies = {125, 250, 500, 1000, 2000, 3000, 4000, 6000, 8000};
     double[] calibrationArray = new double[testFrequencies.length];
     private final Sound sound = new Sound();
     testThread testThread;
@@ -64,26 +64,6 @@ public class PerformSingleTest extends AppCompatActivity {
         return (int) (1500+1500*num);
     }
 
-    /**
-     * Changes background to white when called.
-     */
-    Runnable bkgrndFlash = new Runnable() {
-        @Override
-        public void run(){
-            View view = findViewById(R.id.page);
-            view.setBackgroundColor(Color.parseColor("#adce49"));
-        }
-    };
-    /**
-     * Changes background color to black when called
-     */
-    Runnable bkgrndFlashBlack = new Runnable() {
-        @Override
-        public void run(){
-            View view = findViewById(R.id.page);
-            view.setBackgroundColor(Color.parseColor("#424242"));
-        }
-    };
 
     /**
      * go to MainActivity
@@ -102,7 +82,7 @@ public class PerformSingleTest extends AppCompatActivity {
         }
 
         public void run() {
-
+            AudioTrack audioTrack;
             FileOperations fileOperations = new FileOperations();
             calibrationArray=fileOperations.readCalibration(context);
             actualVolume = (minVolume + maxVolume) / 2;
@@ -142,7 +122,7 @@ public class PerformSingleTest extends AppCompatActivity {
                 setFrequencyView(frequency);
                 setdBView(20*Math.log10(actualVolume)-calibrationArray[i]);
                 float increment = (float) (Math.PI) * frequency / sampleRate;
-                AudioTrack audioTrack = sound.playSound(sound.genTone(increment,(int) actualVolume, numSamples), s, sampleRate);
+                audioTrack = sound.playSound(sound.genTone(increment,(int) actualVolume, numSamples), s, sampleRate);
                 try {
                     Thread.sleep(randomTime());
                 } catch (InterruptedException e) {}

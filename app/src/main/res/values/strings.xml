@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">EarTest</string>
+    <string name="app_name">hEARtest</string>
     <string name="action_settings">Settings</string>
     <string name="main_menu_greeting_body">Quick and Simple Hearing Evaluation</string>
     <string name="button_start">Start Full Test</string>
@@ -14,7 +14,7 @@
     <string name="title_activity_test_complete">Test Complete!</string>
     <string name="export_test_title">Export Test Results</string>
 
-    <string name="title_activity_pre__calibration">Pre-Calibration</string>
+    <string name="title_activity_pre__calibration">Calibration</string>
     <string name="button_calibration">Calibration</string>
     <string name="pre_calibration_title">Audiometer Calibration</string>
     <string name="pre_calibration_info_body">Calibration of your earphones must be performed in a quiet place by at least one normally hearing person between the ages of 18 and 35. Once the test begins, you will hear beeps of various pitches and volumes. Every time you hear a beep, simply tap the screen.</string>

@@ -70,7 +70,7 @@ public class PerformTest extends AppCompatActivity {
         @Override
         public void run(){
             View view = findViewById(R.id.page);
-            view.setBackgroundColor(Color.parseColor("#adce49"));
+            view.setBackgroundColor(getResources().getColor(R.color.green,getTheme()));
         }
     };
     /**
@@ -80,7 +80,7 @@ public class PerformTest extends AppCompatActivity {
         @Override
         public void run(){
             View view = findViewById(R.id.page);
-            view.setBackgroundColor(Color.parseColor("#424242"));
+            view.setBackgroundColor(getResources().getColor(R.color.background_grey,getTheme()));
         }
     };
 
@@ -147,7 +147,7 @@ public class PerformTest extends AppCompatActivity {
         }
 
         public double singleTest(int s, int i) {
-
+            AudioTrack audioTrack;
             int frequency = testFrequencies[i];
             setFrequencyView(frequency);
             float increment = (float) (Math.PI) * frequency / sampleRate;
@@ -167,7 +167,7 @@ public class PerformTest extends AppCompatActivity {
                             break;
                         }
                         heard = false;
-                        AudioTrack audioTrack = sound.playSound(sound.genTone(increment, actualVolume, numSamples), s, sampleRate);
+                        audioTrack = sound.playSound(sound.genTone(increment, actualVolume, numSamples), s, sampleRate);
                         try {
                             Thread.sleep(randomTime());
                         } catch (InterruptedException e) {

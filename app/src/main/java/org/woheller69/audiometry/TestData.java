@@ -65,11 +65,11 @@ public class TestData extends AppCompatActivity {
         b.setOnClickListener(view -> {
             String testdata = "Thresholds right\n";
             for (int i=0; i<testFrequencies.length;i++){
-                testdata+=testFrequencies[i] + " " + (testResults[0][i]-calibrationArray[i]) + "\n";
+                testdata+=testFrequencies[i] + " Hz " + String.format("%.1f",(float) (testResults[0][i]-calibrationArray[i])) + " dBHL\n";
             }
             testdata+="\nThresholds left\n";
             for (int i=0; i<testFrequencies.length;i++){
-                testdata+=testFrequencies[i] + " " + (testResults[1][i]-calibrationArray[i]) + "\n";
+                testdata+=testFrequencies[i] + " Hz " + String.format("%.1f",(float) (testResults[1][i]-calibrationArray[i])) + " dBHL\n";
             }
             testdata+="\n";
             Intent sharingIntent = new Intent(Intent.ACTION_SEND);
@@ -102,7 +102,7 @@ public class TestData extends AppCompatActivity {
             Entry dataPoint = new Entry( scaleCbr(testFrequencies[i]),(float) (testResults[1][i]-calibrationArray[i]) );
             dataLeft.add(dataPoint);
         }
-        LineDataSet setLeft = new LineDataSet(dataLeft, "Left");
+        LineDataSet setLeft = new LineDataSet(dataLeft, "LEFT");
         setLeft.setCircleColor(getResources().getColor(R.color.green,getTheme()));
         setLeft.setColor(getResources().getColor(R.color.green,getTheme()));
         setLeft.setValueTextColor(Color.WHITE);
@@ -112,7 +112,7 @@ public class TestData extends AppCompatActivity {
             Entry dataPoint = new Entry( scaleCbr(testFrequencies[i]), (float)(testResults[0][i]-calibrationArray[i]));
             dataRight.add(dataPoint);
         }
-        LineDataSet setRight = new LineDataSet(dataRight, "Right");
+        LineDataSet setRight = new LineDataSet(dataRight, "RIGHT");
         setRight.setCircleColor(getResources().getColor(R.color.primary_dark,getTheme()));
         setRight.setColor(getResources().getColor(R.color.primary_dark,getTheme()));
         setRight.setValueTextColor(Color.WHITE);
@@ -122,8 +122,10 @@ public class TestData extends AppCompatActivity {
         XAxis xAxis = chart.getXAxis();
         xAxis.setTextColor(Color.WHITE);
         YAxis leftAxis = chart.getAxisLeft();
+        leftAxis.setInverted(true);
         leftAxis.setTextColor(Color.WHITE);
         YAxis rightAxis = chart.getAxisRight();
+        rightAxis.setInverted(true);
         rightAxis.setTextColor(Color.WHITE);
         Legend legend = chart.getLegend();
         legend.setTextColor(Color.WHITE);

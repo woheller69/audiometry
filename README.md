@@ -1,7 +1,7 @@
-Android Audiometry App
+hEARtest
 ------------------------------------------------
 
-Audiometry Made Easy
+Quick and Simple Hearing Evaluation
 
 This app can evaluate your hearing capabilities. 
 First your earphones must be calibrated. You can either perform a full test which requires one or better several persons
@@ -18,8 +18,8 @@ You can then also perform tests at single frequencies.
 There you can manually select ear, frequency, and sound amplitude by clicking on the buttons.
 
 
-The current version of this code is published under GNU GPL V3 License.
+This app is published under GNU GPL V3 License.
 
-The original version of this code is under the MIT license, Copyright (c) 2014 Reece Stevens.
+The original version of this code is published under MIT license, Copyright (c) 2014 Reece Stevens.
 https://github.com/ReeceStevens/ut_ewh_audiometer_2014
 
