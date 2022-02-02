@@ -23,5 +23,6 @@ There you can manually select ear, frequency, and sound amplitude by clicking on
 This app is published under GNU GPL V3 License.
 
 The original version of this code is published under MIT license, Copyright (c) 2014 Reece Stevens.
+
 https://github.com/ReeceStevens/ut_ewh_audiometer_2014
 
