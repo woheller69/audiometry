@@ -2,20 +2,15 @@
 <resources>
 
     <string name="app_name">hEARtest</string>
-    <string name="action_settings">Settings</string>
     <string name="main_menu_greeting_body">Quick and Simple Hearing Evaluation</string>
     <string name="button_start">Start Full Test</string>
     <string name="button_info">Instructions</string>
 
     <string name="title_activity_performTest">Tap When You Hear A Beep</string>
     <string name="test_running">Test in Progress!</string>
-    <string name="title_activity_export_data">Export Data</string>
     <string name="button_export">Test Results</string>
-    <string name="title_activity_test_complete">Test Complete!</string>
-    <string name="export_test_title">Export Test Results</string>
 
     <string name="title_activity_pre__calibration">Calibration</string>
-    <string name="button_calibration">Calibration</string>
     <string name="pre_calibration_title">Audiometer Calibration</string>
     <string name="pre_calibration_info_body">Calibration of your earphones must be performed in a quiet place by at least one normally hearing person between the ages of 18 and 35. Once the test begins, you will hear beeps of various pitches and volumes. Every time you hear a beep, simply tap the screen.</string>
     <string name="pre_calibration_info_simple">Simple Calibration: Requires good hearing at 1000 Hz and headphones are linear across the frequency range.</string>
@@ -23,27 +18,10 @@
     <string name="button_begin_calibration">Add calibration</string>
     <string name="button_begin_full_calibration">Add full calibration</string>
     <string name="button_begin_simple_calibration">Add simple calibration</string>
-    <string name="title_activity_calibration">Calibration</string>
-    <string name="calibration_in_progress">Calibrating&#8230;</string>
-    <string name="test_complete_title">Test Complete!</string>
-    <string name="test_complete_body">Do you want to keep your results?</string>
-    <string name="test_complete_button_yes">Yes</string>
-    <string name="test_complete_button_no">No</string>
-    <string name="title_activity_export_complete">Export Complete</string>
-    <string name="export_data_complete_title">Data Export Complete!</string>
-    <string name="export_data_complete_button">Return to Home</string>
-    <string name="export_data_complete_caveat">If you can\'t find the test results in your inbox, be sure to check your junk or spam folder.</string>
     <string name="title_activity_info">Instructions</string>
 
-    <string name="title_activity_export_error">Export Error</string>
-    <string name="export_error_title">Oops!</string>
-    <string name="export_error_body">Export seems to have run into a problem. Please check your internet connection and try again. You can access your results at any time through the Test Results page and email from there!</string>
-    <string name="export_error_button">Back to Main Menu</string>
     <string name="title_activity_test_lookup">Test Results</string>
     <string name="title_activity_test_data">Test Data</string>
-    <string name="share_option">Share Test Results</string>
-    <string name="button_skip_calibration">Skip calibration</string>
-    <string name="delete_option">Delete</string>
     <string name="right_ear">Right Ear</string>
     <string name="left_ear">Left Ear</string>
     <string name="button_delete_calibration">Delete Calibration</string>
@@ -60,5 +38,6 @@
     <string name="dialog_NO_button">NO</string>
     <string name="dialog_Later_button">Maybe later</string>
     <string name="dialog_StarOnGitHub">Do you like this app? Please star it on GitHub!</string>
+    <string name="visit_on_github">Visit on GitHub</string>
 
 </resources>

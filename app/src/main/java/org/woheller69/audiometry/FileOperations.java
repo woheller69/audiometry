@@ -19,8 +19,7 @@ public class FileOperations {
 
     public static boolean isCalibrated(Context context){
         List<String> list = new ArrayList<String>(Arrays.asList(context.fileList()));
-        if (list.contains("CalibrationPreferences")) return true;
-        else return false;
+        return list.contains("CalibrationPreferences");
     }
 
     public double read0dBSPL(Context context){  //0dB SPL equals hearing threshold at 1000Hz
@@ -72,7 +71,7 @@ public class FileOperations {
     }
 
     public int readNumCalibrations(Context context){
-        double[] calibrationArray = new double[testFrequencies.length+1];
+        double[] calibrationArray;
         calibrationArray=readCalibration(context);
         return (int) calibrationArray[testFrequencies.length];
     }
@@ -143,7 +142,7 @@ public class FileOperations {
             FileInputStream fis = context.openFileInput(fileName);
             fis.read(testResultsByte, 0, testResultsByte.length);
             fis.close();
-        } catch (IOException e) {};
+        } catch (IOException e) {}
 
         double[][] testResults= new double[2][testFrequencies.length];    //left=1, right=0
 

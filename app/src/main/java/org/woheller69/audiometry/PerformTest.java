@@ -2,7 +2,6 @@ package org.woheller69.audiometry;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.os.Bundle;

@@ -21,8 +21,8 @@ public class PerformSingleTest extends AppCompatActivity {
     private final int duration = 1;
     private final int sampleRate = 44100;
     private final int numSamples = duration * sampleRate;
-    private int maxVolume = 32767;
-    private int minVolume = 0;
+    private final int maxVolume = 32767;
+    private final int minVolume = 0;
     private double actualVolume = 0;
     private Context context;
     double[] calibrationArray = new double[testFrequencies.length];
@@ -70,7 +70,7 @@ public class PerformSingleTest extends AppCompatActivity {
     public void gotoMain(){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-    };
+    }
 
     public class testThread extends Thread {
 
@@ -84,7 +84,7 @@ public class PerformSingleTest extends AppCompatActivity {
             AudioTrack audioTrack;
             FileOperations fileOperations = new FileOperations();
             calibrationArray=fileOperations.readCalibration(context);
-            actualVolume = (minVolume + maxVolume) / 2;
+            actualVolume = (minVolume + maxVolume) / 2f;
 
             plusView.setOnClickListener(new View.OnClickListener() {
                 @Override

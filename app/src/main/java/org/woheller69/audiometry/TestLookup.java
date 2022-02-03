@@ -47,7 +47,7 @@ public class TestLookup extends AppCompatActivity {
         super.onResume();
         LinearLayout layout = new LinearLayout(this);
         setContentView(layout);
-        layout.setBackgroundColor(Color.parseColor("#424242"));
+        layout.setBackgroundColor(getResources().getColor(R.color.background_grey,getTheme()));
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setPadding(0, 40, 16, 16);
 
