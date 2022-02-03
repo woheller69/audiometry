@@ -45,8 +45,8 @@ public class Backup {
     public static void requestPermission(Activity activity) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setIcon(R.drawable.ic_warning_amber_black_24dp);
-        builder.setTitle("Permission needed");
-        builder.setMessage("hEARtest needs access to external storage. Please accept permission and try again.");
+        builder.setTitle(activity.getResources().getString(R.string.permission_required));
+        builder.setMessage(activity.getResources().getString(R.string.permission_message,activity.getResources().getString(R.string.app_name)));
         builder.setPositiveButton(R.string.dialog_OK_button, (dialog, which) -> {
             dialog.cancel();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {

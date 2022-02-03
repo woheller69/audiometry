@@ -117,38 +117,6 @@
             android:gravity="right"
             android:elevation="5dp"/>
 
-            <Button
-                android:id="@+id/restore"
-                android:layout_width="130sp"
-                android:layout_height="wrap_content"
-                android:text="Restore"
-                android:paddingLeft="20sp"
-                android:paddingRight="10sp"
-                android:paddingTop="20sp"
-                android:paddingBottom="20sp"
-                android:layout_marginTop="15sp"
-
-                android:onClick="gotoInfo"
-                android:background="@drawable/button_background"
-                android:gravity="right"
-                android:elevation="5dp"/>
-
-            <Button
-                android:id="@+id/backup"
-                android:layout_width="90sp"
-                android:layout_height="wrap_content"
-                android:text="Backup"
-                android:paddingLeft="20sp"
-                android:paddingRight="10sp"
-                android:paddingTop="20sp"
-                android:paddingBottom="20sp"
-                android:layout_marginTop="15sp"
-                android:layout_marginBottom="20dp"
-                android:onClick="gotoInfo"
-                android:background="@drawable/button_background"
-                android:gravity="right"
-                android:elevation="5dp"/>
-
         </LinearLayout>
     </ScrollView>
 

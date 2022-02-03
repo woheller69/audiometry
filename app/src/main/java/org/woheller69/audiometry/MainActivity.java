@@ -21,8 +21,6 @@ import static android.os.Environment.DIRECTORY_DOCUMENTS;
 
 
 public class MainActivity extends AppCompatActivity {
-    public File sd;
-    public File data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,47 +39,6 @@ public class MainActivity extends AppCompatActivity {
             startSingleTest.setVisibility(View.VISIBLE);
             if (GithubStar.shouldShowStarDialog(this)) GithubStar.starDialog(this,"https://github.com/woheller69/audiometer");
         }
-
-        sd = Environment.getExternalStoragePublicDirectory(DIRECTORY_DOCUMENTS);
-        data = Environment.getDataDirectory();
-        String files = "//data//" + this.getPackageName();
-        String files_backup = "hEARtest";
-        final File previewsFolder_app = new File(data, files);
-        final File previewsFolder_backup = new File(sd, files_backup);
-
-        Button ib_backup = findViewById(R.id.backup);
-        ib_backup.setOnClickListener(v -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Backup Data");
-            builder.setPositiveButton(R.string.dialog_OK_button, (dialog, whichButton) -> {
-                if (!Backup.checkPermissionStorage(this)) {
-                    Backup.requestPermission(this);
-                } else {
-                    Backup.copyDirectory(previewsFolder_app, previewsFolder_backup);
-                }
-            });
-            builder.setNegativeButton(R.string.dialog_NO_button, (dialog, whichButton) -> dialog.cancel());
-            AlertDialog dialog = builder.create();
-            dialog.show();
-            Objects.requireNonNull(dialog.getWindow()).setGravity(Gravity.BOTTOM);
-        });
-
-        Button ib_restore = findViewById(R.id.restore);
-        ib_restore.setOnClickListener(v -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Restore Data");
-            builder.setPositiveButton(R.string.dialog_OK_button, (dialog, whichButton) -> {
-                if (!Backup.checkPermissionStorage(this)) {
-                    Backup.requestPermission(this);
-                } else {
-                    Backup.copyDirectory(previewsFolder_backup, previewsFolder_app);
-                }
-            });
-            builder.setNegativeButton(R.string.dialog_NO_button, (dialog, whichButton) -> dialog.cancel());
-            AlertDialog dialog = builder.create();
-            dialog.show();
-            Objects.requireNonNull(dialog.getWindow()).setGravity(Gravity.BOTTOM);
-        });
 
     }
 
@@ -140,9 +97,51 @@ public class MainActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+        File ext_storage;
+        File int_data;
         int id = item.getItemId();
+        if (id==R.id.backup) {
+                ext_storage = Environment.getExternalStoragePublicDirectory(DIRECTORY_DOCUMENTS);
+                int_data = Environment.getDataDirectory();
+                String files = "//data//" + this.getPackageName();
+                String files_backup = getResources().getString(R.string.app_name);
+                final File previewsFolder_app = new File(int_data, files);
+                final File previewsFolder_backup = new File(ext_storage, files_backup);
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage(getResources().getString(R.string.main_backup));
+                builder.setPositiveButton(R.string.dialog_OK_button, (dialog, whichButton) -> {
+                    if (!Backup.checkPermissionStorage(this)) {
+                        Backup.requestPermission(this);
+                    } else {
+                        Backup.copyDirectory(previewsFolder_app, previewsFolder_backup);
+                    }
+                });
+                builder.setNegativeButton(R.string.dialog_NO_button, (dialog, whichButton) -> dialog.cancel());
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                Objects.requireNonNull(dialog.getWindow()).setGravity(Gravity.BOTTOM);
+            }else if (id==R.id.restore){
+                ext_storage = Environment.getExternalStoragePublicDirectory(DIRECTORY_DOCUMENTS);
+                int_data = Environment.getDataDirectory();
+                String files = "//data//" + this.getPackageName();
+                String files_backup = getResources().getString(R.string.app_name);
+                final File previewsFolder_app = new File(int_data, files);
+                final File previewsFolder_backup = new File(ext_storage, files_backup);
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage(getResources().getString(R.string.main_restore));
+                builder.setPositiveButton(R.string.dialog_OK_button, (dialog, whichButton) -> {
+                    if (!Backup.checkPermissionStorage(this)) {
+                        Backup.requestPermission(this);
+                    } else {
+                        Backup.copyDirectory(previewsFolder_backup, previewsFolder_app);
+                    }
+                });
+                builder.setNegativeButton(R.string.dialog_NO_button, (dialog, whichButton) -> dialog.cancel());
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                Objects.requireNonNull(dialog.getWindow()).setGravity(Gravity.BOTTOM);
+            }
 
         return super.onOptionsItemSelected(item);
     }
-
 }

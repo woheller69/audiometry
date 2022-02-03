@@ -3,4 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="org.woheller69.audiometry.MainActivity" >
 
+    <item
+        android:id="@+id/backup"
+        android:title="@string/main_backup"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/restore"
+        android:title="@string/main_restore"
+        app:showAsAction="never" />
 </menu>
