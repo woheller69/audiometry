@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,8 +34,12 @@ public class TestData extends AppCompatActivity {
     double[][] testResults = new double[2][testFrequencies.length];
     double[] calibrationArray = new double[testFrequencies.length];
     String fileName;
+    private final float YMIN = -20f;
+    private final float YMAX = 100f;
     public final static String DESIRED_FILE = "ut.ewh.audiometrytest.DESIRED_FILE";
     private Context context;
+    private LineChart chart;
+    private boolean zoomed = false;
 
     public float scaleCbr(double cbr) {
         return (float) (Math.log10(cbr/125)/Math.log10(2));
@@ -61,8 +66,8 @@ public class TestData extends AppCompatActivity {
         String time = DateFormat.getTimeInstance(DateFormat.SHORT).format(Long.parseLong(names[1])) + ", " + DateFormat.getDateInstance(DateFormat.SHORT).format(Long.parseLong(names[1]));
         String name = "Test at " +time;
 
-        ImageButton b = (ImageButton) findViewById(R.id.share_button);
-        b.setOnClickListener(view -> {
+        ImageButton share = (ImageButton) findViewById(R.id.share_button);
+        share.setOnClickListener(view -> {
             String testdata = "Thresholds right\n";
             for (int i=0; i<testFrequencies.length;i++){
                 testdata+=testFrequencies[i] + " Hz " + String.format("%.1f",(float) (testResults[0][i]-calibrationArray[i])) + " dBHL\n";
@@ -78,18 +83,39 @@ public class TestData extends AppCompatActivity {
             startActivity(Intent.createChooser(sharingIntent, "Share in..."));
         });
 
+        ImageButton zoom = (ImageButton) findViewById(R.id.zoom_button);
+        zoom.setOnClickListener(view -> {
+            if (!zoomed){
+                chart.getAxisLeft().resetAxisMaximum();
+                chart.getAxisLeft().resetAxisMinimum();
+                chart.getAxisRight().resetAxisMaximum();
+                chart.getAxisRight().resetAxisMinimum();
+                zoom.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.ic_zoom_out_black_24dp));
+                zoomed = true;
+            } else {
+                chart.getAxisLeft().setAxisMinimum(YMIN);
+                chart.getAxisLeft().setAxisMaximum(YMAX);
+                chart.getAxisRight().setAxisMinimum(YMIN);
+                chart.getAxisRight().setAxisMaximum(YMAX);
+                zoom.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.ic_zoom_in_black_24dp));
+                zoomed = false;
+            }
+            chart.notifyDataSetChanged();
+            chart.invalidate();
+        });
+
         FileOperations fileOperations = new FileOperations();
         testResults=fileOperations.readTestData(fileName, context);
         calibrationArray=fileOperations.readCalibration(context);
 
-        ImageButton d = (ImageButton) findViewById(R.id.delete_button);
-        d.setOnClickListener(view -> fileOperations.deleteTestData(fileName,context));
+        ImageButton delete = (ImageButton) findViewById(R.id.delete_button);
+        delete.setOnClickListener(view -> fileOperations.deleteTestData(fileName,context));
 
         TextView title = (TextView) findViewById(R.id.test_title);
         title.setText(name);
 
         // Draw Graph
-        LineChart chart = (LineChart) findViewById(R.id.chart);
+        chart = (LineChart) findViewById(R.id.chart);
         chart.setExtraTopOffset(10);
         chart.setNoDataText("Whoops! No data was found. Try again!");
         Description description = new Description();
@@ -126,10 +152,14 @@ public class TestData extends AppCompatActivity {
         xAxis.setTextColor(Color.WHITE);
         xAxis.setTextSize(15);
         YAxis leftAxis = chart.getAxisLeft();
+        leftAxis.setAxisMinimum(YMIN);
+        leftAxis.setAxisMaximum(YMAX);
         leftAxis.setTextSize(15);
         leftAxis.setInverted(true);
         leftAxis.setTextColor(Color.WHITE);
         YAxis rightAxis = chart.getAxisRight();
+        rightAxis.setAxisMinimum(YMIN);
+        rightAxis.setAxisMaximum(YMAX);
         rightAxis.setInverted(true);
         rightAxis.setTextSize(15);
         rightAxis.setTextColor(Color.WHITE);
