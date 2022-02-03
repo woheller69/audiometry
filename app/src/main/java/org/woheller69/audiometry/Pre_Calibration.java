@@ -8,11 +8,11 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 
 public class Pre_Calibration extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +25,10 @@ public class Pre_Calibration extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark,getTheme()));
         if (FileOperations.isCalibrated(this)) {delete.setVisibility(View.VISIBLE);}
+
+
+
+
     }
 
     public void gotoCalibration(View view){
@@ -72,5 +76,6 @@ public class Pre_Calibration extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 
 }

@@ -3,17 +3,26 @@ package org.woheller69.audiometry;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.io.File;
+import java.util.Objects;
+
+import static android.os.Environment.DIRECTORY_DOCUMENTS;
 
 
 public class MainActivity extends AppCompatActivity {
-
+    public File sd;
+    public File data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +41,48 @@ public class MainActivity extends AppCompatActivity {
             startSingleTest.setVisibility(View.VISIBLE);
             if (GithubStar.shouldShowStarDialog(this)) GithubStar.starDialog(this,"https://github.com/woheller69/audiometer");
         }
+
+        sd = Environment.getExternalStoragePublicDirectory(DIRECTORY_DOCUMENTS);
+        data = Environment.getDataDirectory();
+        String files = "//data//" + this.getPackageName();
+        String files_backup = "hEARtest";
+        final File previewsFolder_app = new File(data, files);
+        final File previewsFolder_backup = new File(sd, files_backup);
+
+        Button ib_backup = findViewById(R.id.backup);
+        ib_backup.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Backup Data");
+            builder.setPositiveButton(R.string.dialog_OK_button, (dialog, whichButton) -> {
+                if (!Backup.checkPermissionStorage(this)) {
+                    Backup.requestPermission(this);
+                } else {
+                    Backup.copyDirectory(previewsFolder_app, previewsFolder_backup);
+                }
+            });
+            builder.setNegativeButton(R.string.dialog_NO_button, (dialog, whichButton) -> dialog.cancel());
+            AlertDialog dialog = builder.create();
+            dialog.show();
+            Objects.requireNonNull(dialog.getWindow()).setGravity(Gravity.BOTTOM);
+        });
+
+        Button ib_restore = findViewById(R.id.restore);
+        ib_restore.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Restore Data");
+            builder.setPositiveButton(R.string.dialog_OK_button, (dialog, whichButton) -> {
+                if (!Backup.checkPermissionStorage(this)) {
+                    Backup.requestPermission(this);
+                } else {
+                    Backup.copyDirectory(previewsFolder_backup, previewsFolder_app);
+                }
+            });
+            builder.setNegativeButton(R.string.dialog_NO_button, (dialog, whichButton) -> dialog.cancel());
+            AlertDialog dialog = builder.create();
+            dialog.show();
+            Objects.requireNonNull(dialog.getWindow()).setGravity(Gravity.BOTTOM);
+        });
+
     }
 
     /**
