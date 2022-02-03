@@ -154,15 +154,16 @@ public class PerformSingleTest extends AppCompatActivity {
         plusView = findViewById(R.id.plus);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark,getTheme()));
+    }
 
+    @Override
+    public void onResume() {
         AudioManager am = (AudioManager)getSystemService(AUDIO_SERVICE);
         am.setStreamVolume(AudioManager.STREAM_MUSIC, 9,  0);
         testThread = new testThread();
         testThread.start();
+        super.onResume();
     }
-
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -36,7 +36,6 @@ public class TestData extends AppCompatActivity {
     String fileName;
     private final float YMIN = -20f;
     private final float YMAX = 100f;
-    public final static String DESIRED_FILE = "ut.ewh.audiometrytest.DESIRED_FILE";
     private Context context;
     private LineChart chart;
     private boolean zoomed = false;
