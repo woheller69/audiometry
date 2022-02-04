@@ -19,6 +19,7 @@ After that you can perform tests and view them in test results.
 You can then also perform tests at single frequencies.
 There you can manually select ear, frequency, and sound amplitude by clicking on the buttons.
 
+Backup/restore is also available.
 
 This app is published under GNU GPL V3 License.
 
