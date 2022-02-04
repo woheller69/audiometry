@@ -6,6 +6,7 @@ Sie können dann auch Tests bei Einzelfrequenzen durchführen. Dort können Sie 
 
 Nötige Berechtigungen:
  - Mikrofon
+ - Speicherzugriff für Backup/Restore
 
 Keine Werbung, kein Tracking.
 
