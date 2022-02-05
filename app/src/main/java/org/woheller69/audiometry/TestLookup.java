@@ -98,7 +98,7 @@ public class TestLookup extends AppCompatActivity {
                 b.setText(name);
                 int finalI = i;
                 b.setOnClickListener(view -> gotoTestData(view, allSavedTests[finalI]));
-                container.addView(b, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                container.addView(b, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             }
             scrollview.addView(container);
             layout.addView(scrollview);
