@@ -26,22 +26,26 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button startTest = findViewById(R.id.main_startTest);
-        Button startSingleTest = findViewById(R.id.main_startSingleTest);
-        Button testResults = findViewById(R.id.main_results);
         getSupportActionBar().getThemedContext();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark,getTheme()));
         requestPermissions( new String[]{Manifest.permission.RECORD_AUDIO},1);
+        checkShowInvisibleButtons();
+
+    }
+
+
+    private void checkShowInvisibleButtons(){
+        Button startTest = findViewById(R.id.main_startTest);
+        Button startSingleTest = findViewById(R.id.main_startSingleTest);
+        Button testResults = findViewById(R.id.main_results);
         if (FileOperations.isCalibrated(this)) {
             startTest.setVisibility(View.VISIBLE);
             testResults.setVisibility(View.VISIBLE);
             startSingleTest.setVisibility(View.VISIBLE);
             if (GithubStar.shouldShowStarDialog(this)) GithubStar.starDialog(this,"https://github.com/woheller69/audiometer");
         }
-
     }
-
     /**
      * goes to PreTestInformation activity
      * @param view- current view
@@ -134,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
                         Backup.requestPermission(this);
                     } else {
                         Backup.copyDirectory(previewsFolder_backup, previewsFolder_app);
+                        checkShowInvisibleButtons();
                     }
                 });
                 builder.setNegativeButton(R.string.dialog_NO_button, (dialog, whichButton) -> dialog.cancel());
