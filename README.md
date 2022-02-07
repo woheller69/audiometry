@@ -25,6 +25,11 @@ Backup/restore is also available.
 
 This app is published under GNU GPL V3 License.
 
+The app uses:
+Zip4j (https://github.com/srikanth-lingala/zip4j) which is licensed under Apache License Version 2.0
+AndroidX libraries (https://github.com/androidx/androidx) which is licensed under Apache License Version 2.0
+MPAndroidChart (https://github.com/PhilJay/MPAndroidChart) which is licensed under Apache License Version 2.0
+
 The original version of this code is published under MIT license, Copyright (c) 2014 Reece Stevens.
 
 https://github.com/ReeceStevens/ut_ewh_audiometer_2014

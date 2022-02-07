@@ -2,18 +2,26 @@ package org.woheller69.audiometry;
 
 import android.Manifest;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import net.lingala.zip4j.ZipFile;
+import net.lingala.zip4j.exception.ZipException;
 import java.io.File;
 import java.util.Objects;
 
@@ -21,6 +29,8 @@ import static android.os.Environment.DIRECTORY_DOCUMENTS;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    ActivityResultLauncher<Intent> mRestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +42,14 @@ public class MainActivity extends AppCompatActivity {
         requestPermissions( new String[]{Manifest.permission.RECORD_AUDIO},1);
         checkShowInvisibleButtons();
 
+        mRestore = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                      File intData = new File(Environment.getDataDirectory() + "//data//" + this.getPackageName());
+                      Backup.zipExtract(this, intData, result.getData().getData());
+                      checkShowInvisibleButtons();
+                });
     }
-
 
     private void checkShowInvisibleButtons(){
         Button startTest = findViewById(R.id.main_startTest);
@@ -101,51 +117,63 @@ public class MainActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        File ext_storage;
-        File int_data;
+        File extStorage;
+        File intData;
         int id = item.getItemId();
         if (id==R.id.backup) {
-                ext_storage = Environment.getExternalStoragePublicDirectory(DIRECTORY_DOCUMENTS);
-                int_data = Environment.getDataDirectory();
-                String files = "//data//" + this.getPackageName();
-                String files_backup = getResources().getString(R.string.app_name);
-                final File previewsFolder_app = new File(int_data, files);
-                final File previewsFolder_backup = new File(ext_storage, files_backup);
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage(getResources().getString(R.string.main_backup));
-                builder.setPositiveButton(R.string.dialog_OK_button, (dialog, whichButton) -> {
-                    if (!Backup.checkPermissionStorage(this)) {
-                        Backup.requestPermission(this);
-                    } else {
-                        Backup.copyDirectory(previewsFolder_app, previewsFolder_backup);
+            intData = new File(Environment.getDataDirectory()+"//data//" + this.getPackageName() + "//files//");
+            extStorage = Environment.getExternalStoragePublicDirectory(DIRECTORY_DOCUMENTS);
+            String filesBackup = getResources().getString(R.string.app_name)+".zip";
+            final File zipFileBackup = new File(extStorage, filesBackup);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(getResources().getString(R.string.main_backup));
+            builder.setPositiveButton(R.string.dialog_OK_button, (dialog, whichButton) -> {
+                if (!Backup.checkPermissionStorage(this)) {
+                    Backup.requestPermission(this);
+                } else {
+                    if (zipFileBackup.exists()){
+                        if (!zipFileBackup.delete()){
+                            Toast.makeText(this,getResources().getString(R.string.toast_delete), Toast.LENGTH_LONG).show();
+                        }
                     }
-                });
-                builder.setNegativeButton(R.string.dialog_NO_button, (dialog, whichButton) -> dialog.cancel());
-                AlertDialog dialog = builder.create();
-                dialog.show();
-                Objects.requireNonNull(dialog.getWindow()).setGravity(Gravity.BOTTOM);
-            }else if (id==R.id.restore){
-                ext_storage = Environment.getExternalStoragePublicDirectory(DIRECTORY_DOCUMENTS);
-                int_data = Environment.getDataDirectory();
-                String files = "//data//" + this.getPackageName();
-                String files_backup = getResources().getString(R.string.app_name);
-                final File previewsFolder_app = new File(int_data, files);
-                final File previewsFolder_backup = new File(ext_storage, files_backup);
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage(getResources().getString(R.string.main_restore));
-                builder.setPositiveButton(R.string.dialog_OK_button, (dialog, whichButton) -> {
-                    if (!Backup.checkPermissionStorage(this)) {
-                        Backup.requestPermission(this);
+                    try {
+                        new ZipFile(zipFileBackup).addFolder(intData);
+                    } catch (ZipException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            builder.setNegativeButton(R.string.dialog_NO_button, (dialog, whichButton) -> dialog.cancel());
+            AlertDialog dialog = builder.create();
+            dialog.show();
+            Objects.requireNonNull(dialog.getWindow()).setGravity(Gravity.BOTTOM);
+        }else if (id==R.id.restore){
+            intData = new File(Environment.getDataDirectory() + "//data//" + this.getPackageName());
+            extStorage = Environment.getExternalStoragePublicDirectory(DIRECTORY_DOCUMENTS);
+            String filesBackup = getResources().getString(R.string.app_name)+".zip";
+            final File zipFileBackup = new File(extStorage, filesBackup);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(getResources().getString(R.string.main_restore_message));
+            builder.setPositiveButton(R.string.dialog_OK_button, (dialog, whichButton) -> {
+                if (!Backup.checkPermissionStorage(this)) {
+                    Backup.requestPermission(this);
+                } else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                        intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, this.getExternalFilesDir(DIRECTORY_DOCUMENTS));
+                        intent.setType("application/zip");
+                        mRestore.launch(intent);
                     } else {
-                        Backup.copyDirectory(previewsFolder_backup, previewsFolder_app);
+                        Backup.zipExtract(this, intData, Uri.fromFile(zipFileBackup));
                         checkShowInvisibleButtons();
                     }
-                });
-                builder.setNegativeButton(R.string.dialog_NO_button, (dialog, whichButton) -> dialog.cancel());
-                AlertDialog dialog = builder.create();
-                dialog.show();
-                Objects.requireNonNull(dialog.getWindow()).setGravity(Gravity.BOTTOM);
-            }
+                }
+            });
+            builder.setNegativeButton(R.string.dialog_NO_button, (dialog, whichButton) -> dialog.cancel());
+            AlertDialog dialog = builder.create();
+            dialog.show();
+            Objects.requireNonNull(dialog.getWindow()).setGravity(Gravity.BOTTOM);
+        }
 
         return super.onOptionsItemSelected(item);
     }

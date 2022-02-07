@@ -39,7 +39,9 @@
     <string name="dialog_StarOnGitHub">Do you like this app? Please star it on GitHub!</string>
     <string name="visit_on_github">Visit on GitHub</string>
     <string name="main_restore">Restore Data from Documents folder</string>
+    <string name="main_restore_message">Restore Data from Documents folder. Select hEARtest.zip if needed!</string>
     <string name="main_backup">Backup Data to Documents folder</string>
     <string name="permission_required">Permission required</string>
     <string name="permission_message">%s needs access to external storage. Please accept permission and try again.</string>
+    <string name="toast_delete">Please delete file and try again</string>
 </resources>

@@ -1,0 +1,2 @@
+Backup in einzelnes ZIP file
+MANAGE_EXTERNAL_STORAGE permission entfernt
