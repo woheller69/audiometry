@@ -16,7 +16,7 @@
             android:id="@+id/pre_calibration_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/pre_calibration_title"
+            android:text="@string/title_activity_pre__calibration"
             android:textSize="30sp"
             android:textStyle="bold"
             android:textColor="@color/orange"/>
@@ -65,7 +65,6 @@
                   android:id="@+id/numCalibrations"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:text="@string/num_calibrations_text"
                   android:textAllCaps="true"
                   android:textAppearance="@style/TextAppearance.AppCompat.Button"
                   android:textColor="@color/white"

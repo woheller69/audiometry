@@ -4,14 +4,11 @@
     <string name="app_name">hEARtest</string>
     <string name="main_menu_greeting_body">Quick and Simple Hearing Evaluation</string>
     <string name="button_start">Start Full Test</string>
-    <string name="button_info">Instructions</string>
 
     <string name="title_activity_performTest">Tap When You Hear A Beep</string>
     <string name="test_running">Test in Progress!</string>
-    <string name="button_export">Test Results</string>
 
     <string name="title_activity_pre__calibration">Calibration</string>
-    <string name="pre_calibration_title">Audiometer Calibration</string>
     <string name="pre_calibration_info_body">Calibration of your earphones must be performed in a quiet place by at least one normally hearing person between the ages of 18 and 35. Once the test begins, you will hear beeps of various pitches and volumes. Every time you hear a beep, simply tap the screen.</string>
     <string name="pre_calibration_info_simple">Simple Calibration: Requires good hearing at 1000 Hz and headphones are linear across the frequency range.</string>
     <string name="pre_calibration_info_full">Full Calibration: Extensive tests between 125 Hz and 8000 Hz.</string>
@@ -27,12 +24,10 @@
     <string name="button_delete_calibration">Delete Calibration</string>
     <string name="num_calibrations">Calibrations stored: %d</string>
     <string name="button_singlestart">Test single frequency</string>
-    <string name="test_results">Test Results</string>
-    <string name="no_test_results">Sorry! It seems there are no tests currently stored in memory. Please take a test, then return to this page to view the results.</string>
-    <string name="num_calibrations_text">Num calibrations</string>
+    <string name="no_test_results">No test results available. Please take a test, then return to this page.</string>
     <string name="chart_description">Hearing Thresholds (dB HL)</string>
     <string name="instructions">This app can evaluate your hearing capabilities.\nFirst your earphones must be calibrated. You can either perform a full test which requires one or better several persons between the ages of 18 and 35 with normal hearing. Or you can perform a simple calibration at 1000Hz only (assuming good hearing at this frequency). In this case it is assumed that the earphones are linear across the frequency range and calibration values for the other frequencies are then calculated using the ISO226:2003 standard.\n\nWhenever you hear a beep simply touch the screen.\n\nIf you have several persons available for calibration simply press "Add Calibration" and an average value of existing calibrations will be calculated. You may also delete the whole calibration.\n\nAfter that you can perform tests and view them in test results.\n\nYou can then also perform tests at single frequencies. There you can manually select ear, frequency, and sound amplitude by clicking on the buttons.</string>
-    <string name="title_activity_performSingleTest">Click to set parameters</string>
+    <string name="title_activity_performSingleTest">Set parameters manually</string>
     <string name="dialog_OK_button">OK</string>
     <string name="dialog_NO_button">NO</string>
     <string name="dialog_Later_button">Maybe later</string>

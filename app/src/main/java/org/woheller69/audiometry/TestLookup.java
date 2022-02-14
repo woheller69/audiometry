@@ -52,7 +52,7 @@ public class TestLookup extends AppCompatActivity {
         layout.setPadding(0, 40, 16, 16);
 
         TextView textview = new TextView(this);
-        textview.setText(R.string.test_results);
+        textview.setText(R.string.title_activity_test_lookup);
         textview.setTextColor(getResources().getColor(R.color.orange,getTheme()));
         textview.setTextSize(30);
         textview.setTypeface(null, Typeface.BOLD);

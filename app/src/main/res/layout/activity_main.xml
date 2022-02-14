@@ -92,7 +92,7 @@
             android:visibility="gone"
             android:layout_width="210sp"
             android:layout_height="wrap_content"
-            android:text="@string/button_export"
+            android:text="@string/title_activity_test_lookup"
             android:paddingLeft="30sp"
             android:paddingRight="10sp"
             android:paddingTop="20sp"
@@ -106,7 +106,7 @@
          <Button
              android:layout_width="170sp"
             android:layout_height="wrap_content"
-            android:text="@string/button_info"
+            android:text="@string/title_activity_info"
             android:paddingLeft="20sp"
             android:paddingRight="10sp"
             android:paddingTop="20sp"
