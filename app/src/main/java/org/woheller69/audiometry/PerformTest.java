@@ -150,15 +150,21 @@ public class PerformTest extends AppCompatActivity {
             int frequency = testFrequencies[i];
             setFrequencyView(frequency);
             float increment = (float) (2*Math.PI) * frequency / sampleRate;
+            int actualVolume;
             int maxVolume = volume;
             int minVolume = 0;
             int thresVolume = maxVolume;
             // This is the loop for each individual sample using a binary search algorithm
             while (!stopped) {
                 int tempResponse = 0;
-                int actualVolume = (minVolume + maxVolume) / 2;
 
-                if (minVolume > 0 && ((float) maxVolume / (float) minVolume) < Math.sqrt(2)) {
+                if (minVolume > 0){  //at least one tone not heard
+                    actualVolume = (minVolume + maxVolume) / 2;
+                } else {
+                    actualVolume = (2 * minVolume + maxVolume) / 3;  // go down faster until tone not heard for first time
+                }
+
+                if (minVolume > 0 && ((float) maxVolume / (float) minVolume) < Math.sqrt(2)) {  //if difference less than 3dB
                     return 20 * Math.log10(thresVolume);
                 } else {
                     for (int z = 0; z < 3; z++) { //iterate three times per volume level
@@ -189,7 +195,12 @@ public class PerformTest extends AppCompatActivity {
                         thresVolume = actualVolume;
                         maxVolume = actualVolume;
                     } else {
-                        minVolume = actualVolume;
+                        if (minVolume > 0){ //at least one tone not heard
+                            minVolume = actualVolume;
+                        } else {
+                            minVolume = (int) (actualVolume/Math.sqrt(2)); //if not heard for first time set minVolume 3dB below actualVolume. So we will test this level again if a higher level is heard
+                        }
+
                     }
                 } //continue with test
             }
