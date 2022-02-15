@@ -1,6 +1,7 @@
 package org.woheller69.audiometry;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -15,10 +16,12 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -59,10 +62,16 @@ public class TestLookup extends AppCompatActivity {
         textview.setGravity(Gravity.CENTER);
         layout.addView(textview, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
+        SharedPreferences prefManager = PreferenceManager.getDefaultSharedPreferences(this);
+        int user = prefManager.getInt("user",1);
+
         List<String> list = new ArrayList<String>(Arrays.asList(fileList()));
+        Collections.sort(list,Collections.reverseOrder());
         for (Iterator<String> iterator = list.iterator(); iterator.hasNext();) {
             String string = iterator.next();
             if (string.equals("CalibrationPreferences")) iterator.remove();
+            else if (user == 1 && string.contains("U2")) iterator.remove();
+            else if (user == 2 && !string.contains("U2")) iterator.remove();
         }
         allSavedTests = list.toArray(new String[0]);
 

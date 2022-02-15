@@ -2,6 +2,7 @@ package org.woheller69.audiometry;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
@@ -109,6 +111,13 @@ public class MainActivity extends AppCompatActivity {
 
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        SharedPreferences prefManager = PreferenceManager.getDefaultSharedPreferences(this);
+        if (prefManager.getInt("user",1)==1) {
+            menu.findItem(R.id.user).setIcon(R.drawable.ic_user1_36dp);
+        } else {
+            menu.findItem(R.id.user).setIcon(R.drawable.ic_user2_36dp);
+        }
+
         return true;
     }
 
@@ -173,6 +182,20 @@ public class MainActivity extends AppCompatActivity {
             AlertDialog dialog = builder.create();
             dialog.show();
             Objects.requireNonNull(dialog.getWindow()).setGravity(Gravity.BOTTOM);
+        } else if (id==R.id.user){
+            SharedPreferences prefManager = PreferenceManager.getDefaultSharedPreferences(this);
+            if (prefManager.getInt("user",1)==1){
+                item.setIcon(R.drawable.ic_user2_36dp);
+                SharedPreferences.Editor editor = prefManager.edit();
+                editor.putInt("user", 2);
+                editor.apply();
+            } else {
+                item.setIcon(R.drawable.ic_user1_36dp);
+                SharedPreferences.Editor editor = prefManager.edit();
+                editor.putInt("user", 1);
+                editor.apply();
+            }
+            invalidateOptionsMenu();
         }
 
         return super.onOptionsItemSelected(item);

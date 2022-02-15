@@ -1,8 +1,10 @@
 package org.woheller69.audiometry;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
+import androidx.preference.PreferenceManager;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -101,6 +103,8 @@ public class FileOperations {
 
     public void writeTestResult(double[] thresholds_right, double[] thresholds_left, Context context) {
         int counter;
+        SharedPreferences prefManager = PreferenceManager.getDefaultSharedPreferences(context);
+        String user = Integer.toString(prefManager.getInt("user",1));
 
         String currentDateTime = Long.toString(System.currentTimeMillis());
 
@@ -126,7 +130,7 @@ public class FileOperations {
         }
 
         try{
-            FileOutputStream fos = context.openFileOutput("TestResults-" + currentDateTime, Context.MODE_PRIVATE);
+            FileOutputStream fos = context.openFileOutput("TestResultsU"+ user + "-" + currentDateTime, Context.MODE_PRIVATE);
             try{
                 fos.write(thresholdVolume);
                 fos.close();
@@ -171,8 +175,6 @@ public class FileOperations {
     public void deleteTestData(String fileName, Context context){
         File file = new File(context.getFilesDir()+"/" + fileName);
         file.delete();
-
-
     }
 
 }

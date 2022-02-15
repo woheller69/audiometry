@@ -11,4 +11,9 @@
         android:id="@+id/restore"
         android:title="@string/main_restore"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/user"
+        android:icon="@drawable/ic_user1_36dp"
+        app:showAsAction="always"
+        android:title="Set user" />
 </menu>
