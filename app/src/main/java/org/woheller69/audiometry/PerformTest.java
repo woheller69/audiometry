@@ -28,6 +28,7 @@ public class PerformTest extends AppCompatActivity {
     static public final int[] testFrequencies = {125, 250, 500, 1000, 2000, 3000, 4000, 6000, 8000};
     static final float[] correctiondBSPLtodBHL ={19.7f,9.0f,2.0f,0f,-3.7f,-8.1f,-7.8f, 2.1f,10.2f}; //estimated from  ISO226:2003 hearing threshold. Taken from https://github.com/IoSR-Surrey/MatlabToolbox/blob/master/%2Biosr/%2Bauditory/iso226.m Corrected to value=0 @1000Hz
     private boolean heard = false;
+    private boolean debug = false;
     public double[] thresholds_right = new double[testFrequencies.length];
     public double[] thresholds_left = new double[testFrequencies.length];
     private Context context;
@@ -130,11 +131,11 @@ public class PerformTest extends AppCompatActivity {
 
 
             FileOperations fileOperations = new FileOperations();
-            if (!intent.getStringExtra("Action").equals("SimpleCalibration")){
+            if (!intent.getStringExtra("Action").equals("SimpleCalibration")){  //if this was a full test or full calibration store as test result.
                 fileOperations.writeTestResult(thresholds_right, thresholds_left, context);
             }
 
-            if (!intent.getStringExtra("Action").equals("Test")){
+            if (!intent.getStringExtra("Action").equals("Test")){  //if this was a full or simple calibration store calibration
                 double[] calibrationArray = new double[testFrequencies.length+1];  //last field is used later for number of calibrations
                 for(int i=0;i<testFrequencies.length;i++){  //for calibration average left/right channels
                     calibrationArray[i]=(thresholds_left[i]+thresholds_right[i])/2;
@@ -163,6 +164,11 @@ public class PerformTest extends AppCompatActivity {
                 } else {
                     actualVolume = (2 * minVolume + maxVolume) / 3;  // go down faster until tone not heard for first time
                 }
+                if (actualVolume <= 1) {
+                    showToast(getString(R.string.error_volume));
+                    actualVolume = 1;
+                }
+                if (debug) showToast(getString(R.string.debug_amplitude, actualVolume));
 
                 if (minVolume > 0 && ((float) maxVolume / (float) minVolume) < Math.sqrt(2)) {  //if difference less than 3dB
                     return 20 * Math.log10(thresVolume);
@@ -268,10 +274,10 @@ public class PerformTest extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        switch (id){
-            case android.R.id.home:
-                gotoMain();
-                return true;
+        if  (id == android.R.id.home ) {
+            gotoMain();
+        } else if ( id == R.id.debug) {
+            debug = true;
         }
         return super.onOptionsItemSelected(item);
     }

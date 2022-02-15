@@ -89,7 +89,7 @@ public class PerformSingleTest extends AppCompatActivity {
             plusView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    actualVolume = (int) (actualVolume*Math.sqrt(2d));
+                    actualVolume = (actualVolume*Math.sqrt(2d));
                     if (actualVolume>maxVolume) actualVolume=maxVolume;
                 }
             });
@@ -97,12 +97,16 @@ public class PerformSingleTest extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     actualVolume = (actualVolume/Math.sqrt(2d));
+                    if (actualVolume <= 1) {
+                        showToast(getString(R.string.error_volume));
+                        actualVolume = 1;
+                    }
                 }
             });
             earView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    s =(s +1)%2;
+                    s =(s + 1)%2;
                 }
             });
             frequencyView.setOnClickListener(new View.OnClickListener() {

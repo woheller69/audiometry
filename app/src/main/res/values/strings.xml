@@ -39,4 +39,7 @@
     <string name="permission_required">Permission required</string>
     <string name="permission_message">%s needs access to external storage. Please accept permission and try again.</string>
     <string name="toast_delete">Please delete file and try again</string>
+    <string name="error_volume">Error: cannot get lower!</string>
+    <string name="debug_amplitude">Amplitude: %d</string>
+    <string name="debug">Debug</string>
 </resources>
