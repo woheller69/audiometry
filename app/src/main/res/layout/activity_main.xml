@@ -1,35 +1,35 @@
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin_altered"
-    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingStart="@dimen/activity_horizontal_margin_altered"
+    android:paddingEnd="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:gravity="center_vertical"
     android:background="@color/background_grey"
     tools:context=".MainActivity"
-    android:orientation="vertical"
-    >
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/app_name"
-    android:textSize="40sp"
-    android:textStyle="bold"
-    android:textColor="@color/orange"
-    android:layout_marginBottom="20sp"
-    android:gravity="right"
-    android:layout_gravity="right"/>
+    android:orientation="vertical">
+
     <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/main_menu_greeting_body"
-    android:textSize="20sp"
-    android:textColor="@color/white"
-    android:layout_gravity="right"
-    android:gravity="right"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:textColor="@color/orange"
+        android:layout_marginBottom="20sp"
+        android:gravity="end"
+        android:layout_gravity="end"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/main_menu_greeting_body"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:layout_gravity="end"
+        android:gravity="end"/>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -44,15 +44,15 @@
             android:layout_width="330sp"
             android:layout_height="wrap_content"
             android:text="@string/button_start"
-            android:paddingLeft="30sp"
-            android:paddingRight="10sp"
+            android:paddingStart="30sp"
+            android:paddingEnd="10sp"
             android:paddingTop="20sp"
             android:paddingBottom="20sp"
             android:layout_marginBottom="15sp"
             android:onClick="gotoTest"
             android:background="@drawable/button_background"
-            android:layout_gravity="left"
-            android:gravity="right"
+            android:layout_gravity="start"
+            android:gravity="end"
             android:elevation="5dp"/>
 
         <Button
@@ -61,63 +61,64 @@
             android:layout_width="290sp"
             android:layout_height="wrap_content"
             android:text="@string/button_singlestart"
-            android:paddingLeft="30sp"
-            android:paddingRight="10sp"
+            android:paddingStart="30sp"
+            android:paddingEnd="10sp"
             android:paddingTop="20sp"
             android:paddingBottom="20sp"
             android:layout_marginBottom="15sp"
             android:onClick="gotoSingleTest"
             android:background="@drawable/button_background"
-            android:layout_gravity="left"
-            android:gravity="right"
-            android:elevation="5dp"/>
-
-        <Button
-            android:layout_width="250sp"
-            android:layout_height="wrap_content"
-            android:text="@string/button_begin_calibration"
-            android:onClick="gotoPreCalibration"
-            android:background="@drawable/button_background"
-            android:paddingLeft="30sp"
-            android:paddingRight="10sp"
-            android:paddingTop="20sp"
-            android:paddingBottom="20sp"
-            android:layout_marginBottom="15sp"
-            android:layout_gravity="left"
-            android:gravity="right"
+            android:layout_gravity="start"
+            android:gravity="end"
             android:elevation="5dp"/>
 
         <Button
             android:id="@+id/main_results"
             android:visibility="gone"
-            android:layout_width="210sp"
+            android:layout_width="250sp"
             android:layout_height="wrap_content"
             android:text="@string/title_activity_test_lookup"
-            android:paddingLeft="30sp"
-            android:paddingRight="10sp"
+            android:paddingStart="30sp"
+            android:paddingEnd="10sp"
             android:paddingTop="20sp"
             android:paddingBottom="20sp"
+            android:layout_marginBottom="15sp"
             android:onClick="gotoExport"
             android:background="@drawable/button_background"
-            android:layout_gravity="left"
-            android:gravity="right"
+            android:layout_gravity="start"
+            android:gravity="end"
+            android:elevation="5dp"/>
+
+        <Button
+            android:layout_width="210sp"
+            android:layout_height="wrap_content"
+            android:text="@string/title_calibration"
+            android:onClick="gotoPreCalibration"
+            android:background="@drawable/button_background"
+            android:paddingStart="30sp"
+            android:paddingEnd="10sp"
+            android:paddingTop="20sp"
+            android:paddingBottom="20sp"
+            android:layout_marginBottom="15sp"
+            android:layout_gravity="start"
+            android:gravity="end"
             android:elevation="5dp"/>
 
          <Button
-             android:layout_width="170sp"
+            android:layout_width="170sp"
             android:layout_height="wrap_content"
             android:text="@string/title_activity_info"
-            android:paddingLeft="20sp"
-            android:paddingRight="10sp"
+            android:paddingStart="20sp"
+            android:paddingEnd="10sp"
             android:paddingTop="20sp"
             android:paddingBottom="20sp"
-            android:layout_marginTop="15sp"
             android:onClick="gotoInfo"
             android:background="@drawable/button_background"
-            android:gravity="right"
+            android:gravity="end"
             android:elevation="5dp"/>
 
         </LinearLayout>
+
     </ScrollView>
 
 </LinearLayout>

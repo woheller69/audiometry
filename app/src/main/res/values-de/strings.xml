@@ -8,11 +8,10 @@
     <string name="title_activity_performTest">Bei Piepton tippen</string>
     <string name="test_running">Test läuft!</string>
 
-    <string name="title_activity_pre__calibration">Kalibrierung</string>
+    <string name="title_calibration">Kalibrierung</string>
     <string name="pre_calibration_info_body">Die Kalibrierung Ihrer Kopfhörer muss an einem ruhigen Ort von mindestens einer normal hörenden Person zwischen 18 und 35 Jahren durchgeführt werden. Sobald der Test beginnt, hören Sie Pieptöne in verschiedenen Tonhöhen und Lautstärken. Jedes Mal, wenn Sie einen Piepton hören, tippen Sie einfach auf den Bildschirm. </string>
     <string name="pre_calibration_info_simple">Einfache Kalibrierung: Erfordert gutes Hörvermögen bei 1000 Hz und Kopfhöhrer, die über den gesamten Frequenzbereich linear sind.</string>
     <string name="pre_calibration_info_full">Volle Kalibrierung: Umfassender Test zwischen 125 Hz und 8000 Hz.</string>
-    <string name="button_begin_calibration">Kalibrierung hinzufügen</string>
     <string name="button_begin_full_calibration">Volle Kalibrierung hinzufügen</string>
     <string name="button_begin_simple_calibration">Einfache Kalibrierung hinzufügen</string>
     <string name="title_activity_info">Anleitung</string>

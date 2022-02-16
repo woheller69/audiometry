@@ -16,7 +16,7 @@
             android:id="@+id/pre_calibration_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_activity_pre__calibration"
+            android:text="@string/title_calibration"
             android:textSize="30sp"
             android:textStyle="bold"
             android:textColor="@color/orange"/>

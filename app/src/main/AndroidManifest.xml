@@ -44,7 +44,7 @@
         </activity>
         <activity
             android:name="Pre_Calibration"
-            android:label="@string/title_activity_pre__calibration"
+            android:label="@string/title_calibration"
             android:screenOrientation="portrait"
             android:parentActivityName="MainActivity" >
             <meta-data
