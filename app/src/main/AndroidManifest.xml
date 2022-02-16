@@ -65,6 +65,7 @@
         <activity
             android:name="TestLookup"
             android:label="@string/title_activity_test_lookup"
+            android:screenOrientation="portrait"
             android:parentActivityName="MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -73,6 +74,7 @@
         <activity
             android:name="TestData"
             android:label="@string/title_activity_test_data"
+            android:screenOrientation="portrait"
             android:parentActivityName="TestLookup">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

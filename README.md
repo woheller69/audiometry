@@ -29,6 +29,7 @@ The app uses:
 Zip4j (https://github.com/srikanth-lingala/zip4j) which is licensed under Apache License Version 2.0
 AndroidX libraries (https://github.com/androidx/androidx) which is licensed under Apache License Version 2.0
 MPAndroidChart (https://github.com/PhilJay/MPAndroidChart) which is licensed under Apache License Version 2.0
+Material Design Icons (https://material.io/resources/icons/) which are licensed under Apache License Version 2.0
 
 The original version of this code is published under MIT license, Copyright (c) 2014 Reece Stevens.
 

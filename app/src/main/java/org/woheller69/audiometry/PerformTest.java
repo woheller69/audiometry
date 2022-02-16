@@ -131,9 +131,6 @@ public class PerformTest extends AppCompatActivity {
 
 
             FileOperations fileOperations = new FileOperations();
-            if (!intent.getStringExtra("Action").equals("SimpleCalibration")){  //if this was a full test or full calibration store as test result.
-                fileOperations.writeTestResult(thresholds_right, thresholds_left, context);
-            }
 
             if (!intent.getStringExtra("Action").equals("Test")){  //if this was a full or simple calibration store calibration
                 double[] calibrationArray = new double[testFrequencies.length+1];  //last field is used later for number of calibrations
@@ -141,6 +138,8 @@ public class PerformTest extends AppCompatActivity {
                     calibrationArray[i]=(thresholds_left[i]+thresholds_right[i])/2;
                 }
                 fileOperations.writeCalibration(calibrationArray, context);
+            } else {  // store test result
+                fileOperations.writeTestResult(thresholds_right, thresholds_left, context);
             }
 
             gotoMain();
