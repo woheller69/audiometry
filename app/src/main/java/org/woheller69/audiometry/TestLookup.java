@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,6 +49,10 @@ public class TestLookup extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        createView();
+    }
+
+    private void createView() {
         LinearLayout layout = new LinearLayout(this);
         setContentView(layout);
         layout.setBackgroundColor(getResources().getColor(R.color.background_grey,getTheme()));
@@ -106,6 +111,8 @@ public class TestLookup extends AppCompatActivity {
                 String name = "Test at " +time;
                 b.setText(name);
                 int finalI = i;
+                b.setId(finalI);
+                registerForContextMenu(b);
                 b.setOnClickListener(view -> gotoTestData(view, allSavedTests[finalI]));
                 container.addView(b, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             }
@@ -113,9 +120,21 @@ public class TestLookup extends AppCompatActivity {
             layout.addView(scrollview);
 
         }
-
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add(0, v.getId(), 0, getString(R.string.delete));
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item){
+        FileOperations fileOperations = new FileOperations();
+        fileOperations.deleteTestData(allSavedTests[item.getItemId()],this);
+        createView();  //recreate View
+        return true;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

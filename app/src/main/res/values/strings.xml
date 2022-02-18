@@ -41,4 +41,5 @@
     <string name="error_volume">Error: cannot get lower!</string>
     <string name="debug_amplitude">Amplitude: %d</string>
     <string name="debug">Debug</string>
+    <string name="delete">Delete</string>
 </resources>
