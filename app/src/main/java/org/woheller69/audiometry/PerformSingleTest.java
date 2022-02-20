@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import static org.woheller69.audiometry.PerformTest.testFrequencies;
+import static org.woheller69.audiometry.PerformTest.gain;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -163,7 +164,7 @@ public class PerformSingleTest extends AppCompatActivity {
     @Override
     public void onResume() {
         AudioManager am = (AudioManager)getSystemService(AUDIO_SERVICE);
-        am.setStreamVolume(AudioManager.STREAM_MUSIC, 9,  0);
+        am.setStreamVolume(AudioManager.STREAM_MUSIC, gain,  0);
         testThread = new testThread();
         testThread.start();
         super.onResume();

@@ -25,6 +25,7 @@ public class PerformTest extends AppCompatActivity {
     private final int sampleRate = 44100;
     private final int numSamples = duration * sampleRate;
     private final int volume = 32767;
+    static public int gain = 9;
     static public final int[] testFrequencies = {125, 250, 500, 1000, 2000, 3000, 4000, 6000, 8000};
     static final float[] correctiondBSPLtodBHL ={19.7f,9.0f,2.0f,0f,-3.7f,-8.1f,-7.8f, 2.1f,10.2f}; //estimated from  ISO226:2003 hearing threshold. Taken from https://github.com/IoSR-Surrey/MatlabToolbox/blob/master/%2Biosr/%2Bauditory/iso226.m Corrected to value=0 @1000Hz
     private boolean heard = false;
@@ -236,7 +237,7 @@ public class PerformTest extends AppCompatActivity {
     @Override
     public void onResume() {
         AudioManager am = (AudioManager)getSystemService(AUDIO_SERVICE);
-        am.setStreamVolume(AudioManager.STREAM_MUSIC, 9,  0);
+        am.setStreamVolume(AudioManager.STREAM_MUSIC, gain,  0);
         testThread = new testThread();
         testThread.start();
         super.onResume();
