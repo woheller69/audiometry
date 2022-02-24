@@ -8,7 +8,11 @@ Quick and Simple Hearing Evaluation
 <a href="https://f-droid.org/packages/org.woheller69.audiometry"><img alt="Get it on F-Droid" src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="100"></a>
 
 This app can evaluate your hearing capabilities. 
-First your earphones must be calibrated. You can either perform a full test which requires one or better several persons
+First your earphones must be calibrated. 
+
+Important: Earphones must not have integrated volume control or loudness, equalizers, etc.
+
+You can either perform a full test which requires one or better several persons
 between the ages of 18 and 35 with normal hearing. Or you can perform a simple calibration at 1000Hz only (assuming good hearing at
 this frequency). In this case it is assumed that the earphones are linear across the frequency range and calibration values for the 
 other frequencies are then calculated using the ISO226:2003 standard.
