@@ -63,7 +63,7 @@ public class TestData extends AppCompatActivity {
         String[] names = fileName.split("-");
 
         String time = DateFormat.getTimeInstance(DateFormat.SHORT).format(Long.parseLong(names[1])) + ", " + DateFormat.getDateInstance(DateFormat.SHORT).format(Long.parseLong(names[1]));
-        String name = "Test at " +time;
+        String name = getString(R.string.test_at,time);
 
         ImageButton share = (ImageButton) findViewById(R.id.share_button);
         share.setOnClickListener(view -> {

@@ -108,7 +108,7 @@ public class TestLookup extends AppCompatActivity {
                 String[] names = allSavedTests[i].split("-");
 
                 String time = DateFormat.getTimeInstance(DateFormat.SHORT).format(Long.parseLong(names[1])) + ", " + DateFormat.getDateInstance(DateFormat.SHORT).format(Long.parseLong(names[1]));
-                String name = "Test at " +time;
+                String name = getString(R.string.test_at,time);
                 b.setText(name);
                 int finalI = i;
                 b.setId(finalI);
