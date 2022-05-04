@@ -39,32 +39,32 @@
 
     <TextView
         android:id="@+id/frequency"
-        android:background="@drawable/button_background"
-        android:text="8000 Hz"
-        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="40sp"
+        android:background="@drawable/button_background"
+        android:gravity="center_horizontal"
+        android:padding="10dp"
+        android:text="8000 Hz"
         android:textColor="@color/white"
-        android:textStyle="bold"
-        android:gravity="center_horizontal"/>
+        android:textSize="40sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/db"
-        android:background="@drawable/button_background"
-        android:layout_below="@id/frequency"
-        android:padding="10dp"
-        android:text="20db"
-        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="40sp"
+        android:layout_below="@id/frequency"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_background"
+        android:gravity="center_horizontal"
+        android:padding="10dp"
+        android:text="20db"
         android:textColor="@color/white"
-        android:textStyle="bold"
-        android:gravity="center_horizontal"/>
+        android:textSize="40sp"
+        android:textStyle="bold" />
 
     <Button
-        android:id="@+id/plus"
+        android:id="@+id/vol_plus"
         android:layout_width="60dp"
         android:padding="10dp"
         android:background="@drawable/button_background"
@@ -77,7 +77,7 @@
         android:textColor="@color/white"
         android:textStyle="bold"/>
     <Button
-        android:id="@+id/minus"
+        android:id="@+id/vol_minus"
         android:layout_width="60dp"
         android:padding="10dp"
         android:background="@drawable/button_background"
@@ -90,4 +90,28 @@
         android:layout_alignParentStart="true"
         android:textStyle="bold"/>
 
+    <Button
+        android:id="@+id/freq_plus"
+        android:layout_width="60dp"
+        android:padding="10dp"
+        android:background="@drawable/button_background"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ear"
+        android:text="+"
+        android:textSize="40sp"
+        android:layout_alignParentEnd="true"
+        android:textColor="@color/white"
+        android:textStyle="bold"/>
+    <Button
+        android:id="@+id/freq_minus"
+        android:layout_width="60dp"
+        android:padding="10dp"
+        android:background="@drawable/button_background"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ear"
+        android:text="-"
+        android:textSize="40sp"
+        android:textColor="@color/white"
+        android:layout_alignParentStart="true"
+        android:textStyle="bold"/>
 </RelativeLayout>

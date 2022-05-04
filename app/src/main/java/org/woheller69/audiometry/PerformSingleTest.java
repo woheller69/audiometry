@@ -32,8 +32,10 @@ public class PerformSingleTest extends AppCompatActivity {
     TextView earView;
     TextView dBView;
     TextView frequencyView;
-    Button minusView;
-    Button plusView;
+    Button volMinusView;
+    Button volPlusView;
+    Button freqPlusView;
+    Button freqMinusView;
     private int s=0;
     private int i=0;
 
@@ -87,37 +89,29 @@ public class PerformSingleTest extends AppCompatActivity {
             calibrationArray=fileOperations.readCalibration(context);
             actualVolume = (minVolume + maxVolume) / 2f;
 
-            plusView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    actualVolume = (actualVolume*Math.sqrt(2d));
-                    if (actualVolume>maxVolume) actualVolume=maxVolume;
+            volPlusView.setOnClickListener(v -> {
+                actualVolume = (actualVolume*Math.sqrt(2d));
+                if (actualVolume>maxVolume) actualVolume=maxVolume;
+            });
+            volMinusView.setOnClickListener(v -> {
+                actualVolume = (actualVolume/Math.sqrt(2d));
+                if (actualVolume <= 1) {
+                    showToast(getString(R.string.error_volume));
+                    actualVolume = 1;
                 }
             });
-            minusView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    actualVolume = (actualVolume/Math.sqrt(2d));
-                    if (actualVolume <= 1) {
-                        showToast(getString(R.string.error_volume));
-                        actualVolume = 1;
-                    }
-                }
+            earView.setOnClickListener(v -> s =(s + 1)%2);
+            freqPlusView.setOnClickListener(v -> {
+                int j=i;
+                i=(i+1)%testFrequencies.length;
+                actualVolume=actualVolume*Math.pow(10,(calibrationArray[i]-calibrationArray[j])/20);
+                if (actualVolume>maxVolume) actualVolume=maxVolume;
             });
-            earView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    s =(s + 1)%2;
-                }
-            });
-            frequencyView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int j=i;
-                    i=(i+1)%testFrequencies.length;
-                    actualVolume=actualVolume*Math.pow(10,(calibrationArray[i]-calibrationArray[j])/20);
-                    if (actualVolume>maxVolume) actualVolume=maxVolume;
-                }
+            freqMinusView.setOnClickListener(v -> {
+                int j=i;
+                i=(i+testFrequencies.length-1)%testFrequencies.length;
+                actualVolume=actualVolume*Math.pow(10,(calibrationArray[i]-calibrationArray[j])/20);
+                if (actualVolume>maxVolume) actualVolume=maxVolume;
             });
             while (!stopped) {
                 int frequency = testFrequencies[i];
@@ -155,8 +149,10 @@ public class PerformSingleTest extends AppCompatActivity {
         earView = findViewById(R.id.ear);
         frequencyView = findViewById(R.id.frequency);
         dBView = findViewById(R.id.db);
-        minusView = findViewById(R.id.minus);
-        plusView = findViewById(R.id.plus);
+        volMinusView = findViewById(R.id.vol_minus);
+        volPlusView = findViewById(R.id.vol_plus);
+        freqMinusView = findViewById(R.id.freq_minus);
+        freqPlusView = findViewById(R.id.freq_plus);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark,getTheme()));
     }

@@ -30,7 +30,8 @@ import java.util.ArrayList;
 import static org.woheller69.audiometry.PerformTest.testFrequencies;
 
 public class TestData extends AppCompatActivity {
-
+    int index;
+    String[] allSavedTests;
     double[][] testResults = new double[2][testFrequencies.length];
     double[] calibrationArray = new double[testFrequencies.length];
     String fileName;
@@ -53,15 +54,37 @@ public class TestData extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context=this;
+        allSavedTests=TestLookup.getAllSavedTests(this);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark,getTheme()));
 
         setContentView(R.layout.activity_test_data);
         Intent intent = getIntent();
-        fileName = intent.getStringExtra(TestLookup.DESIRED_FILE);
+        index = intent.getIntExtra("Index",0);
+        fileName = allSavedTests[index];
 
+        ImageButton next = (ImageButton) findViewById(R.id.next);
+        next.setOnClickListener(view -> {
+            index = (index - 1);
+            if (index < 0) index = 0;
+            fileName = allSavedTests[index];
+            draw();
+        });
+
+        ImageButton prev = (ImageButton) findViewById(R.id.prev);
+        prev.setOnClickListener(view -> {
+            index = (index + 1);
+            if (index > allSavedTests.length-1) index = allSavedTests.length-1;
+            fileName = allSavedTests[index];
+            draw();
+        });
+
+        draw();
+
+    }
+
+    private void draw() {
         String[] names = fileName.split("-");
-
         String time = DateFormat.getTimeInstance(DateFormat.SHORT).format(Long.parseLong(names[1])) + ", " + DateFormat.getDateInstance(DateFormat.SHORT).format(Long.parseLong(names[1]));
         String name = getString(R.string.test_at,time);
 
@@ -181,9 +204,7 @@ public class TestData extends AppCompatActivity {
 
         chart.setData(data);
         chart.invalidate(); // refresh
-
     }
-
 
 
     @Override

@@ -1,5 +1,6 @@
 package org.woheller69.audiometry;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -29,11 +30,10 @@ import java.util.List;
 
 public class TestLookup extends AppCompatActivity {
 
-    public final static String DESIRED_FILE = "ut.ewh.audiometrytest.DESIRED_FILE";
     String[] allSavedTests;
-    public void gotoTestData(View view, String fileName){
+    public void gotoTestData(View view, int index){
         Intent intent = new Intent(this, TestData.class);
-        intent.putExtra(DESIRED_FILE, fileName);
+        intent.putExtra("Index", index);
         startActivity(intent);
     }
 
@@ -67,18 +67,7 @@ public class TestLookup extends AppCompatActivity {
         textview.setGravity(Gravity.CENTER);
         layout.addView(textview, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
-        SharedPreferences prefManager = PreferenceManager.getDefaultSharedPreferences(this);
-        int user = prefManager.getInt("user",1);
-
-        List<String> list = new ArrayList<String>(Arrays.asList(fileList()));
-        Collections.sort(list,Collections.reverseOrder());
-        for (Iterator<String> iterator = list.iterator(); iterator.hasNext();) {
-            String string = iterator.next();
-            if (string.equals("CalibrationPreferences")) iterator.remove();
-            else if (user == 1 && string.contains("U2")) iterator.remove();
-            else if (user == 2 && !string.contains("U2")) iterator.remove();
-        }
-        allSavedTests = list.toArray(new String[0]);
+        allSavedTests = getAllSavedTests(this);
 
         if (allSavedTests.length < 1) {
             TextView message = new TextView(this);
@@ -113,13 +102,28 @@ public class TestLookup extends AppCompatActivity {
                 int finalI = i;
                 b.setId(finalI);
                 registerForContextMenu(b);
-                b.setOnClickListener(view -> gotoTestData(view, allSavedTests[finalI]));
+                b.setOnClickListener(view -> gotoTestData(view, finalI));
                 container.addView(b, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             }
             scrollview.addView(container);
             layout.addView(scrollview);
 
         }
+    }
+
+    public static String[] getAllSavedTests(Context context) {
+        SharedPreferences prefManager = PreferenceManager.getDefaultSharedPreferences(context);
+        int user = prefManager.getInt("user",1);
+
+        List<String> list = new ArrayList<String>(Arrays.asList(context.fileList()));
+        Collections.sort(list,Collections.reverseOrder());
+        for (Iterator<String> iterator = list.iterator(); iterator.hasNext();) {
+            String string = iterator.next();
+            if (string.equals("CalibrationPreferences")) iterator.remove();
+            else if (user == 1 && string.contains("U2")) iterator.remove();
+            else if (user == 2 && !string.contains("U2")) iterator.remove();
+        }
+        return list.toArray(new String[0]);
     }
 
     @Override
