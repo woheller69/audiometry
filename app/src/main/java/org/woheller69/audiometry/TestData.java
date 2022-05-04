@@ -86,7 +86,6 @@ public class TestData extends AppCompatActivity {
     private void draw() {
         String[] names = fileName.split("-");
         String time = DateFormat.getTimeInstance(DateFormat.SHORT).format(Long.parseLong(names[1])) + ", " + DateFormat.getDateInstance(DateFormat.SHORT).format(Long.parseLong(names[1]));
-        String name = getString(R.string.test_at,time);
 
         ImageButton share = (ImageButton) findViewById(R.id.share_button);
         share.setOnClickListener(view -> {
@@ -134,7 +133,7 @@ public class TestData extends AppCompatActivity {
         delete.setOnClickListener(view -> fileOperations.deleteTestData(fileName,context));
 
         TextView title = (TextView) findViewById(R.id.test_title);
-        title.setText(name);
+        title.setText(time);
 
         // Draw Graph
         chart = (LineChart) findViewById(R.id.chart);
@@ -151,7 +150,7 @@ public class TestData extends AppCompatActivity {
             Entry dataPoint = new Entry( scaleCbr(testFrequencies[i]),(float) (testResults[1][i]-calibrationArray[i]) );
             dataLeft.add(dataPoint);
         }
-        LineDataSet setLeft = new LineDataSet(dataLeft, "LEFT");
+        LineDataSet setLeft = new LineDataSet(dataLeft, getString(R.string.left));
         setLeft.setCircleColor(getResources().getColor(R.color.green,getTheme()));
         setLeft.setColor(getResources().getColor(R.color.green,getTheme()));
         setLeft.setValueTextColor(Color.WHITE);
@@ -162,7 +161,7 @@ public class TestData extends AppCompatActivity {
             Entry dataPoint = new Entry( scaleCbr(testFrequencies[i]), (float)(testResults[0][i]-calibrationArray[i]));
             dataRight.add(dataPoint);
         }
-        LineDataSet setRight = new LineDataSet(dataRight, "RIGHT");
+        LineDataSet setRight = new LineDataSet(dataRight, getString(R.string.right));
         setRight.setCircleColor(getResources().getColor(R.color.primary_dark,getTheme()));
         setRight.setColor(getResources().getColor(R.color.primary_dark,getTheme()));
         setRight.setValueTextColor(Color.WHITE);

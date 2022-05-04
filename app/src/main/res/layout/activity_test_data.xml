@@ -17,14 +17,48 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <TextView
-            android:id="@+id/test_title"
-            android:textColor="@color/orange"
-            android:textSize="30sp"
-            android:textStyle="bold"
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/prev"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:padding="10dp"
+                android:background="@drawable/button_background"
+                android:layout_alignParentStart="true"
+                android:src="@drawable/ic_skip_previous_black_24dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/test_title"
+                android:textColor="@color/orange"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:padding="10dp"
+                android:textAlignment="gravity"
+                android:text="Test"
+                android:layout_toEndOf="@id/prev"
+                android:layout_toStartOf="@id/next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageButton
+                android:id="@+id/next"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:padding="10dp"
+                android:background="@drawable/button_background"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_skip_next_black_24dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+        </RelativeLayout>
 
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/chart"
@@ -73,38 +107,6 @@
                 android:paddingTop="10sp"
                 android:paddingBottom="10sp"
                 android:id="@+id/delete_button"/>
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:orientation="horizontal">
-            <ImageButton
-                android:id="@+id/prev"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:paddingRight="20sp"
-                android:paddingLeft="20sp"
-                android:paddingTop="10sp"
-                android:paddingBottom="10sp"
-                android:background="@drawable/button_background"
-                android:layout_alignParentStart="true"
-                android:src="@drawable/ic_skip_previous_black_24dp"
-                android:textColor="@color/black"
-                android:textStyle="bold"/>
-            <ImageButton
-                android:id="@+id/next"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:paddingRight="20sp"
-                android:paddingLeft="20sp"
-                android:paddingTop="10sp"
-                android:paddingBottom="10sp"
-                android:background="@drawable/button_background"
-                android:layout_alignParentEnd="true"
-                android:src="@drawable/ic_skip_next_black_24dp"
-                android:textColor="@color/black"
-                android:textStyle="bold"/>
         </RelativeLayout>
     </LinearLayout>
 </ScrollView>

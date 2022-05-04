@@ -43,4 +43,6 @@
     <string name="debug">Debug</string>
     <string name="delete">Löschen</string>
     <string name="test_at">Test um %s</string>
+    <string name="left">LINKS</string>
+    <string name="right">RECHTS</string>
 </resources>
