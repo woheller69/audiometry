@@ -1,6 +1,5 @@
 package org.woheller69.audiometry;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -47,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                       File intData = new File(Environment.getDataDirectory() + "//data//" + this.getPackageName());
-                      Backup.zipExtract(this, intData, result.getData().getData());
+                      if (result.getData()!=null && result.getData().getData()!=null) Backup.zipExtract(this, intData, result.getData().getData());
                       checkShowInvisibleButtons();
                 });
     }
