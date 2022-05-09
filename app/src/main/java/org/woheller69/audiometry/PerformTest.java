@@ -7,6 +7,7 @@ import android.media.AudioTrack;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -20,7 +21,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class PerformTest extends AppCompatActivity {
+public class PerformTest extends AppCompatActivity implements GestureDetector.OnGestureListener {
+    private GestureDetector gestureDetector;
+    private boolean paused = false;
     private final int duration = 1;
     private final int sampleRate = 44100;
     private final int numSamples = duration * sampleRate;
@@ -37,6 +40,7 @@ public class PerformTest extends AppCompatActivity {
     testThread testThread;
     TextView earView;
     TextView frequencyView;
+    TextView progressView;
     Intent intent;
 
 
@@ -92,6 +96,41 @@ public class PerformTest extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        heard = true;
+        paused = false;
+        PerformTest.this.runOnUiThread(bkgrndFlash);
+        Timer timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                PerformTest.this.runOnUiThread(bkgrndFlashBlack);
+            }
+        };
+        timer.schedule(timerTask,250);
+        progressView.setText(getString(R.string.test_running));
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+        paused = true;
+        progressView.setText(getString(R.string.test_paused));
+    }
+
+    @Override
+    public boolean onDown(MotionEvent e) { return false; }
+
+    @Override
+    public void onShowPress(MotionEvent e) { }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) { return false; }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) { return false; }
 
     public class testThread extends Thread {
 
@@ -177,6 +216,10 @@ public class PerformTest extends AppCompatActivity {
                         if (stopped) {
                             break;
                         }
+                        if (paused) {
+                            z = 0;
+                            tempResponse = 0;
+                        }
                         heard = false;
                         audioTrack = sound.playSound(sound.genTone(increment, actualVolume, numSamples), s, sampleRate);
                         try {
@@ -226,9 +269,11 @@ public class PerformTest extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context=this;
+        this.gestureDetector = new GestureDetector(this,this);
         setContentView(R.layout.activity_performtest);
         earView = findViewById(R.id.ear);
         frequencyView = findViewById(R.id.frequency);
+        progressView = findViewById(R.id.progress);
         intent = getIntent();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark,getTheme()));
@@ -244,21 +289,10 @@ public class PerformTest extends AppCompatActivity {
     }
 
     @Override
-    public boolean dispatchTouchEvent(MotionEvent e){
-        heard = true;
-        PerformTest.this.runOnUiThread(bkgrndFlash);
-        Timer timer = new Timer();
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                PerformTest.this.runOnUiThread(bkgrndFlashBlack);
-            }
-        };
-        timer.schedule(timerTask,250);
-        return super.dispatchTouchEvent(e);
+    public boolean onTouchEvent(MotionEvent event) {
+        this.gestureDetector.onTouchEvent(event);
+        return true;
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -13,6 +13,7 @@
     android:keepScreenOn="true">
 
     <TextView
+        android:id="@+id/progress"
         android:layout_above="@id/ear"
         android:layout_marginBottom="40dp"
         android:text="@string/test_running"
