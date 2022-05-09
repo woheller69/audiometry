@@ -1,0 +1,2 @@
+Test can be paused / continued with long click
+Bugfixes

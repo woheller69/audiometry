@@ -116,8 +116,8 @@ public class PerformTest extends AppCompatActivity implements GestureDetector.On
 
     @Override
     public void onLongPress(MotionEvent e) {
-        paused = true;
-        progressView.setText(getString(R.string.test_paused));
+        paused = !paused;
+        progressView.setText(paused ? getString(R.string.test_paused) : getString(R.string.test_running));
     }
 
     @Override

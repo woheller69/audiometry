@@ -130,7 +130,12 @@ public class TestData extends AppCompatActivity {
         calibrationArray=fileOperations.readCalibration(context);
 
         ImageButton delete = (ImageButton) findViewById(R.id.delete_button);
-        delete.setOnClickListener(view -> fileOperations.deleteTestData(fileName,context));
+        delete.setOnClickListener(view -> {
+            fileOperations.deleteTestData(fileName,context);
+            allSavedTests=TestLookup.getAllSavedTests(this);
+            if (index > allSavedTests.length-1) index = allSavedTests.length-1;
+            fileName = allSavedTests[index];
+            draw();});
 
         TextView title = (TextView) findViewById(R.id.test_title);
         title.setText(time);

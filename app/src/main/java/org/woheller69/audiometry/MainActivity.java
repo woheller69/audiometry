@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().getThemedContext();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark,getTheme()));
-        requestPermissions( new String[]{Manifest.permission.RECORD_AUDIO},1);
         checkShowInvisibleButtons();
 
         mRestore = registerForActivityResult(
@@ -169,7 +168,6 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                        intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, this.getExternalFilesDir(DIRECTORY_DOCUMENTS));
                         intent.setType("application/zip");
                         mRestore.launch(intent);
                     } else {
