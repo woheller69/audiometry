@@ -68,6 +68,7 @@ public class TestData extends AppCompatActivity {
             index = (index - 1);
             if (index < 0) index = 0;
             fileName = allSavedTests[index];
+            zoomed = false;
             draw();
         });
 
@@ -76,6 +77,7 @@ public class TestData extends AppCompatActivity {
             index = (index + 1);
             if (index > allSavedTests.length-1) index = allSavedTests.length-1;
             fileName = allSavedTests[index];
+            zoomed = false;
             draw();
         });
 
@@ -104,7 +106,8 @@ public class TestData extends AppCompatActivity {
             startActivity(Intent.createChooser(sharingIntent, "Share in..."));
         });
 
-        ImageButton zoom = (ImageButton) findViewById(R.id.zoom_button);
+        ImageButton zoom = findViewById(R.id.zoom_button);
+        zoom.setImageDrawable(zoomed ? ContextCompat.getDrawable(this,R.drawable.ic_zoom_out_black_24dp) : ContextCompat.getDrawable(this,R.drawable.ic_zoom_in_black_24dp));
         zoom.setOnClickListener(view -> {
             if (!zoomed){
                 chart.getAxisLeft().resetAxisMaximum();
@@ -135,6 +138,7 @@ public class TestData extends AppCompatActivity {
             allSavedTests=TestLookup.getAllSavedTests(this);
             if (index > allSavedTests.length-1) index = allSavedTests.length-1;
             fileName = allSavedTests[index];
+            zoomed = false;
             draw();});
 
         TextView title = (TextView) findViewById(R.id.test_title);

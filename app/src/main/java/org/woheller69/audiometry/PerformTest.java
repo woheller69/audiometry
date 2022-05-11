@@ -21,7 +21,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class PerformTest extends AppCompatActivity implements GestureDetector.OnGestureListener {
+public class PerformTest extends AppCompatActivity {
     private GestureDetector gestureDetector;
     private boolean paused = false;
     private final int duration = 1;
@@ -32,6 +32,7 @@ public class PerformTest extends AppCompatActivity implements GestureDetector.On
     static public final int[] testFrequencies = {125, 250, 500, 1000, 2000, 3000, 4000, 6000, 8000};
     static final float[] correctiondBSPLtodBHL ={19.7f,9.0f,2.0f,0f,-3.7f,-8.1f,-7.8f, 2.1f,10.2f}; //estimated from  ISO226:2003 hearing threshold. Taken from https://github.com/IoSR-Surrey/MatlabToolbox/blob/master/%2Biosr/%2Bauditory/iso226.m Corrected to value=0 @1000Hz
     private boolean heard = false;
+    private boolean skip = false;
     private boolean debug = false;
     public double[] thresholds_right = new double[testFrequencies.length];
     public double[] thresholds_left = new double[testFrequencies.length];
@@ -97,40 +98,6 @@ public class PerformTest extends AppCompatActivity implements GestureDetector.On
         startActivity(intent);
     }
 
-    @Override
-    public boolean onSingleTapUp(MotionEvent e) {
-        heard = true;
-        paused = false;
-        PerformTest.this.runOnUiThread(bkgrndFlash);
-        Timer timer = new Timer();
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                PerformTest.this.runOnUiThread(bkgrndFlashBlack);
-            }
-        };
-        timer.schedule(timerTask,250);
-        progressView.setText(getString(R.string.test_running));
-        return false;
-    }
-
-    @Override
-    public void onLongPress(MotionEvent e) {
-        paused = !paused;
-        progressView.setText(paused ? getString(R.string.test_paused) : getString(R.string.test_running));
-    }
-
-    @Override
-    public boolean onDown(MotionEvent e) { return false; }
-
-    @Override
-    public void onShowPress(MotionEvent e) { }
-
-    @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) { return false; }
-
-    @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) { return false; }
 
     public class testThread extends Thread {
 
@@ -221,16 +188,16 @@ public class PerformTest extends AppCompatActivity implements GestureDetector.On
                             tempResponse = 0;
                         }
                         heard = false;
+                        skip = false;
                         audioTrack = sound.playSound(sound.genTone(increment, actualVolume, numSamples), s, sampleRate);
                         try {
                             Thread.sleep(randomTime());
                         } catch (InterruptedException e) {
                         }
                         audioTrack.release();
-                        if (heard) {
-                            tempResponse++;
-                        }
-//                                // Checks if the first two test were positive, and skips the third if true. Helps speed the test along.
+                        if (heard) tempResponse++;
+                        if (skip) tempResponse=3;
+                         // Checks if the first two test were positive, and skips the third if true. Helps speed the test along.
                         if (tempResponse >= 2) {
                             break;
                         }
@@ -269,7 +236,37 @@ public class PerformTest extends AppCompatActivity implements GestureDetector.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context=this;
-        this.gestureDetector = new GestureDetector(this,this);
+        this.gestureDetector = new GestureDetector(this,new GestureDetector.SimpleOnGestureListener(){
+            @Override
+            public boolean onSingleTapUp(MotionEvent e) {
+                heard = true;
+                paused = false;
+                PerformTest.this.runOnUiThread(bkgrndFlash);
+                Timer timer = new Timer();
+                TimerTask timerTask = new TimerTask() {
+                    @Override
+                    public void run() {
+                        PerformTest.this.runOnUiThread(bkgrndFlashBlack);
+                    }
+                };
+                timer.schedule(timerTask,250);
+                progressView.setText(getString(R.string.test_running));
+                return false;
+            }
+
+            @Override
+            public void onLongPress(MotionEvent e) {
+                paused = !paused;
+                progressView.setText(paused ? getString(R.string.test_paused) : getString(R.string.test_running));
+            }
+
+            @Override
+            public boolean onDoubleTap(MotionEvent e) {
+                skip = true;
+                return true;
+            }
+
+        });
         setContentView(R.layout.activity_performtest);
         earView = findViewById(R.id.ear);
         frequencyView = findViewById(R.id.frequency);
