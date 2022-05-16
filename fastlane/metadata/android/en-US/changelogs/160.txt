@@ -1,2 +1,3 @@
 Test can be paused / continued with long click
+Speed up test with double click
 Bugfixes

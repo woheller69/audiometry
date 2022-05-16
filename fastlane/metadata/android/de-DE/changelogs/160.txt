@@ -1,2 +1,3 @@
 Test kann mit langem Klick angehalten / fortgesetzt werden.
+Test kann mit Doppelklick beschleunigt werden.
 Fehlerbeseitigung
