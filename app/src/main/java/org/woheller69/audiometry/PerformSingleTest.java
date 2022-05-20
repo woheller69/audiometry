@@ -24,7 +24,7 @@ public class PerformSingleTest extends AppCompatActivity {
     private final int numSamples = duration * sampleRate;
     private final int maxVolume = 32767;
     private final int minVolume = 0;
-    private double actualVolume = 0;
+    private double actualVolume = -1;
     private Context context;
     double[] calibrationArray = new double[testFrequencies.length];
     private final Sound sound = new Sound();
@@ -87,7 +87,7 @@ public class PerformSingleTest extends AppCompatActivity {
             AudioTrack audioTrack;
             FileOperations fileOperations = new FileOperations();
             calibrationArray=fileOperations.readCalibration(context);
-            actualVolume = (minVolume + maxVolume) / 2f;
+            if (actualVolume==-1) actualVolume = (minVolume + maxVolume) / 2f;
 
             volPlusView.setOnClickListener(v -> {
                 actualVolume = (actualVolume*Math.sqrt(2d));
