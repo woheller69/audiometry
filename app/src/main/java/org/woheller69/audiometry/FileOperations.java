@@ -31,6 +31,34 @@ public class FileOperations {
         return 0;
     }
 
+    public static void writeGain(Context context){
+        try{
+            FileOutputStream fos = context.openFileOutput("Gain", Context.MODE_PRIVATE);
+            try{
+                fos.write(PerformTest.gain);
+                fos.close();
+            } catch (IOException q) {System.out.println (q.toString());}
+        } catch (FileNotFoundException e) {System.out.println (e.toString());
+        }
+    }
+
+    public static int readGain(Context context){
+        try{
+            FileInputStream fis = context.openFileInput("Gain");
+            int gain=fis.read();
+            fis.close();
+            return gain;
+        } catch (IOException e) {}
+        return PerformTest.defaultGain;  // return default gain
+    }
+
+    public static void deleteAllFiles(Context context){
+        File file = new File(context.getFilesDir()+"/");
+        for(File tempFile : file.listFiles()) {
+            tempFile.delete();
+        }
+    }
+
     public void deleteCalibration(Context context){
         File file = new File(context.getFilesDir()+"/" + "CalibrationPreferences");
         file.delete();

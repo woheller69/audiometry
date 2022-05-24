@@ -38,7 +38,7 @@
     <string name="permission_required">Berechtigung erforderlich</string>
     <string name="permission_message">%s benötigt Zugriff auf den externen Speicher. Bitte die Berechtigung erteilen und erneut versuchen.</string>
     <string name="toast_delete">Bitte die Datei zuerst löschen und erneut versuchen.</string>
-    <string name="error_volume">Fehler: Leiser nicht möglich!</string>
+    <string name="error_volume">Fehler: Leiser nicht möglich! Probieren Sie die Option: Geringere Verstärkung nutzen</string>
     <string name="debug_amplitude">Amplitude: %d</string>
     <string name="debug">Debug</string>
     <string name="delete">Löschen</string>
@@ -46,4 +46,7 @@
     <string name="left">LINKS</string>
     <string name="right">RECHTS</string>
     <string name="test_paused">Test angehalten</string>
+    <string name="use_low_gain">Geringere Verstärkung nutzen</string>
+    <string name="changeGain">Verstärkung ändern</string>
+    <string name="changeGainDescription">Alle Kalibrierungs- und Testdaten werden gelöscht. Fortsetzen?</string>
 </resources>

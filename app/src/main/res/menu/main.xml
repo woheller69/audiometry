@@ -12,6 +12,10 @@
         android:title="@string/main_restore"
         app:showAsAction="never" />
     <item
+        android:id="@+id/lowGain"
+        android:title="@string/use_low_gain"
+        android:checkable="true"/>
+    <item
         android:id="@+id/user"
         android:icon="@drawable/ic_user1_36dp"
         app:showAsAction="always"

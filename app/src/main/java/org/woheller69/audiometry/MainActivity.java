@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.DocumentsContract;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -47,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
                 result -> {
                       File intData = new File(Environment.getDataDirectory() + "//data//" + this.getPackageName());
                       if (result.getData()!=null && result.getData().getData()!=null) Backup.zipExtract(this, intData, result.getData().getData());
+                      PerformTest.gain=FileOperations.readGain(this);
+                      //Toast.makeText(this,"Gain: "+PerformTest.gain,Toast.LENGTH_LONG).show();
                       checkShowInvisibleButtons();
                 });
     }
@@ -60,6 +61,10 @@ public class MainActivity extends AppCompatActivity {
             testResults.setVisibility(View.VISIBLE);
             startSingleTest.setVisibility(View.VISIBLE);
             if (GithubStar.shouldShowStarDialog(this)) GithubStar.starDialog(this,"https://github.com/woheller69/audiometer");
+        } else {
+            startTest.setVisibility(View.GONE);
+            testResults.setVisibility(View.GONE);
+            startSingleTest.setVisibility(View.GONE);
         }
     }
     /**
@@ -115,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             menu.findItem(R.id.user).setIcon(R.drawable.ic_user2_36dp);
         }
+        menu.findItem(R.id.lowGain).setChecked(FileOperations.readGain(this) != PerformTest.highGain);
 
         return true;
     }
@@ -128,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
         File intData;
         int id = item.getItemId();
         if (id==R.id.backup) {
+            FileOperations.writeGain(this);
             intData = new File(Environment.getDataDirectory()+"//data//" + this.getPackageName() + "//files//");
             extStorage = Environment.getExternalStoragePublicDirectory(DIRECTORY_DOCUMENTS);
             String filesBackup = getResources().getString(R.string.app_name)+".zip";
@@ -171,6 +178,8 @@ public class MainActivity extends AppCompatActivity {
                         mRestore.launch(intent);
                     } else {
                         Backup.zipExtract(this, intData, Uri.fromFile(zipFileBackup));
+                        PerformTest.gain=FileOperations.readGain(this);
+                        //Toast.makeText(this,"Gain: "+PerformTest.gain,Toast.LENGTH_LONG).show();
                         checkShowInvisibleButtons();
                     }
                 }
@@ -179,6 +188,23 @@ public class MainActivity extends AppCompatActivity {
             AlertDialog dialog = builder.create();
             dialog.show();
             Objects.requireNonNull(dialog.getWindow()).setGravity(Gravity.BOTTOM);
+        }else if (id==R.id.lowGain){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(getResources().getString(R.string.changeGain));
+            builder.setMessage(getResources().getString(R.string.changeGainDescription));
+            builder.setPositiveButton(R.string.dialog_OK_button, (dialog, whichButton) -> {
+                if (item.isChecked()) PerformTest.gain=PerformTest.highGain; // item.isChecked always previous value until invalidated, so value has to be inverted
+                else PerformTest.gain=PerformTest.lowGain;
+                FileOperations.deleteAllFiles(this);
+                FileOperations.writeGain(this);
+                //Toast.makeText(this,"Gain: "+FileOperations.readGain(this),Toast.LENGTH_LONG).show();
+                checkShowInvisibleButtons();
+                invalidateOptionsMenu();
+            });
+            builder.setNegativeButton(R.string.dialog_NO_button, (dialog, whichButton) -> dialog.cancel());
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
         } else if (id==R.id.user){
             SharedPreferences prefManager = PreferenceManager.getDefaultSharedPreferences(this);
             if (prefManager.getInt("user",1)==1){

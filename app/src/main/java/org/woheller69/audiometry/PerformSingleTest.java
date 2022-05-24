@@ -159,6 +159,7 @@ public class PerformSingleTest extends AppCompatActivity {
 
     @Override
     public void onResume() {
+        gain=FileOperations.readGain(this);
         AudioManager am = (AudioManager)getSystemService(AUDIO_SERVICE);
         am.setStreamVolume(AudioManager.STREAM_MUSIC, gain,  0);
         testThread = new testThread();

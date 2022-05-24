@@ -38,7 +38,7 @@
     <string name="permission_required">Permission required</string>
     <string name="permission_message">%s needs access to external storage. Please accept permission and try again.</string>
     <string name="toast_delete">Please delete file and try again</string>
-    <string name="error_volume">Error: cannot get lower!</string>
+    <string name="error_volume">Error: cannot get lower! Try setting: Use low gain</string>
     <string name="debug_amplitude">Amplitude: %d</string>
     <string name="debug">Debug</string>
     <string name="delete">Delete</string>
@@ -46,4 +46,7 @@
     <string name="left">LEFT</string>
     <string name="right">RIGHT</string>
     <string name="test_paused">Test paused</string>
+    <string name="use_low_gain">Use low gain</string>
+    <string name="changeGain">Change gain</string>
+    <string name="changeGainDescription">This will delete all calibration and test data. Continue?</string>
 </resources>
