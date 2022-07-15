@@ -1,0 +1,2 @@
+Option um zwischen großer und kleiner Verstärkung umzuschalten
+Fehlerbeseitigung

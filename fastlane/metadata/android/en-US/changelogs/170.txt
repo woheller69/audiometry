@@ -1,0 +1,2 @@
+Add option to switch gain between normal and low
+Bugfixes
