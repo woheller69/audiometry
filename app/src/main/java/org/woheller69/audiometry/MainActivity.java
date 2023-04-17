@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         new ZipFile(zipFileBackup).addFolder(intData);
                     } catch (ZipException e) {
-                        e.printStackTrace();
+                        Toast.makeText(this,e.toString(), Toast.LENGTH_LONG).show();
                     }
                 }
             });

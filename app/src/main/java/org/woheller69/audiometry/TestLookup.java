@@ -119,8 +119,7 @@ public class TestLookup extends AppCompatActivity {
         Collections.sort(list,Collections.reverseOrder());
         for (Iterator<String> iterator = list.iterator(); iterator.hasNext();) {
             String string = iterator.next();
-            if (string.equals("CalibrationPreferences")) iterator.remove();
-            else if (string.equals("Gain")) iterator.remove();
+            if (!string.contains("TestResults")) iterator.remove();
             else if (user == 1 && string.contains("U2")) iterator.remove();
             else if (user == 2 && !string.contains("U2")) iterator.remove();
         }
