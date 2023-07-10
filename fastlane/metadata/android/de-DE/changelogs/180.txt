@@ -1,0 +1,3 @@
+Update auf Android 13
+Unterstützung für monochromes Icon
+Fehlerbehebung
