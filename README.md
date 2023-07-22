@@ -15,7 +15,7 @@
 | [<img src="https://github.com/woheller69/gptassist/blob/master/fastlane/metadata/android/en-US/images/icon.png" width="50">](https://f-droid.org/packages/org.woheller69.gptassist/) |  |  |
 
 
-#hEARtest
+# hEARtest
 ------------------------------------------------
 
 <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/01.png" width="150"/> <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/02.png" width="150"/> <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/03.png" width="150"/> <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/04.png" width="150"/> <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/05.png" width="150"/>
