@@ -219,8 +219,10 @@ public class MainActivity extends AppCompatActivity {
                 editor.apply();
             }
             invalidateOptionsMenu();
+        } else if (item.getItemId() == R.id.menu_about) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/woheller69/audiometry")));
+            return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

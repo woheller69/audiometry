@@ -20,4 +20,9 @@
         android:icon="@drawable/ic_user1_36dp"
         app:showAsAction="always"
         android:title="Set user" />
+    <item
+        android:id="@+id/menu_about"
+        android:icon="@drawable/ic_info"
+        android:title="GitHub"
+        app:showAsAction="always"/>
 </menu>
