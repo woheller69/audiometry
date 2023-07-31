@@ -25,6 +25,23 @@ Quick and Simple Hearing Evaluation
 <a href="https://f-droid.org/packages/org.woheller69.audiometry"><img alt="Get it on F-Droid" src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="100"></a>
 
 This app can evaluate your hearing capabilities. 
+The term dB HL describes your hearing loss in decibels.
+
+The table below shows a common way to classify hearing loss
+(Source: Clark, J. G. (1981). Uses and abuses of hearing loss classification. Asha, 23, 493–500.)
+
+
+| **Degree of hearing loss** | **Hearing loss range (dB HL)** | 
+|:---:|:------------------------------:|
+|Normal|–10 to 15|
+|Slight|16 to 25|
+|Mild|26 to 40|
+|Moderate|41 to 55|
+|Moderately severe|56 to 70|
+|Severe|71 to 90|
+|Profound|91+|
+
+
 First your earphones must be calibrated. 
 
 Important: Earphones must not have integrated volume control or loudness, equalizers, etc.
