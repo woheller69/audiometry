@@ -1,4 +1,20 @@
-This app can evaluate your hearing capabilities. First your earphones must be calibrated. You can either perform a full test which requires one or better several persons between the ages of 18 and 35 with normal hearing. Or you can perform a simple calibration at 1000Hz only (assuming good hearing at this frequency). In this case it is assumed that the earphones are linear across the frequency range and calibration values for the other frequencies are then calculated using the ISO226:2003 standard. Whenever you hear a beep simply touch the screen.  You can pause / continue with a long click and speed up with a double click. If you have several persons available for calibration simply press "Add Calibration" and an average value of existing calibrations will be calculated. You may also delete the whole calibration.
+This app can evaluate your hearing capabilities.
+
+The term dB HL describes your hearing loss in decibels.
+
+The table below shows a common way to classify hearing loss
+(Source: Clark, J. G. (1981). Uses and abuses of hearing loss classification. Asha, 23, 493–500.)
+
+Degree of hearing loss:  dB HL range
+Normal: –10 to 15
+Slight: 16 to 25
+Mild:   26 to 40
+Moderate:   41 to 55
+Moderately severe:  56 to 70
+Severe: 71 to 90
+Profound:   91+
+
+First your earphones must be calibrated. You can either perform a full test which requires one or better several persons between the ages of 18 and 35 with normal hearing. Or you can perform a simple calibration at 1000Hz only (assuming good hearing at this frequency). In this case it is assumed that the earphones are linear across the frequency range and calibration values for the other frequencies are then calculated using the ISO226:2003 standard. Whenever you hear a beep simply touch the screen.  You can pause / continue with a long click and speed up with a double click. If you have several persons available for calibration simply press "Add Calibration" and an average value of existing calibrations will be calculated. You may also delete the whole calibration.
 
 After that you can perform tests and view them in test results.
 
