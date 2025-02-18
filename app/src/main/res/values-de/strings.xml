@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">hEARtest</string>
+    <string name="app_name" translatable="false">hEARtest</string>
     <string name="main_menu_greeting_body">Schneller und einfacher Hörtest</string>
     <string name="button_start">Vollständigen Test starten</string>
 
