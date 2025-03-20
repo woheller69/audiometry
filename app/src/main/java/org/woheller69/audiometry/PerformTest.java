@@ -24,9 +24,9 @@ import java.util.TimerTask;
 public class PerformTest extends AppCompatActivity {
     private GestureDetector gestureDetector;
     private boolean paused = false;
-    private final int duration = 1;
+    private final float duration = 0.35f;
     private final int sampleRate = 44100;
-    private final int numSamples = duration * sampleRate;
+    private final int numSamples = (int) (duration * sampleRate);
     private final int volume = 32767;
     static public final int lowGain = 4;
     static public final int highGain = 9;

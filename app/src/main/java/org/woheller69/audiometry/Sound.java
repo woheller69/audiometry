@@ -22,10 +22,10 @@ public class Sound {
             float sampleValue = (float) (Math.sin(angle) * volume / 32768);
 
             if (i < fadeInSamples) {
-                // Phase-in effect
+                // Fade-in effect
                 sampleValue *= (float) i / fadeInSamples;
             } else if (i >= numSamples - fadeOutSamples) {
-                // Phase-out effect
+                // Fade-out effect
                 sampleValue *= (float) (numSamples - i) / fadeOutSamples;
             }
 
