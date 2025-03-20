@@ -18,7 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 public class PerformSingleTest extends AppCompatActivity {
-    private final float duration = 0.27f;
+    private final float duration = 0.5f;
     private final int sampleRate = 44100;
     private final int numSamples = (int) (duration * sampleRate);
     private final int maxVolume = 32767;

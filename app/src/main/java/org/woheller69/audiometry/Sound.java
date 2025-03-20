@@ -11,14 +11,28 @@ public class Sound {
      * @param increment - the amount to increment by
      * @param volume - the volume to generate
      */
-    public float[] genTone(float increment, int volume, int numSamples){
-
+    public float[] genTone(float increment, int volume, int numSamples) {
         float angle = 0;
         float[] generatedSnd = new float[numSamples];
-        for (int i = 0; i < numSamples; i++){
-            generatedSnd[i] = (float) (Math.sin(angle)*volume/32768);
+
+        int fadeInSamples = Math.max(1, numSamples / 10);
+        int fadeOutSamples = Math.max(1, numSamples / 10);
+
+        for (int i = 0; i < numSamples; i++) {
+            float sampleValue = (float) (Math.sin(angle) * volume / 32768);
+
+            if (i < fadeInSamples) {
+                // Phase-in effect
+                sampleValue *= (float) i / fadeInSamples;
+            } else if (i >= numSamples - fadeOutSamples) {
+                // Phase-out effect
+                sampleValue *= (float) (numSamples - i) / fadeOutSamples;
+            }
+
+            generatedSnd[i] = sampleValue;
             angle += increment;
         }
+
         return generatedSnd;
     }
 
