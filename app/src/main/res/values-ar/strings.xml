@@ -8,7 +8,7 @@
     <string name="use_low_gain">استخدم كسباً منخفضاً</string>
     <string name="changeGain">تغيير الكسب</string>
     <string name="changeGainDescription">سيتم حذف جميع بيانات المعايرة والاختبارات. هل ترغب في المتابعة؟</string>
-    <string name="app_name">hEARtest</string>
+    <string name="app_name">اختبار السمع</string>
     <string name="main_menu_greeting_body">تقييم سمعي سريع وبسيط</string>
     <string name="button_start">بدء الاختبار الكامل</string>
     <string name="title_activity_performTest">انقر عندما تسمع صفيراً</string>
