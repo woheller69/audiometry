@@ -1,13 +1,20 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
 
 android {
-    compileSdk 34
+    compileSdk 35
+    namespace 'org.woheller69.audiometry'
+    buildFeatures {
+        buildConfig = true
+    }
 
     defaultConfig {
         minSdkVersion 23
-        targetSdk 34
-        versionCode 210
-        versionName "2.1"
+        targetSdk 35
+        versionCode 220
+        versionName "2.2"
     }
     buildTypes {
         release {
@@ -26,9 +33,10 @@ repositories {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'androidx.appcompat:appcompat:1.7.1'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.0'
-    implementation 'androidx.preference:preference:1.1.1'
+    implementation 'androidx.preference:preference:1.2.1'
     implementation 'net.lingala.zip4j:zip4j:2.9.1'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.github.woheller69:FreeDroidWarn:V1.3'
 }

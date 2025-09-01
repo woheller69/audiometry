@@ -27,6 +27,8 @@ import java.util.Objects;
 
 import static android.os.Environment.DIRECTORY_DOCUMENTS;
 
+import org.woheller69.freeDroidWarn.FreeDroidWarn;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().getThemedContext();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark,getTheme()));
+        FreeDroidWarn.showWarningOnUpgrade(this, BuildConfig.VERSION_CODE);
         checkShowInvisibleButtons();
 
         mRestore = registerForActivityResult(
