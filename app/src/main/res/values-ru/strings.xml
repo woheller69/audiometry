@@ -44,4 +44,5 @@
     <string name="use_low_gain">Использовать низкий коэффициент усиления</string>
     <string name="changeGain">Изменить коэффициент усиления</string>
     <string name="changeGainDescription">Это приведет к удалению всех данных калибровки и испытаний. Продолжить?</string>
+    <string name="app_name">hEARtest</string>
 </resources>
