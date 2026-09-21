@@ -47,7 +47,7 @@ public class PerformTest extends AppCompatActivity {
     TextView progressView;
     Intent intent;
 
-
+    private volatile boolean skipCurrentEar = false;
 
     public void showToast(final String toast)
     {
@@ -117,9 +117,13 @@ public class PerformTest extends AppCompatActivity {
                 if (s==0) setEarView(R.string.right_ear);
                 else setEarView(R.string.left_ear);
                 if (stopped){break;}
+
+                skipCurrentEar = false;
+
                 if (!intent.getStringExtra("Action").equals("SimpleCalibration")) {
                     for (int i = 0; i < testFrequencies.length; i++) {
                         double threshold = singleTest(s, i);
+                        if (skipCurrentEar) break;
                         if (s == 0) {
                             thresholds_right[i] = threshold; //records volume as threshold
                         } else {
@@ -128,11 +132,18 @@ public class PerformTest extends AppCompatActivity {
                     }
                 }else{
                     double threshold = singleTest(s, Arrays.binarySearch(testFrequencies, 1000));  // Test at 1000Hz
-                    if (s == 0) {
-                        for (int i=0;i<testFrequencies.length;i++) thresholds_right[i] = correctiondBSPLtodBHL[i] + threshold;
-                    } else {
-                        for (int i=0;i<testFrequencies.length;i++) thresholds_left[i] = correctiondBSPLtodBHL[i] + threshold;
+                    if (!skipCurrentEar) {
+                        if (s == 0) {
+                            for (int i=0;i<testFrequencies.length;i++) thresholds_right[i] = correctiondBSPLtodBHL[i] + threshold;
+                        } else {
+                            for (int i=0;i<testFrequencies.length;i++) thresholds_left[i] = correctiondBSPLtodBHL[i] + threshold;
+                        }
                     }
+                }
+
+                if (skipCurrentEar) {
+                    if (s == 0) Arrays.fill(thresholds_right, Double.NaN);
+                    else        Arrays.fill(thresholds_left,  Double.NaN);
                 }
 
                 PerformTest.this.runOnUiThread(bkgrndFlashBlack);
@@ -145,7 +156,13 @@ public class PerformTest extends AppCompatActivity {
             if (!intent.getStringExtra("Action").equals("Test")){  //if this was a full or simple calibration store calibration
                 double[] calibrationArray = new double[testFrequencies.length+1];  //last field is used later for number of calibrations
                 for(int i=0;i<testFrequencies.length;i++){  //for calibration average left/right channels
-                    calibrationArray[i]=(thresholds_left[i]+thresholds_right[i])/2;
+                    if (!Double.isNaN(thresholds_left[i]) && !Double.isNaN(thresholds_right[i])) {
+                        calibrationArray[i]=(thresholds_left[i]+thresholds_right[i])/2;
+                    } else if (!Double.isNaN(thresholds_right[i])) {
+                        calibrationArray[i] = thresholds_right[i];
+                    } else if (!Double.isNaN(thresholds_left[i])) {
+                        calibrationArray[i] = thresholds_left[i];
+                    }
                 }
                 fileOperations.writeCalibration(calibrationArray, context);
             } else {  // store test result
@@ -165,7 +182,7 @@ public class PerformTest extends AppCompatActivity {
             int minVolume = 0;
             int thresVolume = maxVolume;
             // This is the loop for each individual sample using a binary search algorithm
-            while (!stopped) {
+            while (!stopped && !skipCurrentEar) {
                 int tempResponse = 0;
 
                 if (minVolume > 0){  //at least one tone not heard
@@ -183,7 +200,7 @@ public class PerformTest extends AppCompatActivity {
                     return 20 * Math.log10(thresVolume);
                 } else {
                     for (int z = 0; z < 3; z++) { //iterate three times per volume level
-                        if (stopped) {
+                        if (stopped || skipCurrentEar) {
                             break;
                         }
                         if (paused) {
@@ -200,7 +217,7 @@ public class PerformTest extends AppCompatActivity {
                         audioTrack.release();
                         if (heard) tempResponse++;
                         if (skip) tempResponse=3;
-                         // Checks if the first two test were positive, and skips the third if true. Helps speed the test along.
+                        // Checks if the first two test were positive, and skips the third if true. Helps speed the test along.
                         if (tempResponse >= 2) {
                             break;
                         }
@@ -277,6 +294,11 @@ public class PerformTest extends AppCompatActivity {
         intent = getIntent();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark,getTheme()));
+
+        earView.setOnLongClickListener(v -> {
+            skipCurrentEar = true;
+            return true;
+        });
     }
 
     @Override

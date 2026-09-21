@@ -66,7 +66,9 @@ You can either perform a full test which requires one or better several persons
 between the ages of 18 and 35 with normal hearing. Or you can perform a simple calibration at 1000Hz only (assuming good hearing at
 this frequency). In this case it is assumed that the earphones are linear across the frequency range and calibration values for the 
 other frequencies are then calculated using the ISO226:2003 standard.
-Whenever you hear a beep simply touch the screen. You can pause / continue with a long click and speed up with a double click.
+Whenever you hear a beep simply touch the screen. 
+You can pause / continue with a long click and speed up with a double click (In this case a tone only needs to be confirmed once).
+You can skip an ear with a long click on "Left Ear" or "Right Ear".
 If you have several persons available for calibration simply press "Add Calibration" and an average value of existing calibrations
 will be calculated. You may also delete the whole calibration.
 

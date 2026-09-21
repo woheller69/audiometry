@@ -91,15 +91,24 @@ public class TestData extends AppCompatActivity {
 
         ImageButton share = (ImageButton) findViewById(R.id.share_button);
         share.setOnClickListener(view -> {
-            String testdata = "Thresholds right\n";
+            String testdata = "";
+            boolean hasData = false;
             for (int i=0; i<testFrequencies.length;i++){
-                testdata+=testFrequencies[i] + " Hz " + String.format("%.1f",(float) (testResults[0][i]-calibrationArray[i])) + " dBHL\n";
+                if (!Double.isNaN(testResults[0][i])) {
+                    if (!hasData) { testdata += "Thresholds right\n"; hasData = true; }
+                    testdata+=testFrequencies[i] + " Hz " + String.format("%.1f",(float) (testResults[0][i]-calibrationArray[i])) + " dBHL\n";
+                }
             }
-            testdata+="\nThresholds left\n";
+            hasData = false;
             for (int i=0; i<testFrequencies.length;i++){
-                testdata+=testFrequencies[i] + " Hz " + String.format("%.1f",(float) (testResults[1][i]-calibrationArray[i])) + " dBHL\n";
+                if (!Double.isNaN(testResults[1][i])) {
+                    if (!hasData) { testdata += "Thresholds left\n"; hasData = true; }
+                    testdata+=testFrequencies[i] + " Hz " + String.format("%.1f",(float) (testResults[1][i]-calibrationArray[i])) + " dBHL\n";
+                }
             }
-            testdata+="\n";
+            if (testdata.isEmpty()) testdata = "No test data available.\n";
+            else testdata += "\n";
+
             Intent sharingIntent = new Intent(Intent.ACTION_SEND);
             sharingIntent.setType("text/plain");
             sharingIntent.putExtra(Intent.EXTRA_TEXT, testdata);
@@ -154,29 +163,46 @@ public class TestData extends AppCompatActivity {
         description.setTextColor(getResources().getColor(R.color.white,getTheme()));
         chart.setDescription(description);
 
-        ArrayList<Entry> dataLeft = new ArrayList<Entry>();
-        for (int i = 0; i < testResults[1].length; i ++){
-            Entry dataPoint = new Entry( scaleCbr(testFrequencies[i]),(float) (testResults[1][i]-calibrationArray[i]) );
-            dataLeft.add(dataPoint);
-        }
-        LineDataSet setLeft = new LineDataSet(dataLeft, getString(R.string.left));
-        setLeft.setCircleColor(getResources().getColor(R.color.green,getTheme()));
-        setLeft.setColor(getResources().getColor(R.color.green,getTheme()));
-        setLeft.setValueTextColor(Color.WHITE);
-        setLeft.setValueTextSize(12);
+        ArrayList<Entry> dataLeft = new ArrayList<>();
+        ArrayList<Entry> dataRight = new ArrayList<>();
+        boolean leftTested = false;
+        boolean rightTested = false;
 
-        ArrayList<Entry> dataRight = new ArrayList<Entry>();
-        for (int i = 0; i < testResults[0].length; i ++){
-            Entry dataPoint = new Entry( scaleCbr(testFrequencies[i]), (float)(testResults[0][i]-calibrationArray[i]));
-            dataRight.add(dataPoint);
+        for (int i = 0; i < testResults[1].length; i++) {
+            if (!Double.isNaN(testResults[1][i])) {
+                Entry dataPoint = new Entry(scaleCbr(testFrequencies[i]), (float) (testResults[1][i]-calibrationArray[i]));
+                dataLeft.add(dataPoint);
+                leftTested = true;
+            }
         }
-        LineDataSet setRight = new LineDataSet(dataRight, getString(R.string.right));
-        setRight.setCircleColor(getResources().getColor(R.color.primary_dark,getTheme()));
-        setRight.setColor(getResources().getColor(R.color.primary_dark,getTheme()));
-        setRight.setValueTextColor(Color.WHITE);
-        setRight.setValueTextSize(12);
 
-        LineData data = new LineData(setLeft,setRight);
+        for (int i = 0; i < testResults[0].length; i++) {
+            if (!Double.isNaN(testResults[0][i])) {
+                Entry dataPoint = new Entry(scaleCbr(testFrequencies[i]), (float)(testResults[0][i]-calibrationArray[i]));
+                dataRight.add(dataPoint);
+                rightTested = true;
+            }
+        }
+
+        ArrayList<LineDataSet> dataSets = new ArrayList<>();
+        if (leftTested) {
+            LineDataSet setLeft = new LineDataSet(dataLeft, getString(R.string.left));
+            setLeft.setCircleColor(getResources().getColor(R.color.green,getTheme()));
+            setLeft.setColor(getResources().getColor(R.color.green,getTheme()));
+            setLeft.setValueTextColor(Color.WHITE);
+            setLeft.setValueTextSize(12);
+            dataSets.add(setLeft);
+        }
+        if (rightTested) {
+            LineDataSet setRight = new LineDataSet(dataRight, getString(R.string.right));
+            setRight.setCircleColor(getResources().getColor(R.color.primary_dark,getTheme()));
+            setRight.setColor(getResources().getColor(R.color.primary_dark,getTheme()));
+            setRight.setValueTextColor(Color.WHITE);
+            setRight.setValueTextSize(12);
+            dataSets.add(setRight);
+        }
+
+        LineData data = new LineData(dataSets.toArray(new LineDataSet[0]));
 
         XAxis xAxis = chart.getXAxis();
         xAxis.setTextColor(Color.WHITE);
@@ -202,7 +228,7 @@ public class TestData extends AppCompatActivity {
             public String getFormattedValue(float value, AxisBase axis) {
                 DecimalFormat mFormat;
                 mFormat = new DecimalFormat("##0.#"); // use one decimal.
-                    return mFormat.format(unScaleCbr(value));
+                return mFormat.format(unScaleCbr(value));
             }
             @Override
             public int getDecimalDigits() {
